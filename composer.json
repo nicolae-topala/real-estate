@@ -1,0 +1,12 @@
+{
+    "name": "ibu/real-estate",
+    "description": "Real estate site project for intro to web class",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "nicolae.topala",
+            "email": "nicolae.topala13@gmail.com"
+        }
+    ],
+    "require": {}
+}
