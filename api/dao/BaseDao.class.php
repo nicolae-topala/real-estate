@@ -14,6 +14,12 @@ class BaseDao{
     }
   }
 
+  /**
+   * Insert query for DB
+   * @param  $table  Table name
+   * @param  $entity User data
+   * @return User_data         Return the user data + the id it created for it.
+   */
   public function insert($table, $entity){
     $query = "INSERT INTO ${table} "."(";
       foreach($entity as $name => $value){
@@ -54,12 +60,24 @@ class BaseDao{
     $stmt->execute($entity);
   }
 
+  /**
+   * Return array of arrays data
+   * @param  string $query  The querry command of select
+   * @param  $params The parametres from the query
+   * @return [type]         Returns array of arrays data
+   */
   public function query($query, $params){
     $stmt = $this->connection->prepare($query);
     $stmt->execute($params);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  /**
+   * Return single array data
+   * @param  string $query  The querry command of select
+   * @param  $params The parametres from the query
+   * @return [type]         Returns single array data
+   */
   public function query_unique($query, $params){
     $results = $this->query($query, $params);
     return reset($results);
