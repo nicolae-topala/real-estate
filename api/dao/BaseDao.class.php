@@ -1,6 +1,13 @@
 <?php
   require_once dirname(__FILE__)."/../config.php";
 
+  /**
+  * The main class for interaction with database.
+  *
+  * All other DAO classes should inherit this class.
+  *
+  */
+
 class BaseDao{
 
   protected $connection;
@@ -41,6 +48,8 @@ class BaseDao{
     return $entity;
   }
 
+
+
   /**
    * Update query for DB
    * @param  $table     Table name
@@ -62,6 +71,8 @@ class BaseDao{
     $stmt->execute($entity);
   }
 
+
+
   /**
    * Return array of arrays data
    * @param  string $query  The querry command of select
@@ -74,6 +85,8 @@ class BaseDao{
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+
+
   /**
    * Return single array data
    * @param  string $query  The querry command of select
@@ -85,6 +98,8 @@ class BaseDao{
     return reset($results);
   }
 
+
+
   /**
    * Add function for DB
    * @param $entity Array of data, example
@@ -92,6 +107,8 @@ class BaseDao{
   public function add($entity){
     return $this->insert($this->table,$entity);
   }
+
+
 
   /**
    * Update function for DB
@@ -102,6 +119,8 @@ class BaseDao{
     $this->execute_update($this->table, $id, $entity);
   }
 
+
+
   /**
    * Get array of data by id
    * @param   $id Id to search
@@ -109,6 +128,14 @@ class BaseDao{
    */
   public function get_by_id($id){
     return $this->query_unique("SELECT * FROM ".$this->table." WHERE id = :id", ["id" => $id]);
+  }
+
+
+  /**
+   * Get all data from a table
+   */
+  public function get_all(){
+    return $this->query("SELECT * FROM ".$this->table, []);
   }
 }
 
