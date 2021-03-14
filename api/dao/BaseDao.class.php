@@ -4,8 +4,10 @@
 class BaseDao{
 
   protected $connection;
+  private $table;
 
-  public function __construct(){
+  public function __construct($table){
+    $this->table = $table;
     try {
       $this->connection = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);
       $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -20,7 +22,7 @@ class BaseDao{
    * @param  $entity User data
    * @return User_data         Return the user data + the id it created for it.
    */
-  public function insert($table, $entity){
+  protected function insert($table, $entity){
     $query = "INSERT INTO ${table} "."(";
       foreach($entity as $name => $value){
         $query .= $name.", ";
@@ -47,7 +49,7 @@ class BaseDao{
    * @param  $id_column Optional: Search by column name(default: id)
    * @example $this->update("users", $email, $user, "email"); in which $user = $user_dao->update_user_by_email("valera@valera.com", $user1);
    */
-  public function update($table, $id, $entity, $id_column = "id"){
+  protected function execute_update($table, $id, $entity, $id_column = "id"){
     $query = "UPDATE ${table} SET ";
     foreach($entity as $name => $value){
       $query .=$name. " = :" .$name. ", ";
@@ -66,7 +68,7 @@ class BaseDao{
    * @param  $params The parametres from the query
    * @return [type]         Returns array of arrays data
    */
-  public function query($query, $params){
+  protected function query($query, $params){
     $stmt = $this->connection->prepare($query);
     $stmt->execute($params);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -78,12 +80,36 @@ class BaseDao{
    * @param  $params The parametres from the query
    * @return [type]         Returns single array data
    */
-  public function query_unique($query, $params){
+  protected function query_unique($query, $params){
     $results = $this->query($query, $params);
     return reset($results);
   }
 
+  /**
+   * Add function for DB
+   * @param $entity Array of data, example
+   */
+  public function add($entity){
+    return $this->insert($this->table,$entity);
+  }
 
+  /**
+   * Update function for DB
+   * @param   $id     Id of data from which it will do the update
+   * @param   $entity Data array which will be updated
+   */
+  public function update($id,$entity){
+    $this->execute_update($this->table, $id, $entity);
+  }
+
+  /**
+   * Get array of data by id
+   * @param   $id Id to search
+   * @return Single_Array     Single array of data
+   */
+  public function get_by_id($id){
+    return $this->query_unique("SELECT * FROM ".$this->table." WHERE id = :id", ["id" => $id]);
+  }
 }
 
 ?>

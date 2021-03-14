@@ -28,14 +28,13 @@ error_reporting(E_ALL);
 
 $advertisement_dao = new AdvertisementsDao();
 
-  $advertisement1 = [
-    'admin_id' => 2,
-    'name' => "Casa de vanzare LOL",
-    'address' => "LA BUIUCANI"
-  ];
+$advertisement_dao->update(3,[
+  'admin_id' => 1,
+  'name' => "hello",
+  'address' => "no address"
+]);
+  //$advertisement = $advertisement_dao->update(1,$advertisement1);
 
-  $advertisement = $advertisement_dao->update_advertisement(1,$advertisement1);
-
-  print_r($advertisement);
+  print_r($advertisement_dao);
 
 ?>

@@ -4,25 +4,16 @@
 
   class UsersDao extends BaseDao{
 
+    public function __construct(){
+      parent::__construct("users");
+    }
+
     public function get_user_by_email($email){
       return $this->query_unique("SELECT * FROM users WHERE email = :email", ["email" => $email]);
     }
 
-    public function get_user_by_id($id){
-      return $this->query_unique("SELECT * FROM users WHERE id = :id", ["id" => $id]);
-    }
-
-    public function add_user($user){
-      $user['password']=MD5($user['password']);
-      return $this->insert("users", $user);
-    }
-
-    public function update_user($id, $user){
-      $this->update("users", $id, $user);
-    }
-
     public function update_user_by_email($email, $user){
-      $this->update("users", $email, $user, "email");
+      $this->execute_update("users", $email, $user, "email");
     }
   }
 
