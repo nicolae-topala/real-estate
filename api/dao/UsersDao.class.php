@@ -13,11 +13,8 @@
     }
 
     public function add_user($user){
-      $sql = "INSERT INTO users (first_name, last_name, email, password, telephone) VALUES (:first_name, :last_name, :email, MD5(:password), :telephone)";
-      $stmt = $this->connection->prepare($sql);
-      $stmt->execute($user);
-      $user['id'] = $this->connection->lastInsertId();
-      return $user;
+      $user['password']=MD5($user['password']);
+      return $this->insert("users", $user);
     }
 
     public function update_user($id, $user){
