@@ -14,12 +14,13 @@ error_reporting(E_ALL);
   $user1 = [
     'first_name' => "Valeras",
     'last_name' => "PIDARAS",
-    'email' => "EL ARE",
-    'password' => "II FOARTE MARE",
-    'telephone' => "IPHONE CONESHO"
+    'email' => "email@valera.com",
+    'password' => "321",
+    'telephone' => "IPHONE CONESHO",
+    'admin_level' => 1
   ];
 
-  $user = $user_dao->add_user($user1);
+  $user = $user_dao->update_user(3, $user1);
 
 
 
