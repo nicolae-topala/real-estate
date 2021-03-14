@@ -12,17 +12,10 @@ error_reporting(E_ALL);
   //$user = $user_dao->get_user_by_id("1");
 
   $user1 = [
-    'first_name' => "Valeras",
-    'last_name' => "PIDARAS",
-    'email' => "email@valera.com",
-    'password' => "321",
-    'telephone' => "IPHONE CONESHO",
     'admin_level' => 1
   ];
 
   $user = $user_dao->update_user(3, $user1);
-
-
 
   print_r($user);
 
