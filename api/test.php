@@ -15,7 +15,9 @@ error_reporting(E_ALL);
     'admin_level' => 1
   ];
 
-  $user = $user_dao->update_user(3, $user1);
+  $user = $user_dao->update_user_by_email("valera@valera.com", $user1);
+
+
 
   print_r($user);
 

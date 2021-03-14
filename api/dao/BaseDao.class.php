@@ -18,8 +18,25 @@ class BaseDao{
 
   }
 
-  public function update(){
+  /**
+   * Update query for DB
+   * @param  $table     Table name
+   * @param  $id        Search value
+   * @param  $entity    User data
+   * @param  $id_column Optional: Search by column name(default: id)
+   * @example $this->update("users", $email, $user, "email"); in which $user = $user_dao->update_user_by_email("valera@valera.com", $user1);
+   */
+  public function update($table, $id, $entity, $id_column = "id"){
+    $query = "UPDATE ${table} SET ";
+    foreach($entity as $name => $value){
+      $query .=$name. " = :" .$name. ", ";
+    }
+    $query = substr($query, 0 , -2);
+    $query .=" WHERE ${id_column} = :id";
 
+    $stmt = $this->connection->prepare($query);
+    $entity['id'] = $id;
+    $stmt->execute($entity);
   }
 
   public function query($query, $params){
