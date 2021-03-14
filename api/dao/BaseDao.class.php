@@ -3,7 +3,7 @@
 
 class BaseDao{
 
-  private $connection;
+  protected $connection;
 
   public function __construct(){
     try {
