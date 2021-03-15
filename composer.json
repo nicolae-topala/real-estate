@@ -8,5 +8,7 @@
             "email": "nicolae.topala13@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "mikecao/flight": "^1.3"
+    }
 }
