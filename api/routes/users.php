@@ -5,7 +5,10 @@
    * @var [type]
    */
   Flight::route('GET /users', function(){
-    flight::json(Flight::userdao()->get_all());
+    $offset = Flight::query('offset', 0);
+    $limit = Flight::query('limit', 5);
+
+    Flight::json(Flight::userdao()->get_all($offset,$limit));
   });
 
 
@@ -22,7 +25,8 @@
    * Using add() method from BaseDao
    */
   Flight::route('POST /users', function(){
-    Flight::json(Flight::userdao()->add(Flight::request()->data->getData()));
+    $request = Flight::request()->data->getData();
+    Flight::json(Flight::userdao()->add($request));
   });
 
   /**
@@ -30,9 +34,12 @@
    * Using update() and get_by_id() method from BaseDao
    */
   Flight::route('PUT /users/@id', function($id){
-    Flight::userdao()->update($id, Flight::request()->data->getData());
+    $request = Flight::request();
+    $data = $request->data->getData();
 
-    flight::json(Flight::userdao()->get_by_id($id));
+    Flight::userdao()->update($id, $data);
+    $user = Flight::userdao()->get_by_id($id);
+    Flight::json($user);
   });
 
 ?>
