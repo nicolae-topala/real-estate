@@ -18,7 +18,7 @@
    * Using get_by_id method from BaseDao
    */
   Flight::route('GET /users/@id', function($id){
-    Flight::json(Flight::userdao()->get_by_id($id));
+    Flight::json(Flight::userservice()->get_by_id($id));
   });
 
   /**
@@ -26,8 +26,8 @@
    * Using add() method from BaseDao
    */
   Flight::route('POST /users', function(){
-    $request = Flight::request()->data->getData();
-    Flight::json(Flight::userdao()->add($request));
+    $data = Flight::request()->data->getData();
+    Flight::json(Flight::userservice()->add($data));
   });
 
   /**
@@ -35,12 +35,7 @@
    * Using update() and get_by_id() method from BaseDao
    */
   Flight::route('PUT /users/@id', function($id){
-    $request = Flight::request();
-    $data = $request->data->getData();
+    $data = Flight::request()->data->getData();;
 
-    Flight::userdao()->update($id, $data);
-    $user = Flight::userdao()->get_by_id($id);
-    Flight::json($user);
+    Flight::json(Flight::userservice()->update($id, $data));
   });
-
-?>
