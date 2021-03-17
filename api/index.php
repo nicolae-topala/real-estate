@@ -5,6 +5,20 @@
 
   require_once dirname(__FILE__)."/../vendor/autoload.php";
   require_once dirname(__FILE__)."/dao/UsersDao.class.php";
+  require_once dirname(__FILE__)."/services/UserService.class.php";
+  require_once dirname(__FILE__)."/routes/users.php";
+
+  /**
+   * UserDao object replacer
+   * @example $dao = new UserDao(); -> Flight::userdao()
+   */
+  Flight::register('userdao', 'UsersDao');
+
+  /**
+   * User Services object replacer
+   * @example $dao = new UserService(); -> Flight::UserService()
+   */
+  Flight::register('userservice', 'UserService');
 
   /**
    * Utility function for reading query parameters from URL
@@ -18,15 +32,6 @@
     $query_param = $query_param ? $query_param : $default_value;
     return $query_param;
   });
-
-
-  require_once dirname(__FILE__)."/routes/users.php";
-
-  /**
-   * UserDao object replacer
-   * @example $dao = new UserDao(); -> Flight::userdao()
-   */
-  Flight::register('userdao', 'UsersDao');
 
   Flight::start();
 

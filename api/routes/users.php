@@ -7,14 +7,10 @@
   Flight::route('GET /users', function(){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 5);
-
     $search = Flight::query('search');
-    if ($search){
-      Flight::json(Flight::userdao()->get_users($search, $offset, $limit));
-    }else{
-      Flight::json(Flight::userdao()->get_all($offset, $limit));
-    }
-    });
+
+    Flight::json(Flight::userservice()->get_users($search, $offset, $limit));
+  });
 
 
   /**
@@ -22,7 +18,7 @@
    * Using get_by_id method from BaseDao
    */
   Flight::route('GET /users/@id', function($id){
-    flight::json(Flight::userdao()->get_by_id($id));
+    Flight::json(Flight::userdao()->get_by_id($id));
   });
 
   /**
