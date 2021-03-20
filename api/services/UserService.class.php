@@ -16,9 +16,40 @@ class UserService extends BaseService {
         }
     }
 
-    public function add($user){
+   public function add($user){
         if(!isset($user['email'])) throw new Exception("Email is missing.");
+        $user['status'] = "ACTIVE";
 
         return parent::add($user);
     }
+
+    public function register($user){
+        if(!isset($user['email'])) throw new Exception("Email field is required.");
+        if(!isset($user['last_name'])) throw new Exception("Last namefield is required.");
+        if(!isset($user['first_name'])) throw new Exception("First name field is required.");
+        if(!isset($user['password'])) throw new Exception("Password field is required.");
+        if(!isset($user['telephone'])) throw new Exception("Telephone field is required.");
+
+        try{
+          $user['token'] = md5(random_bytes(16));
+          $user['password'] = md5($user['password']);
+
+          return parent::add($user);
+        }catch (\Exception $e){
+          // rollback
+          throw $e;
+        }
+
+        return $user;
+    }
+
+    public function confirm($token){
+        $user = $this->dao->get_user_by_token($token);
+
+        if(!isset($user['id'])) throw Exception("Invalid Token");
+
+        $this->dao->update($user['id'], ["status" => "ACTIVE", "token" => NULL]);
+
+    }
+
 }

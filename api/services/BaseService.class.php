@@ -8,7 +8,7 @@ class BaseService{
   }
 
   public function add($data){
-    return $this->dao->data($data);
+    return $this->dao->add($data);
   }
 
   public function update($id, $data){
@@ -17,3 +17,4 @@ class BaseService{
     return $this->dao->get_by_id($id);
   }
 }
+ ?>
