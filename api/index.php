@@ -5,13 +5,16 @@
 
   require_once dirname(__FILE__)."/../vendor/autoload.php";
   require_once dirname(__FILE__)."/services/UserService.class.php";
+  require_once dirname(__FILE__)."/services/AdvertisementService.class.php";
   require_once dirname(__FILE__)."/routes/users.php";
+  require_once dirname(__FILE__)."/routes/advertisement.php";
 
   /**
    * User Services object replacer
    * @example $dao = new UserService(); -> Flight::UserService()
    */
   Flight::register('userservice', 'UserService');
+  Flight::register('advertisementservice', 'AdvertisementService');
 
   /**
    * Utility function for reading query parameters from URL

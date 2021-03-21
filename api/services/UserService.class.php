@@ -30,17 +30,10 @@ class UserService extends BaseService {
         if(!isset($user['password'])) throw new Exception("Password field is required.");
         if(!isset($user['telephone'])) throw new Exception("Telephone field is required.");
 
-        try{
-          $user['token'] = md5(random_bytes(16));
-          $user['password'] = md5($user['password']);
+        $user['token'] = md5(random_bytes(16));
+        $user['password'] = md5($user['password']);
 
-          return parent::add($user);
-        }catch (\Exception $e){
-          // rollback
-          throw $e;
-        }
-
-        return $user;
+        return parent::add($user);
     }
 
     public function confirm($token){

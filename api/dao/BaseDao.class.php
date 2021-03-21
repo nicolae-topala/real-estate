@@ -13,6 +13,18 @@ class BaseDao{
   protected $connection;
   private $table;
 
+  public function beginTransaction(){
+      $response = $this->connection->beginTransaction();
+  }
+
+  public function commit(){
+      $this->connection->commit();
+  }
+
+  public function rollBack(){
+      $response = $this->connection->rollBack();
+  }
+
   public function parse_order($order){
         switch(substr($order, 0, 1)){
             case '-' : $order_direction = "ASC"; break;
@@ -29,6 +41,7 @@ class BaseDao{
     try {
       $this->connection = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);
       $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      //$this->connection->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
     } catch(PDOException $e) {
       throw $e;
     }
@@ -59,8 +72,6 @@ class BaseDao{
     return $entity;
   }
 
-
-
   /**
    * Update query for DB
    * @param  $table     Table name
@@ -82,8 +93,6 @@ class BaseDao{
     $stmt->execute($entity);
   }
 
-
-
   /**
    * Return array of arrays data
    * @param  string $query  The querry command of select
@@ -96,8 +105,6 @@ class BaseDao{
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-
-
   /**
    * Return single array data
    * @param  string $query  The querry command of select
@@ -109,8 +116,6 @@ class BaseDao{
     return reset($results);
   }
 
-
-
   /**
    * Add function for DB
    * @param $entity Array of data, example
@@ -118,8 +123,6 @@ class BaseDao{
   public function add($entity){
     return $this->insert($this->table,$entity);
   }
-
-
 
   /**
    * Update function for DB
@@ -130,8 +133,6 @@ class BaseDao{
     $this->execute_update($this->table, $id, $entity);
   }
 
-
-
   /**
    * Get array of data by id
    * @param   $id Id to search
@@ -140,7 +141,6 @@ class BaseDao{
   public function get_by_id($id){
     return $this->query_unique("SELECT * FROM ".$this->table." WHERE id = :id", ["id" => $id]);
   }
-
 
   /**
    * Get all data from a table

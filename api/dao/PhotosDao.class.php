@@ -2,8 +2,8 @@
 
 require_once dirname(__FILE__)."/BaseDao.class.php";
 
-class AdvertisementsDao extends BaseDao{
+class PhotosDao extends BaseDao{
     public function __construct(){
-        parent::__construct("advertisements");
+        parent::__construct("photos");
     }
 }
