@@ -9,6 +9,14 @@
   require_once dirname(__FILE__)."/routes/users.php";
   require_once dirname(__FILE__)."/routes/advertisement.php";
 
+  Flight::set('flight.log_errors', TRUE);
+
+  /* Error handling for our API */
+  Flight::map('error', function(Exception $ex){
+    Flight::json(["message" => $ex->getMessage()], $ex->getCode());
+  });
+
+
   /**
    * User Services object replacer
    * @example $dao = new UserService(); -> Flight::UserService()

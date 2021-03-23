@@ -31,7 +31,6 @@ class AdvertisementService extends BaseService {
         if(!isset($data['address'])) throw new Exception("Address field is required.");
 
         try {
-
             $this->dao->beginTransaction();
 
             $description = $this->descriptionDao->add([
@@ -52,7 +51,6 @@ class AdvertisementService extends BaseService {
             ]);
 
             $this->dao->commit();
-
         }catch(\Exception $e) {
             $this->dao->rollBack();
             throw $e;

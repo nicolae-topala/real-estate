@@ -30,10 +30,18 @@ class UserService extends BaseService {
         if(!isset($user['password'])) throw new Exception("Password field is required.");
         if(!isset($user['telephone'])) throw new Exception("Telephone field is required.");
 
-        $user['token'] = md5(random_bytes(16));
-        $user['password'] = md5($user['password']);
-
-        return parent::add($user);
+        try{
+            $user['token'] = md5(random_bytes(16));
+            $user['password'] = md5($user['password']);
+            
+            return parent::add($user);
+        }catch(\Exception $e){
+            if(str_contains($e->getMessage(), 'users.uq_user_email')){
+                throw new Exception("User with same email (".$user['email'].") already exists in the database", 400, $e);
+            }else{
+              throw $e;
+            }
+        }
     }
 
     public function confirm($token){

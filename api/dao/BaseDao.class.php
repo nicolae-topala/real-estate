@@ -13,6 +13,17 @@ class BaseDao{
   protected $connection;
   private $table;
 
+  public function __construct($table){
+    $this->table = $table;
+    try {
+      $this->connection = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);
+      $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      //$this->connection->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+    } catch(PDOException $e) {
+      throw $e;
+    }
+  }
+
   public function beginTransaction(){
       $response = $this->connection->beginTransaction();
   }
@@ -34,17 +45,6 @@ class BaseDao{
 
         $order_column = substr($order, 1);
         return [$order_column, $order_direction];
-  }
-
-  public function __construct($table){
-    $this->table = $table;
-    try {
-      $this->connection = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);
-      $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      //$this->connection->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
-    } catch(PDOException $e) {
-      throw $e;
-    }
   }
 
   /**
