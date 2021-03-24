@@ -1,5 +1,6 @@
 <?php
 
+
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/UsersDao.class.php";
 
@@ -33,7 +34,7 @@ class UserService extends BaseService {
         try{
             $user['token'] = md5(random_bytes(16));
             $user['password'] = md5($user['password']);
-            
+
             return parent::add($user);
         }catch(\Exception $e){
             if(str_contains($e->getMessage(), 'users.uq_user_email')){
