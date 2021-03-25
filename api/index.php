@@ -13,7 +13,7 @@ Flight::set('flight.log_errors', TRUE);
 
 /* Error handling for our API */
 Flight::map('error', function(Exception $ex){
-  Flight::json(["message" => $ex->getMessage()], $ex->getCode() ? $ex->getCode() : 500);
+    Flight::json(["message" => $ex->getMessage()], $ex->getCode() ? $ex->getCode() : 500);
 });
 
 
@@ -30,17 +30,21 @@ Flight::register('advertisementservice', 'AdvertisementService');
  * @param default_value the default value of the parameter
  */
 Flight::map('query', function($name, $default_value = NULL){
-  $request = Flight::request();
+    $request = Flight::request();
 
-  $query_param = @$request->query->getData()[$name];
-  $query_param = $query_param ? $query_param : $default_value;
-  return $query_param;
+    $query_param = @$request->query->getData()[$name];
+    $query_param = $query_param ? $query_param : $default_value;
+    return $query_param;
 });
 
 Flight::route('GET /swagger', function(){
-  $openapi = @\OpenApi\scan(dirname(__FILE__)."/routes");
-  header('Content-Type: application/json');
-  echo $openapi->toJson();
+    $openapi = @\OpenApi\scan(dirname(__FILE__)."/routes");
+    header('Content-Type: application/json');
+    echo $openapi->toJson();
+});
+
+Flight::route('GET /', function(){
+    Flight::redirect('/docs');
 });
 
 Flight::start();
