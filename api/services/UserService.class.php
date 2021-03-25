@@ -26,7 +26,7 @@ class UserService extends BaseService {
 
     public function register($user){
         if(!isset($user['email'])) throw new Exception("Email field is required.");
-        if(!isset($user['last_name'])) throw new Exception("Last namefield is required.");
+        if(!isset($user['last_name'])) throw new Exception("Last name field is required.");
         if(!isset($user['first_name'])) throw new Exception("First name field is required.");
         if(!isset($user['password'])) throw new Exception("Password field is required.");
         if(!isset($user['telephone'])) throw new Exception("Telephone field is required.");
