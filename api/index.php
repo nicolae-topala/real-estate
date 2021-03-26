@@ -16,7 +16,6 @@ Flight::map('error', function(Exception $ex){
     Flight::json(["message" => $ex->getMessage()], $ex->getCode() ? $ex->getCode() : 500);
 });
 
-
 /**
  * User Services object replacer
  * @example $dao = new UserService(); -> Flight::UserService()

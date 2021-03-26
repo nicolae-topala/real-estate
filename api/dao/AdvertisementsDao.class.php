@@ -42,4 +42,5 @@ class AdvertisementsDao extends BaseDao{
             "rooms_max" => $ad['rooms_max']
         ]);
     }
+
 }

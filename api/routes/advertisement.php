@@ -69,16 +69,21 @@ Flight::route('POST /advertisements/create', function(){
 });
 
 /**
-* @OA\Put(path="/users/{id}", tags={"user"},
+* @OA\Put(path="/advertisements/{id}", tags={"advertisements"},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1),
-*     @OA\RequestBody(description="Basic user info that is going to be updated.", required=true,
+*     @OA\RequestBody(description="Basic advertisement info that is going to be updated.", required=true,
 *         @OA\MediaType(mediaType="application/json",
 *             @OA\Schema(
-*                 @OA\Property(property="first_name", type="string", required="true", example="Nick", description="First name"),
-*                 @OA\Property(property="last_name", type="string", required="true", example="Ford", description="Last name"),
-*                 @OA\Property(property="email", type="string", required="true", example="nick.ford@ford.com", description="Email"),
-*                 @OA\Property(property="password", type="string", required="true", example="example123", description="Password"),
-*                 @OA\Property(property="telephone", type="string", required="true", example="3248975", description="Telephone")
+*                 @OA\Property(property="admin_id", type="integer", example="1", description="The admin id that created or modified the add"),
+*                 @OA\Property(property="title", type="string", example="House title", description="The title of the ad"),
+*                 @OA\Property(property="address", type="string", example="Human street nr.3", description="The street number of the ad"),
+*                 @OA\Property(property="location_id", type="integer", example="1", description="The id that includes the location"),
+*                 @OA\Property(property="type_id", type="integer", example="1", description="The type of the ad"),
+*                 @OA\Property(property="price", type="integer", example="2500", description="Price number"),
+*                 @OA\Property(property="floor", type="integer", example="4", description="Floor number"),
+*                 @OA\Property(property="space", type="integer", example="53", description="Space number in m2"),
+*                 @OA\Property(property="rooms", type="integer", example="2", description="Number of rooms"),
+*                 @OA\Property(property="text", type="string", example="This is a text.", description="The description, max 1000 characters")
 *             )
 *         )
 *     ),
@@ -87,5 +92,5 @@ Flight::route('POST /advertisements/create', function(){
 */
 Flight::route('PUT /advertisements/@id', function($id){
     $data = Flight::request()->data->getData();
-    Flight::json(Flight::advertisementservice()->update($id, $data));
+    Flight::json(Flight::advertisementservice()->modify_ad($id, $data));
 });
