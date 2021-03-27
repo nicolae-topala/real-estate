@@ -1,12 +1,16 @@
 <?php
 
-
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/UsersDao.class.php";
+require_once dirname(__FILE__)."/../clients/SMTPClient.class.php";
 
 class UserService extends BaseService {
+
+    private $smtpClient;
+
     public function __construct() {
       $this->dao = new UsersDao();
+      $this->smtpClient = new SMTPClient();
     }
 
     public function get_users($search, $offset, $limit, $order){
@@ -35,7 +39,8 @@ class UserService extends BaseService {
             $user['token'] = md5(random_bytes(16));
             $user['password'] = md5($user['password']);
 
-            return parent::add($user);
+            $user = parent::add($user);
+
         }catch(\Exception $e){
             if(str_contains($e->getMessage(), 'users.uq_user_email')){
                 throw new Exception("User with same email (".$user['email'].") already exists in the database", 400, $e);
@@ -43,6 +48,10 @@ class UserService extends BaseService {
               throw $e;
             }
         }
+
+        $this->smtpClient->send_register_user_token($user);
+
+        return $user;
     }
 
     public function confirm($token){
