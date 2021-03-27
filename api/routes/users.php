@@ -4,7 +4,7 @@
 * @OA\Info(title="Real-estate API", version="0.1")
 * @Oa\OpenApi(
 *   @OA\Server(url="http://localhost/real-estate/api/", description="Development Enviroment"),
-*   @OA\Server(url="https://real-estate.valerapidarhuisos.md/api/", description="Production Enviroment")
+*   @OA\Server(url="https://real-estate.studio/api/", description="Production Enviroment")
 * )
 */
 

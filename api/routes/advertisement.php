@@ -1,7 +1,7 @@
 <?php
 
 /**
-* @OA\GET(path="/advertisement", tags={"advertisements"},
+* @OA\GET(path="/advertisements", tags={"advertisements"},
 *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination."),
 *     @OA\Parameter(type="integer", in="query", name="limit", default=5, description="Limit for pagination."),
 *     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name desceding order by column_name."),
