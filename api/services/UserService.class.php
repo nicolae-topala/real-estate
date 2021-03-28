@@ -63,4 +63,20 @@ class UserService extends BaseService {
 
     }
 
+    public function login($user){
+        $db_user = $this->dao->get_user_by_email($user['email']);
+
+        if (!isset($db_user['id'])) throw new Exception("User doesn't exist !", 400);
+
+        switch($db_user['status']){
+          case 'PENDING' : throw new Exception("Your account is not confirmed !", 400); break;
+          case 'BLOCKED' : throw new Exception("Your account is suspended !", 400); break;
+        }
+
+        if(md5($user['password']) != $db_user['password'])
+            throw new Exception("Invalid password !", 400);
+
+        return $db_user;
+    }
+
 }
