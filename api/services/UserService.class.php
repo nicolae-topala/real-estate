@@ -93,4 +93,13 @@ class UserService extends BaseService {
       $this->smtpClient->send_user_recovery_token($db_user);
     }
 
+    public function reset($user){
+      $db_user = $this->dao->get_user_by_token($user['token']);
+
+      if(!isset($db_user['id'])) throw new Exception("Invalid Token");
+
+      $this->dao->update($db_user['id'], ["password" => md5($user['password']), "token" => NULL]);
+
+    }
+
 }
