@@ -102,10 +102,48 @@ Flight::route('PUT /users/@id', function($id){
 *             )
 *         )
 *     ),
-*     @OA\Response(response="200", description="Register user to database")
+*     @OA\Response(response="200", description="Login user to site")
 * )
 */
 Flight::route('POST /users/login', function(){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::userservice()->login($data));
+});
+
+/**
+* @OA\Post(path="/users/forgot", tags={"user"},
+*     @OA\RequestBody(description="Send recovery URL to users email address", required=true,
+*         @OA\MediaType(mediaType="application/json",
+*             @OA\Schema(
+*                 @OA\Property(property="email", type="string", required="true", example="nick.ford@ford.com", description="Email")
+*             )
+*         )
+*     ),
+*     @OA\Response(response="200", description="Message that recovery link has been sent.")
+* )
+*/
+Flight::route('POST /users/forgot', function(){
+    $data = Flight::request()->data->getData();
+    Flight::userservice()->forgot($data);
+    Flight::json(["message" => "Recovery link has been sent to your email"]);
+});
+
+/**
+* @OA\Post(path="/users/reset", tags={"user"},
+*     @OA\RequestBody(description="Reset user password using recovery token", required=true,
+*         @OA\MediaType(mediaType="application/json",
+*             @OA\Schema(
+*                 @OA\Property(property="token", type="string", required="true", example="4134135", description="Recovery token"),
+*                 @OA\Property(property="password", type="string", required="true", example="123", description="New password")
+*
+*             )
+*         )
+*     ),
+*     @OA\Response(response="200", description="Message that user has changed password.")
+* )
+*/
+Flight::route('POST /users/reset', function(){
+    $data = Flight::request()->data->getData();
+    Flight::userservice()->reset($data);
+    Flight::json(["message" => "Your password has been changed"]);
 });

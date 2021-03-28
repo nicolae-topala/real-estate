@@ -24,4 +24,13 @@ class SMTPClient{
       $this->mailer->send($message);
     }
 
+    public function send_user_recovery_token($user){
+      $message = (new Swift_Message('[Real-Estate] Recover Password'))
+        ->setFrom(['no-reply@real-estate.studio' => 'No-Reply'])
+        ->setTo([$user['email']])
+        ->setBody('Here is the recovery token: '.$user['token']);
+
+      $this->mailer->send($message);
+    }
+
 }

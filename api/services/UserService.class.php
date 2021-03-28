@@ -60,7 +60,6 @@ class UserService extends BaseService {
         if(!isset($user['id'])) throw new Exception("Invalid Token");
 
         $this->dao->update($user['id'], ["status" => "ACTIVE", "token" => NULL]);
-
     }
 
     public function login($user){
@@ -77,6 +76,21 @@ class UserService extends BaseService {
             throw new Exception("Invalid password !", 400);
 
         return $db_user;
+    }
+
+    public function forgot($user){
+      $db_user = $this->dao->get_user_by_email($user['email']);
+
+      if (!isset($db_user['id'])) throw new Exception("User doesn't exist !", 400);
+
+      switch($db_user['status']){
+        case 'PENDING' : throw new Exception("Your account is not confirmed !", 400); break;
+        case 'BLOCKED' : throw new Exception("Your account is suspended !", 400); break;
+      }
+
+      $db_user = parent::update($db_user['id'], ['token' => md5(random_bytes(16))]);
+
+      $this->smtpClient->send_user_recovery_token($db_user);
     }
 
 }
