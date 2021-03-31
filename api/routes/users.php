@@ -6,6 +6,12 @@
 *   @OA\Server(url="http://localhost/real-estate/api/", description="Development Enviroment"),
 *   @OA\Server(url="https://real-estate.studio/api/", description="Production Enviroment")
 * )
+* @OA\SecurityScheme(
+*        securityScheme="ApiKeyAuth",
+*        in="header",
+*        name="Authentication",
+*        type="apiKey"
+* )
 */
 
 /**
@@ -27,13 +33,24 @@ Flight::route('GET /users', function(){
 });
 
 /**
-* @OA\Get(path="/users/{id}", tags={"user"},
+* @OA\Get(path="/users/{id}", tags={"user"}, security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of user"),
 *     @OA\Response(response="200", description="Fetch individual user")
 * )
 */
 Flight::route('GET /users/@id', function($id){
-    Flight::json(Flight::userservice()->get_by_id($id));
+
+  $headers = getallheaders();
+
+  $token = @$headers['Authentication'];
+
+  try{
+      $decoded = \Firebase\JWT\JWT::decode($token, "!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ", array('HS256'));
+      Flight::json(Flight::userservice()->get_by_id($id));
+  } catch (\Exception $e){
+      Flight::json(["message" => $e->getMessage()], 401);
+  }
+
 });
 
 /**
