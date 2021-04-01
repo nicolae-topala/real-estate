@@ -11,8 +11,6 @@ require_once dirname(__FILE__)."/routes/middleware.php";
 require_once dirname(__FILE__)."/routes/users.php";
 require_once dirname(__FILE__)."/routes/advertisement.php";
 
-
-
 Flight::set('flight.log_errors', TRUE);
 
 /* Error handling for our API */
