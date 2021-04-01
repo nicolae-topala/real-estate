@@ -77,7 +77,7 @@ class UserService extends BaseService {
 
         $jwt = \Firebase\JWT\JWT::encode(["id" => $db_user['id'],
                             "lvl" => $db_user['admin_level']],
-                            "!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ");
+                            Config::JWT_SECRET);
 
         return ["token" => $jwt];
     }

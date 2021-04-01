@@ -1,34 +1,30 @@
 <?php
-/* FILTER BASED MIDDLEWARE*
-Flight::before('start', function(&$params, &$output){
-    if (Flight::request()->url == '/swagger') return TRUE;
-
-    $headers = getallheaders();
-    $token = @$headers['Authentication'];
-
+Flight::route('/user/*', function(){
     try{
-        $decoded = (array)\Firebase\JWT\JWT::decode($token, "!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ", array('HS256'));
-        Flight::set('user', $decoded);
-         return TRUE;
+        $user = (array)\Firebase\JWT\JWT::decode($token, Config::JWT_SECRET, array('HS256'));
+
+        if(Flight::request()->method != GET && $user["lvl"] == -1){
+            throw new Exception("You do not have permission to do this !", 403);
+        }
+
+        Flight::set('user', $user);;
+        return TRUE;
     }catch (\Exception $e){
         Flight::json(["message" => $e->getMessage()], 401);
         die;
     }
-});*/
+});
 
-/* ROUTE BASED MIDDLEWARE */
-Flight::route('*', function(){
-    if (Flight::request()->url == '/swagger') return TRUE;
-    if (Flight::request()->url == '/users/login') return TRUE;
-
-
-    $headers = getallheaders();
-    $token = @$headers['Authentication'];
-
+Flight::route('/admin/*', function(){
     try{
-        $decoded = (array)\Firebase\JWT\JWT::decode($token, "!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ", array('HS256'));
-        Flight::set('user', $decoded);
-         return TRUE;
+        $user = (array)\Firebase\JWT\JWT::decode($token, Config::JWT_SECRET, array('HS256'));
+
+        if($user['lvl'] < 1){
+            throw new Exception("Admin access required.", 403);
+        }
+        
+        Flight::set('user', $user);
+        return TRUE;
     }catch (\Exception $e){
         Flight::json(["message" => $e->getMessage()], 401);
         die;

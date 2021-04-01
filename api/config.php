@@ -11,6 +11,8 @@
     const SMTP_PORT = 587;
     const SMTP_USER = "real.estate.project.ibu@gmail.com";
     const SMTP_PASS = "tuw%pO*WOT*@";
+
+    const JWT_SECRET ="!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ";
   }
 
 ?>
