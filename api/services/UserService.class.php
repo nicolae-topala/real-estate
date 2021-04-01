@@ -75,7 +75,7 @@ class UserService extends BaseService {
         if(md5($user['password']) != $db_user['password'])
             throw new Exception("Invalid password !", 400);
 
-        $jwt = JWT::encode(["id" => $db_user['id'],
+        $jwt = \Firebase\JWT\JWT::encode(["id" => $db_user['id'],
                             "lvl" => $db_user['admin_level']],
                             "!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ");
 

@@ -8,10 +8,12 @@ require_once dirname(__FILE__)."/services/UserService.class.php";
 require_once dirname(__FILE__)."/services/AdvertisementService.class.php";
 require_once dirname(__FILE__)."/routes/users.php";
 require_once dirname(__FILE__)."/routes/advertisement.php";
+require_once dirname(__FILE__)."/routes/middleware.php";
+
 
 Flight::set('flight.log_errors', TRUE);
 
-/* Error handling for our API */
+/* Error handling for our API *
 Flight::map('error', function(Exception $ex){
     Flight::json(["message" => $ex->getMessage()], $ex->getCode() ? $ex->getCode() : 500);
 });
