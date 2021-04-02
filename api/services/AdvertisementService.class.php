@@ -78,8 +78,6 @@ class AdvertisementService extends BaseService {
     }
 
     public function modify_ad($id, $data, $admin_id){
-        $this->get_ad_by_id($id);
-
         try {
             $this->dao->beginTransaction();
 
