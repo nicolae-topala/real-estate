@@ -39,7 +39,7 @@ class AdvertisementService extends BaseService {
         return $result;
     }
 
-    public function create_ad($id, $data){
+    public function create_ad($user, $data){
         if(!isset($data['title'])) throw new Exception("Title field is required.");
         if(!isset($data['location_id'])) throw new Exception("Location field is required.");
         if(!isset($data['type_id'])) throw new Exception("Type field is required.");
@@ -61,28 +61,27 @@ class AdvertisementService extends BaseService {
             ]);
 
             $advertisement = parent::add([
-                "admin_id" => $id,
+                "admin_id" => $user['id'],
                 "title" => $data['title'],
                 "description_id" => 1
             ]);
 
             $this->dao->commit();
-
         }catch(\Exception $e) {
             $this->dao->rollBack();
             throw $e;
         }
 
-        parent::update($advertisement['id'], ["description_id" => $description['id']]);
+        $this->dao->update($advertisement['id'], ["description_id" => $description['id']]);
         return $data;
     }
 
-    public function modify_ad($id, $data, $admin_id){
+    public function modify_ad($id, $data, $user){
         try {
             $this->dao->beginTransaction();
 
             $advertisement = parent::update($id, [
-                "admin_id" => $admin_id,
+                "admin_id" => $user['id'],
                 "title" => $data['title'],
             ]);
 

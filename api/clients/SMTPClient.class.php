@@ -19,7 +19,7 @@ class SMTPClient{
       $message = (new Swift_Message('[Real-Estate] Register User Confirmation'))
         ->setFrom(['no-reply@real-estate.studio' => 'No-Reply'])
         ->setTo([$user['email']])
-        ->setBody('Here is the confirmation link: http://localhost/real-estate/api/users/confirm/'.$user['token']);
+        ->setBody('Here is the confirmation link: http://localhost/real-estate/api/confirm/'.$user['token']);
 
       $this->mailer->send($message);
     }

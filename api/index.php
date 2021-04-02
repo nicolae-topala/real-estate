@@ -13,7 +13,7 @@ require_once dirname(__FILE__)."/routes/advertisement.php";
 
 Flight::set('flight.log_errors', TRUE);
 
-/* Error handling for our API */
+/* Error handling for our API *
 Flight::map('error', function(Exception $ex){
     Flight::json(["message" => $ex->getMessage()], $ex->getCode() ? $ex->getCode() : 500);
 });

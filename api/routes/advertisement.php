@@ -73,8 +73,7 @@ Flight::route('GET /advertisements/@id', function($id){
 * )
 */
 Flight::route('POST /admin/advertisement/create', function(){
-  $data = Flight::request()->data->getData();
-  Flight::json(Flight::advertisementservice()->create_ad(Flight::get('user')['id'], $data));
+  Flight::json(Flight::advertisementservice()->create_ad(Flight::get('user'), Flight::request()->data->getData()));
 });
 
 /**
@@ -99,6 +98,5 @@ Flight::route('POST /admin/advertisement/create', function(){
 * )
 */
 Flight::route('PUT /admin/advertisement/@id', function($id){
-    $data = Flight::request()->data->getData();
-    Flight::json(Flight::advertisementservice()->modify_ad($id, $data, Flight::get('user')['id']));
+    Flight::json(Flight::advertisementservice()->modify_ad($id, Flight::request()->data->getData(), Flight::get('user')));
 });

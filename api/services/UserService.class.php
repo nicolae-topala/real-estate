@@ -39,7 +39,14 @@ class UserService extends BaseService {
             $user['token'] = md5(random_bytes(16));
             $user['password'] = md5($user['password']);
 
-            $user = parent::add($user);
+            $user = parent::add([
+                "first_name"=> $user['first_name'],
+                "last_name" => $user['last_name'],
+                "email" => $user['email'],
+                "password" => $user['password'],
+                "telephone" => $user['telephone'],
+                "token" => $user['token']
+            ]);
 
         }catch(\Exception $e){
             if(str_contains($e->getMessage(), 'users.uq_user_email')){
