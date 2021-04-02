@@ -160,5 +160,5 @@ Flight::route('POST /reset', function(){
 * )
 */
 Flight::route('GET /user/account', function(){
-     Flight::json(Flight::userservice()->get_by_id(1));
+     Flight::json(Flight::userservice()->get_by_id(Flight::get('user')['id']));
 });

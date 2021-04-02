@@ -32,8 +32,14 @@ class AdvertisementService extends BaseService {
           return $this->dao->get_advertisements($offset, $limit, $ad, $order);
     }
 
-    public function create_ad($data){
-        if(!isset($data['admin_id'])) throw new Exception("Admin ID field is required.");
+    public function get_ad_by_id($id){
+        $result = $this->dao->get_ad_by_id($id);
+        if(!$result) throw new Exception("There is no AD with such ID !", 404);
+
+        return $result;
+    }
+
+    public function create_ad($id, $data){
         if(!isset($data['title'])) throw new Exception("Title field is required.");
         if(!isset($data['location_id'])) throw new Exception("Location field is required.");
         if(!isset($data['type_id'])) throw new Exception("Type field is required.");
@@ -55,7 +61,7 @@ class AdvertisementService extends BaseService {
             ]);
 
             $advertisement = parent::add([
-                "admin_id" => $data['admin_id'],
+                "admin_id" => $id,
                 "title" => $data['title'],
                 "description_id" => 1
             ]);
@@ -71,12 +77,14 @@ class AdvertisementService extends BaseService {
         return $data;
     }
 
-    public function modify_ad($id, $data){
+    public function modify_ad($id, $data, $admin_id){
+        $this->get_ad_by_id($id);
+
         try {
             $this->dao->beginTransaction();
 
             $advertisement = parent::update($id, [
-                "admin_id" => $data['admin_id'],
+                "admin_id" => $admin_id,
                 "title" => $data['title'],
             ]);
 

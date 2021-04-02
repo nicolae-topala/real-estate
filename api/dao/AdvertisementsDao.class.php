@@ -43,4 +43,9 @@ class AdvertisementsDao extends BaseDao{
         ]);
     }
 
+    public function get_ad_by_id($id){
+        return $this->query_unique("SELECT * FROM advertisements
+                                    JOIN descriptions ON advertisements.description_id=descriptions.id
+                                    WHERE advertisements.id = :id", ["id" => $id]);
+    }
 }
