@@ -13,6 +13,5 @@
     const SMTP_PASS = "tuw%pO*WOT*@";
 
     const JWT_SECRET ="!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ";
+    const JWT_TOKEN_TIME= 604800;
   }
-
-?>
