@@ -91,6 +91,8 @@ class BaseDao{
     $stmt = $this->connection->prepare($query);
     $entity['id'] = $id;
     $stmt->execute($entity);
+
+    return $entity;
   }
 
   /**
@@ -130,7 +132,9 @@ class BaseDao{
    * @param   $entity Data array which will be updated
    */
   public function update($id,$entity){
-    $this->execute_update($this->table, $id, $entity);
+    $result = $this->execute_update($this->table, $id, $entity);
+
+    return $result;
   }
 
   /**

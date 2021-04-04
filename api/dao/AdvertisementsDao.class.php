@@ -25,7 +25,7 @@ class AdvertisementsDao extends BaseDao{
 
         if($ad['location'] > 0) $query.="AND location_id = ${ad['location']} ";
         if($ad['type'] > 0) $query.="AND type_id = ${ad['type']} ";
-        if($order_column=="id" || $order_column=="title")
+        if($order_column=="id" || $order_column=="title") // search on advertisements only id and title, the rest are on descriptions
             $order_table="advertisements";
         else
             $order_table = "descriptions";

@@ -67,6 +67,8 @@ class UserService extends BaseService {
         if(!isset($user['id'])) throw new Exception("Invalid Token");
 
         $this->dao->update($user['id'], ["status" => "ACTIVE", "token" => NULL]);
+
+        return $user;
     }
 
     public function login($user){
@@ -82,11 +84,7 @@ class UserService extends BaseService {
         if(md5($user['password']) != $db_user['password'])
             throw new Exception("Invalid password !", 400);
 
-        $jwt = \Firebase\JWT\JWT::encode(["exp" => (time() + Config::JWT_TOKEN_TIME), "id" => $db_user['id'],
-                            "lvl" => $db_user['admin_level']],
-                            Config::JWT_SECRET);
-
-        return ["token" => $jwt];
+        return $db_user;
     }
 
     public function forgot($user){
@@ -101,7 +99,7 @@ class UserService extends BaseService {
 
       $check_time = strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']);
 
-      if($check_time < 300) throw new Exception("Wait ".(300-$check_time)." seconds until you can create a new token.", 400);
+      //if($check_time < 300) throw new Exception("Wait ".(300-$check_time)." seconds until you can create a new token.", 400);
 
       $db_user = parent::update($db_user['id'], ['token' => md5(random_bytes(16)), 'token_created_at' => date(Config::DATE_FORMAT)]);
 
@@ -116,6 +114,7 @@ class UserService extends BaseService {
 
       $this->dao->update($db_user['id'], ["password" => md5($user['password']), "token" => NULL]);
 
+      return $db_user;
     }
 
 }
