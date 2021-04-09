@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Real-Estate API</title>
+    <title>Real Estate API</title>
     <link rel="stylesheet" type="text/css" href="swagger-ui.css">
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
   <style>
