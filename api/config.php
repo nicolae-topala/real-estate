@@ -34,6 +34,6 @@ class Config{
     const JWT_TOKEN_TIME= 604800;
 
     public static function get_env($name, $default){
-      return isset($_ENV[$name]) && trim($_ENV[$name]) != '' ? $_ENV[$name] : $default;
+        return isset($_ENV[$name]) && trim($_ENV[$name]) != '' ? $_ENV[$name] : $default;
     }
 }
