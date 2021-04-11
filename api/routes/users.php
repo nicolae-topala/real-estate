@@ -5,7 +5,7 @@
 * @Oa\OpenApi(
 *   @OA\Server(url="http://localhost/real-estate/api/", description="Development Enviroment"),
 *   @OA\Server(url="https://real-estate.studio/api/", description="Production Enviroment"),
-*   @OA\Server(url="https://real-estate-ihyad.ondigitalocean.app/api/", description="test Enviroment")
+*   @OA\Server(url="https://real-estate-xfpu4.ondigitalocean.app/api/", description="test Enviroment")
 * )
 * @OA\SecurityScheme(
 *        securityScheme="ApiKeyAuth",
