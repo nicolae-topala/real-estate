@@ -111,7 +111,7 @@ Flight::route('GET /confirm/@token', function($token){
 * )
 */
 Flight::route('POST /login', function(){
-    print_r("mysql:host=".Config::DB_HOST().";dbname=".Config::DB_SCHEME(), Config::DB_USERNAME(), Config::DB_PASSWORD());die;
+    print_r("mysql:host=".Config::DB_HOST().";dbname=".Config::DB_SCHEME().Config::DB_USERNAME().Config::DB_PASSWORD());die;
     Flight::json(Flight::jwt(Flight::userservice()->login(Flight::request()->data->getData())));
 });
 
