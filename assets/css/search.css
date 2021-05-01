@@ -1,0 +1,72 @@
+.search_dropdown:focus, .search_dropdown:hover, .search_dropdown:visited, .search_dropdown:active {
+  background-color: #fff;
+  color: rgb(52,58,64);
+}
+
+.search_dropdown {
+  width: 100%;
+  outline: none;
+  border-color: #C9C9C9;
+  color: var(--bs-gray-dark);
+  background: rgb(255,255,255);
+  box-shadow: none;
+  text-align: left;
+}
+
+.form-control.search_price_from {
+  width: 82%;
+  margin-top: -5px;
+  margin-left: 8px;
+  height: 31px;
+  padding: 0 5px;
+}
+
+.form-control.search_price_to {
+  margin-top: -5px;
+  margin-left: -3px;
+  height: 31px;
+  width: 90%;
+  padding: 0 5px;
+}
+
+.dropdown-menu.show.search_price_menu {
+  padding-top: 11px;
+  width: 391px;
+  height: 115%;
+  position: absolute;
+  margin: 8px 0 !important;
+  margin-left: -1px !important;
+}
+
+.search_dropdown_icon {
+  font-size: 17px;
+  float: right;
+  margin-top: 3px;
+}
+
+.search_column {
+  margin-top: 15px;
+}
+
+.dropdown-menu.search_price_menu_last {
+  padding-top: 11px;
+  width: 391px;
+  height: 115%;
+  position: absolute;
+  margin-top: 8px !important;
+  margin-left: -188% !important;
+}
+
+.dropdown-menu.search_price_menu_before_last {
+  padding-top: 11px;
+  width: 391px;
+  height: 115%;
+  position: absolute;
+  margin: 8px 0 !important;
+  margin-left: -59px !important;
+}
+
+.search_results_div {
+  padding: 20px;
+}
+
