@@ -20,7 +20,7 @@
 }
 
 .search_bar_image {
-  background-image: url(https://picsum.photos/4000/2000);
+  background-image: url(https://picsum.photos/1920/1080);
   height: 450px;
   background-size: 100%;
   background-repeat: no-repeat;
@@ -216,4 +216,3 @@
   position: absolute;
   margin-top: -22px;
 }
-

@@ -32,14 +32,13 @@
 <body>
     <div>
         <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button navigation_bar" style="height: 71px;">
-            <div class="container-fluid"><a class="navbar-brand" href="#main">&nbsp;<img class="navbar-logo" src="assets/img/logo.png"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Home</a><button data-bs-toggle="collapse" class="navbar-toggler bg-light" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon" style="color: red;"></span></button>
+            <div class="container-fluid"><a class="navbar-brand" href="#main">&nbsp;<img class="navbar-logo" src="assets/img/logo.png"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Home</a><button data-bs-toggle="collapse" class="navbar-toggler bg-light" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon" style="color: red;"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1" style="background-color: #292c2f;padding: 10px;">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"><a href="#profile-view" class="btn btn-light" type="button" style="box-shadow: 0px 0px;"><i class="fa fa-user"></i>&nbsp;FirstName LastName</a></li>
-                        <li class="nav-item"><button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal" style="box-shadow: 0px 0px;margin-right: 5px;">Sign in</button></li>
-                        <li class="nav-item"><a href="#register" class="btn btn-link" type="button" style="box-shadow: 0px 0px;color: white;text-decoration: none;">Register</a></li>
+                        <li id="Profile" class="nav-item" style="display: none;"><a href="#profile-view" class="btn btn-light" type="button" style="box-shadow: 0px 0px; margin-right: 5px;"><i class="fa fa-user"></i>&nbsp;FirstName LastName</a></li>
+                        <li id="LogOut" class="nav-item" style="display: none;"><button class="btn text-white" type="button" style="background-color: transparent; border: none; box-shadow: 0px 0px;margin-right: 5px;">Log Out &nbsp;<i class="fa fa-arrow-right"></i></button></li>
+                        <li id="Login" class="nav-item"><button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal" style="box-shadow: 0px 0px;margin-right: 5px;">Sign in</button></li>
+                        <li id="Register" class="nav-item"><a href="#register" class="btn btn-link" type="button" style="box-shadow: 0px 0px;color: white;text-decoration: none;">Register</a></li>
                     </ul>
                 </div>
             </div>
@@ -136,7 +135,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.2/bootstrap-slider.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="assets/js/Range-selector---slider.js"></script>
     <!-- jQuerySpApp js -->
     <script src="assets/js/jquery.spapp.js"></script>
     <script type="text/javascript">
@@ -144,8 +142,30 @@
 
         var app = $.spapp({defaultView : 'main'});
 
+        //load js code to pages
+        app.route({ view : "view", load : "view.html", onReady: function() {
+            $.getScript("assets/js/Simple-Slider.js", function(){});}
+        });
+
         // run app
         app.run();
+
+        if(window.localStorage.getItem("token")){
+            $("#Profile").show();
+            $("#LogOut").show();
+            $("#Login").hide();
+            $("#Register").hide();
+        }else{
+            $("#Profile").hide();
+            $("#LogOut").hide();
+            $("#Login").show();
+            $("#Register").show();
+        }
+
+        $('#LogOut').click(function(){
+            window.localStorage.clear("token");
+            location.reload();
+        });
 
       });
 
@@ -156,15 +176,18 @@
           };
 
           $("#LoginButton").addClass('disabled');
+          $("#LogOut").addClass('disabled');
           $.post("http://localhost/real-estate/api/login", login_info).done(function(data){
               $("#LoginModal").modal('hide');
+              window.localStorage.setItem("token", data.token);
+              location.reload();
           }).fail(function(error){
               $("#WrongPass").show().text( error.responseJSON.message );
               $("#LoginButton").removeClass('disabled');
           });
-
-          console.log(login_info);
       }
+
+
     </script>
 </body>
 
