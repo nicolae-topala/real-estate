@@ -51,7 +51,7 @@
                         <h4 class="modal-title">Welcome back !</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form onsubmit="return doLogin()">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12 signin_column"><label class="form-label" for="InputEmail">Email</label><input class="form-control" type="email" id="InputEmail"></div>
@@ -59,11 +59,11 @@
                                 <div class="row">
                                     <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">Password</label><input class="form-control" type="password" id="InputPassword"></div>
                                     <div class="col mt-3 mb-0 signin_column" style="height: 45px;">
-                                        <div class="alert alert-danger" role="alert"><span><strong>Incorrect</strong>&nbsp;password or email.</span></div>
+                                        <div id="WrongPass" class="alert alert-danger" role="alert" style="display: none;"><span><strong>Incorrect</strong>&nbsp;password or email.</span></div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xxl-12 signin_column"><button class="btn btn-primary signin_button signin_column" type="submit" style="height: 37px;">Sign in</button></div>
+                                    <div class="col-xxl-12 signin_column"><button id="LoginButton" class="btn btn-primary signin_button signin_column" type="submit" style="height: 37px;">Sign in</button></div>
                                 </div>
                                 <div class="row">
                                     <div class="col signin_column"><a href="#forgot" onclick="$('#LoginModal').modal('hide')" class="btn btn-light signin_button" style="border-color: #0B5ED7;">Forgot password?</a></div>
@@ -148,6 +148,23 @@
         app.run();
 
       });
+
+      function doLogin() {
+          var login_info = {
+              "email" : $("#InputEmail").val(),
+              "password" : $("#InputPassword").val()
+          };
+
+          $("#LoginButton").addClass('disabled');
+          $.post("http://localhost/real-estate/api/login", login_info).done(function(data){
+              $("#LoginModal").modal('hide');
+          }).fail(function(error){
+              $("#WrongPass").show().text( error.responseJSON.message );
+              $("#LoginButton").removeClass('disabled');
+          });
+
+          console.log(login_info);
+      }
     </script>
 </body>
 
