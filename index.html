@@ -144,19 +144,6 @@
 
         var app = $.spapp({defaultView : 'main'});
 
-        // define routes
-        app.route({view: 'main', load: 'main.html' });
-        app.route({view: 'confirmation-accepted', load: 'confirmation-accepted.html' });
-        app.route({view: 'create', load: 'create.html' });
-        app.route({view: 'forgot-accepted', load: 'forgot-accepted.html' });
-        app.route({view: 'forgot', load: 'forgot.html' });
-        app.route({view: 'profile-view', load: 'profile-view.html' });
-        app.route({view: 'profile-publications', load: 'profile-publications.html' });
-        app.route({view: 'profile', load: 'profile.html' });
-        app.route({view: 'register', load: 'register.html' });
-        app.route({view: 'search', load: 'search.html' });
-        app.route({view: 'view', load: 'view.html' });
-
         // run app
         app.run();
 
