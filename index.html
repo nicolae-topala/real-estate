@@ -35,10 +35,10 @@
             <div class="container-fluid"><a class="navbar-brand" href="#main">&nbsp;<img class="navbar-logo" src="assets/img/logo.png"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Home</a><button data-bs-toggle="collapse" class="navbar-toggler bg-light" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon" style="color: red;"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1" style="background-color: #292c2f;padding: 10px;">
                     <ul class="navbar-nav ms-auto">
-                        <li id="Profile" class="nav-item" style="display: none;"><a href="#profile-view" class="btn btn-light" type="button" style="box-shadow: 0px 0px; margin-right: 5px;"><i class="fa fa-user"></i>&nbsp;FirstName LastName</a></li>
-                        <li id="LogOut" class="nav-item" style="display: none;"><button class="btn text-white" type="button" style="background-color: transparent; border: none; box-shadow: 0px 0px;margin-right: 5px;">Log Out &nbsp;<i class="fa fa-arrow-right"></i></button></li>
-                        <li id="Login" class="nav-item"><button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal" style="box-shadow: 0px 0px;margin-right: 5px;">Sign in</button></li>
-                        <li id="Register" class="nav-item"><a href="#register" class="btn btn-link" type="button" style="box-shadow: 0px 0px;color: white;text-decoration: none;">Register</a></li>
+                        <li class="user nav-item" style="display: none;"><a href="#profile-view" class="btn btn-light" type="button" style="box-shadow: 0px 0px; margin-right: 5px;"><i class="fa fa-user"></i>&nbsp;FirstName LastName</a></li>
+                        <li id="LogOut" class="user nav-item" style="display: none;"><button class="btn text-white" type="button" style="background-color: transparent; border: none; box-shadow: 0px 0px;margin-right: 5px;">Log Out &nbsp;<i class="fa fa-arrow-right"></i></button></li>
+                        <li class="guest nav-item"><button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal" style="box-shadow: 0px 0px;margin-right: 5px;">Sign in</button></li>
+                        <li class="guest nav-item"><a href="#register" class="btn btn-link" type="button" style="box-shadow: 0px 0px;color: white;text-decoration: none;">Register</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                         <h4 class="modal-title">Welcome back !</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form onsubmit="return doLogin()">
+                        <form onsubmit="doLogin()">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12 signin_column"><label class="form-label" for="InputEmail">Email</label><input class="form-control" type="email" id="InputEmail"></div>
@@ -92,12 +92,11 @@
       <section id="profile-publications" data-load="profile-publications.html"></section>
       <section id="profile" data-load="profile.html"></section>
       <section id="register" data-load="register.html"></section>
+      <section id="register-accepted" data-load="register-accepted.html"></section>
       <section id="search" data-load="search.html"></section>
       <section id="view" data-load="view.html"></section>
 
-      <section id="view_3"><h1>view 3</h1></section>
       <section id="error_404"><h1>Page not found</h1></section>
-      <section id="view_1"  ></section>
     </main>
 
     <div style="margin-top: 0;">
@@ -137,6 +136,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <!-- jQuerySpApp js -->
     <script src="assets/js/jquery.spapp.js"></script>
+    <script src="assets/js/check-token.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
 
@@ -144,28 +144,34 @@
 
         //load js code to pages
         app.route({ view : "view", load : "view.html", onReady: function() {
-            $.getScript("assets/js/Simple-Slider.js", function(){});}
+            $.getScript("assets/js/Simple-Slider.js", function(){});
+            $.getScript("assets/js/check-token.js", function(){});
+          }
         });
 
         // run app
         app.run();
 
-        if(window.localStorage.getItem("token")){
-            $("#Profile").show();
-            $("#LogOut").show();
-            $("#Login").hide();
-            $("#Register").hide();
-        }else{
-            $("#Profile").hide();
-            $("#LogOut").hide();
-            $("#Login").show();
-            $("#Register").show();
+        if (history.pushState) {
+            if(window.location.href.split('/').pop().charAt(0) != '?'){
+                window.history.pushState("object or string", "Title", '?'
+                                          + window.location.href.split('/').pop());
+            }
+        } else {
+            document.location.href = "?";
+            if(window.location.href.split('/').pop().charAt(0) != '?'){
+                document.location.href = '?' + window.location.href.split('/').pop();
+            }
         }
 
         $('#LogOut').click(function(){
             window.localStorage.clear("token");
             location.reload();
         });
+
+        $('#LoginModal').on('shown.bs.modal', function () {
+            $('#InputEmail').trigger('focus')
+        })
 
       });
 
@@ -176,18 +182,15 @@
           };
 
           $("#LoginButton").addClass('disabled');
-          $("#LogOut").addClass('disabled');
           $.post("http://localhost/real-estate/api/login", login_info).done(function(data){
-              $("#LoginModal").modal('hide');
               window.localStorage.setItem("token", data.token);
+              $("#LoginModal").modal('hide');
               location.reload();
           }).fail(function(error){
               $("#WrongPass").show().text( error.responseJSON.message );
               $("#LoginButton").removeClass('disabled');
           });
       }
-
-
     </script>
 </body>
 

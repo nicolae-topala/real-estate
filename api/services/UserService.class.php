@@ -50,7 +50,7 @@ class UserService extends BaseService {
 
         }catch(\Exception $e){
             if(str_contains($e->getMessage(), 'users.uq_user_email')){
-                throw new Exception("User with same email (".$user['email'].") already exists in the database", 400, $e);
+                throw new Exception("User with same email already exists in the database", 400, $e);
             }else{
               throw $e;
             }
@@ -88,22 +88,22 @@ class UserService extends BaseService {
     }
 
     public function forgot($user){
-      $db_user = $this->dao->get_user_by_email($user['email']);
+        $db_user = $this->dao->get_user_by_email($user['email']);
 
-      if (!isset($db_user['id'])) throw new Exception("User doesn't exist !", 400);
+        if (!isset($db_user['id'])) throw new Exception("User doesn't exist !", 400);
 
-      switch($db_user['status']){
-        case 'PENDING' : throw new Exception("Your account is not confirmed !", 400); break;
-        case 'BLOCKED' : throw new Exception("Your account is suspended !", 400); break;
-      }
+        switch($db_user['status']){
+          case 'PENDING' : throw new Exception("Your account is not confirmed !", 400); break;
+          case 'BLOCKED' : throw new Exception("Your account is suspended !", 400); break;
+        }
 
-      $check_time = strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']);
+        $check_time = strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']);
 
-      //if($check_time < 300) throw new Exception("Wait ".(300-$check_time)." seconds until you can create a new token.", 400);
+        if($check_time < 300) throw new Exception("Wait ".(300-$check_time)." seconds until you can create a new token.", 400);
 
-      $db_user = parent::update($db_user['id'], ['token' => md5(random_bytes(16)), 'token_created_at' => date(Config::DATE_FORMAT)]);
+        $db_user = parent::update($db_user['id'], ['token' => md5(random_bytes(16)), 'token_created_at' => date(Config::DATE_FORMAT)]);
 
-      $this->smtpClient->send_user_recovery_token($db_user);
+        $this->smtpClient->send_user_recovery_token($db_user);
     }
 
     public function reset($user){
