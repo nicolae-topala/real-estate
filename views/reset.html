@@ -1,0 +1,59 @@
+<div style="padding: 20px 50px;background-color: #F4F4F4;">
+    <section class="register-photo">
+        <div class="form-container" style="width: auto;height: auto;">
+            <form id="Forgot_Form" onsubmit="doReset()">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <h2 class="text-center" style="font-family: Lato, sans-serif;"><strong>Reset your password</strong></h2>
+                    </div>
+                    <input id="change-password-token" name="token" type="hidden">
+                    <div class="col-xxl-12 offset-xxl-0 mb-2"><label class="form-label" for="reset-password">New Password<br></label><input class="form-control create_new_border" type="password" id="reset-password" required="" minlenght="8" maxlength="32"></div>
+                    <div class="col-xxl-12 offset-xxl-0 mb-2"><label class="form-label" for="repeat-reset-password">Repeat New Password<br></label><input class="form-control create_new_border" type="password" id="repeat-reset-password" required="" minlenght="8" maxlength="32"></div>
+                    <div class="col mt-2">
+                        <div id="Reset-Alert" class="alert alert-danger" role="alert" style="display: none;"></div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 offset-md-6 offset-lg-6 offset-xl-6 offset-xxl-6 mt-2">
+                        <div class="mb-3"><button id="ResetButton" class="btn btn-primary d-block w-100" type="submit" style="margin-top: 0;background: var(--bs-blue);">Send</button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+      $(function(){
+          var urlParams = new URLSearchParams(window.location.search);
+          if(urlParams.has('token')){
+              $("#change-password-token").val(urlParams.get('token'));
+          }
+      });
+
+      $("#Forgot_Form").submit(function(e) {
+        e.preventDefault();
+      });
+
+      function doReset() {
+          if($('#reset-password').val() != $('#repeat-reset-password').val()){
+             $('#Reset-Alert').show().text("Passwords don't match !");
+             return 0;
+          }
+          $('#Reset-Alert').hide();
+
+          var reset_info = {
+              "token" : $("#change-password-token").val(),
+              "email" : $("#reset-password").val()
+          };
+
+          $("#ResetButton").addClass('disabled');
+          $.post("http://localhost/real-estate/api/reset", reset_info).done(function(data){
+              window.localStorage.setItem("token", data.token);
+              location.replace("#reset-accepted");
+              $("#ResetButton").removeClass('disabled');
+          }).fail(function(error){
+              $('#Reset-Alert').show().text( error.responseJSON.message );
+              $("#ResetButton").removeClass('disabled');
+          });
+
+      }
+
+    </script>

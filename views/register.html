@@ -44,6 +44,7 @@
       $("#RegisterButton").addClass('disabled');
       $.post("http://localhost/real-estate/api/register", register_info).done(function(data){
           location.replace("#register-accepted");
+          $("#ForgotButton").removeClass('disabled');
       }).fail(function(error){
           $("#Password-match").show().text( error.responseJSON.message );
           $("#RegisterButton").removeClass('disabled');
