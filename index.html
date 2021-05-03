@@ -185,6 +185,7 @@
           $.post("http://localhost/real-estate/api/login", login_info).done(function(data){
               window.localStorage.setItem("token", data.token);
               $("#LoginModal").modal('hide');
+              $("#ForgotButton").removeClass('disabled');
               location.reload();
           }).fail(function(error){
               $("#WrongPass").show().text( error.responseJSON.message );
