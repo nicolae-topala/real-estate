@@ -1,12 +1,12 @@
 <div style="padding: 20px 50px;background-color: #F4F4F4;">
     <section class="register-photo">
         <div class="form-container" style="width: auto;height: auto;">
-            <form id="Forgot_Form" onsubmit="doForgot()">
+            <form id="Forgot_Form" method="POST" onsubmit="doForgot(); return false">
                 <div class="row">
                     <div class="col-xxl-12">
                         <h2 class="text-center" style="font-family: Lato, sans-serif;"><strong>Forgot password ?</strong></h2>
                     </div>
-                    <div class="col-xxl-12 offset-xxl-0 mb-2"><label class="form-label" for="forgot-email">Please insert your e-mail.<br></label><input class="form-control create_new_border" type="email" id="forgot-email" required=""></div>
+                    <div class="col-xxl-12 offset-xxl-0 mb-2"><label class="form-label" for="forgot-email">Please insert your e-mail.<br></label><input class="form-control create_new_border" type="email" id="forgot-email" name="email" required></div>
                     <div class="col mt-2">
                         <div id="Forgot-Alert" class="alert alert-danger" role="alert" style="display: none;"><span>This<strong>&nbsp;e-mail</strong>&nbsp;doesn't exist.</span></div>
                     </div>
@@ -20,17 +20,9 @@
 
     <script type="text/javascript">
 
-      $("#Forgot_Form").submit(function(e) {
-        e.preventDefault();
-      });
-
       function doForgot() {
-          var forgot_info = {
-              "email" : $("#forgot-email").val()
-          };
-
           $("#ForgotButton").addClass('disabled');
-          $.post("http://localhost/real-estate/api/forgot", forgot_info).done(function(data){
+          $.post("api/forgot", jsonize_form("#Forgot_Form")).done(function(data){
               location.replace("#forgot-accepted");
               $("#ForgotButton").removeClass('disabled');
           }).fail(function(error){

@@ -71,6 +71,29 @@ class UserService extends BaseService {
         return $user;
     }
 
+    public function update_info($id, $data){
+        $verify = $this->dao->get_by_id($id);
+
+        if(!isset($data['first_name']) || strlen($data['first_name'])<1) $data['first_name'] = $verify['first_name'];
+        if(!isset($data['last_name']) || strlen($data['last_name'])<1) $data['last_name'] = $verify['last_name'];
+        if(!isset($data['email']) || strlen($data['email'])<1) $data['email'] = $verify['email'];
+        if(!isset($data['telephone']) || strlen($data['telephone'])<1) $data['telephone'] = $verify['telephone'];
+
+        if(!isset($data['password']) || strlen($data['password'])<1) $data['password'] = $verify['password'];
+        else $data['password'] = md5($data['password']);
+
+        try{
+            return parent::update($id, $data);
+
+        }catch(\Exception $e){
+            if(str_contains($e->getMessage(), 'users.uq_user_email')){
+                throw new Exception("User with same email already exists in the database", 400, $e);
+            }else{
+              throw $e;
+            }
+        }
+    }
+
     public function login($user){
         $db_user = $this->dao->get_user_by_email($user['email']);
 

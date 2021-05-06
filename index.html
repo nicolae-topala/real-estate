@@ -50,19 +50,19 @@
                         <h4 class="modal-title">Welcome back !</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form onsubmit="doLogin()">
+                        <form id="LoginForm" method="POST" onsubmit="doLogin(); return false">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-12 signin_column"><label class="form-label" for="InputEmail">Email</label><input class="form-control" type="email" id="InputEmail"></div>
+                                    <div class="col-md-12 signin_column"><label class="form-label" for="InputEmail">Email</label><input class="form-control" type="email" id="InputEmail" name="email"></div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">Password</label><input class="form-control" type="password" id="InputPassword"></div>
+                                    <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">Password</label><input class="form-control" type="password" id="InputPassword" name="password"></div>
                                     <div class="col mt-3 mb-0 signin_column" style="height: 45px;">
                                         <div id="WrongPass" class="alert alert-danger" role="alert" style="display: none;"><span><strong>Incorrect</strong>&nbsp;password or email.</span></div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xxl-12 signin_column"><button id="LoginButton" class="btn btn-primary signin_button signin_column" type="submit" style="height: 37px;">Sign in</button></div>
+                                    <div class="col-xxl-12 signin_column"><button id="LoginButton" class="btn btn-primary signin_button signin_column" type="submit" style="height: 37px;"><span class="mt-3">Sign in</span></button></div>
                                 </div>
                                 <div class="row">
                                     <div class="col signin_column"><a href="#forgot" onclick="$('#LoginModal').modal('hide')" class="btn btn-light signin_button" style="border-color: #0B5ED7;">Forgot password?</a></div>
@@ -139,11 +139,11 @@
     <!-- jQuerySpApp js -->
     <script src="assets/js/jquery.spapp.js"></script>
     <script src="assets/js/check-token.js"></script>
+    <script src="assets/js/utils.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
 
         var app = $.spapp({defaultView : 'main'});
-
         //load js code to pages
         app.route({ view : "view", load : "view.html", onReady: function() {
             $.getScript("assets/js/Simple-Slider.js", function(){});
@@ -153,18 +153,6 @@
 
         // run app
         app.run();
-
-        if (history.pushState) {
-            if(window.location.href.split('/').pop().charAt(0) != '?'){
-                window.history.pushState("object or string", "Title", '?'
-                                          + window.location.href.split('/').pop());
-            }
-        } else {
-            document.location.href = "?";
-            if(window.location.href.split('/').pop().charAt(0) != '?'){
-                document.location.href = '?' + window.location.href.split('/').pop();
-            }
-        }
 
         $('#LogOut').click(function(){
             window.localStorage.clear("token");
@@ -178,13 +166,9 @@
       });
 
       function doLogin() {
-          var login_info = {
-              "email" : $("#InputEmail").val(),
-              "password" : $("#InputPassword").val()
-          };
 
           $("#LoginButton").addClass('disabled');
-          $.post("http://localhost/real-estate/api/login", login_info).done(function(data){
+          $.post("api/login", jsonize_form("#LoginForm")).done(function(data){
               window.localStorage.setItem("token", data.token);
               $("#LoginModal").modal('hide');
               $("#ForgotButton").removeClass('disabled');

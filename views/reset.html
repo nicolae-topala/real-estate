@@ -1,14 +1,14 @@
 <div style="padding: 20px 50px;background-color: #F4F4F4;">
     <section class="register-photo">
         <div class="form-container" style="width: auto;height: auto;">
-            <form id="Forgot_Form" onsubmit="doReset()">
+            <form id="Reset-Form" onsubmit="doReset(); return false">
                 <div class="row">
                     <div class="col-xxl-12">
                         <h2 class="text-center" style="font-family: Lato, sans-serif;"><strong>Reset your password</strong></h2>
                     </div>
                     <input id="change-password-token" name="token" type="hidden">
-                    <div class="col-xxl-12 offset-xxl-0 mb-2"><label class="form-label" for="reset-password">New Password<br></label><input class="form-control create_new_border" type="password" id="reset-password" required="" minlenght="8" maxlength="32"></div>
-                    <div class="col-xxl-12 offset-xxl-0 mb-2"><label class="form-label" for="repeat-reset-password">Repeat New Password<br></label><input class="form-control create_new_border" type="password" id="repeat-reset-password" required="" minlenght="8" maxlength="32"></div>
+                    <div class="col-xxl-12 offset-xxl-0 mb-2"><label class="form-label" for="reset-password">New Password<br></label><input class="form-control create_new_border" type="password" id="reset-password" required minlength="8" maxlength="32" name="password"></div>
+                    <div class="col-xxl-12 offset-xxl-0 mb-2"><label class="form-label" for="repeat-reset-password">Repeat New Password<br></label><input class="form-control create_new_border" type="password" id="repeat-reset-password" required minlength="8" maxlength="32"></div>
                     <div class="col mt-2">
                         <div id="Reset-Alert" class="alert alert-danger" role="alert" style="display: none;"></div>
                     </div>
@@ -39,16 +39,11 @@
           }
           $('#Reset-Alert').hide();
 
-          var reset_info = {
-              "token" : $("#change-password-token").val(),
-              "email" : $("#reset-password").val()
-          };
-
           $("#ResetButton").addClass('disabled');
-          $.post("http://localhost/real-estate/api/reset", reset_info).done(function(data){
+          $.post("api/reset", jsonize_form("#Reset-Form")).done(function(data){
               window.localStorage.setItem("token", data.token);
-              location.replace("#reset-accepted");
               $("#ResetButton").removeClass('disabled');
+              location.replace("?#reset-accepted");
           }).fail(function(error){
               $('#Reset-Alert').show().text( error.responseJSON.message );
               $("#ResetButton").removeClass('disabled');

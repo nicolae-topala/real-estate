@@ -66,6 +66,27 @@ Flight::route('PUT /admin/account/@id', function($id){
 });
 
 /**
+* @OA\Put(path="/user/account", tags={"x-user", "user"},  security={{"ApiKeyAuth":{}}},
+*     @OA\RequestBody(description="Basic user info that is going to be updated.", required=true,
+*         @OA\MediaType(mediaType="application/json",
+*             @OA\Schema(
+*                 @OA\Property(property="first_name", type="string", required="true", example="Nick", description="First name"),
+*                 @OA\Property(property="last_name", type="string", required="true", example="Ford", description="Last name"),
+*                 @OA\Property(property="email", type="string", required="true", example="nick.ford@ford.com", description="Email"),
+*                 @OA\Property(property="password", type="string", required="true", example="example123", description="Password"),
+*                 @OA\Property(property="telephone", type="string", required="true", example="3248975", description="Telephone")
+*             )
+*         )
+*     ),
+*     @OA\Response(response="200", description="Update account.")
+* )
+*/
+Flight::route('PUT /user/account', function(){
+    $data = Flight::request()->data->getData();
+    Flight::json(Flight::userservice()->update_info(Flight::get('user')['id'], $data));
+});
+
+/**
 * @OA\Post(path="/register", tags={"login"},
 *     @OA\RequestBody(description="Basic user info", required=true,
 *         @OA\MediaType(mediaType="application/json",
