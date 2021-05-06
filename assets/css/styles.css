@@ -35,7 +35,9 @@
 }
 
 .search_bar_select {
-  border: none;
+  border: none; 
+  width: 100%;
+  height: 100%;
 }
 
 .search_bar_select:hover, .search_bar_select:active, .search_bar_text:hover, .search_bar_text:active {

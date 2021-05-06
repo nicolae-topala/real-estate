@@ -7,13 +7,15 @@ error_reporting(E_ALL);
 require_once dirname(__FILE__)."/../vendor/autoload.php";
 require_once dirname(__FILE__)."/services/UserService.class.php";
 require_once dirname(__FILE__)."/services/AdvertisementService.class.php";
+require_once dirname(__FILE__)."/services/LocationService.class.php";
 require_once dirname(__FILE__)."/routes/middleware.php";
 require_once dirname(__FILE__)."/routes/users.php";
 require_once dirname(__FILE__)."/routes/advertisement.php";
+require_once dirname(__FILE__)."/routes/locations.php";
 
 Flight::set('flight.log_errors', TRUE);
 
-/* Error handling for our API */
+/* Error handling for our API *
 Flight::map('error', function(Exception $ex){
     Flight::json(["message" => $ex->getMessage()], $ex->getCode() ? $ex->getCode() : 500);
 });
@@ -24,6 +26,7 @@ Flight::map('error', function(Exception $ex){
  */
 Flight::register('userservice', 'UserService');
 Flight::register('advertisementservice', 'AdvertisementService');
+Flight::register('locationservice', 'LocationService');
 
 /**
  * Utility function for reading query parameters from URL

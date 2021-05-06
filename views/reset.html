@@ -43,7 +43,7 @@
           $.post("api/reset", jsonize_form("#Reset-Form")).done(function(data){
               window.localStorage.setItem("token", data.token);
               $("#ResetButton").removeClass('disabled');
-              location.replace("?#reset-accepted");
+              location.replace("#reset-accepted");
           }).fail(function(error){
               $('#Reset-Alert').show().text( error.responseJSON.message );
               $("#ResetButton").removeClass('disabled');

@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <!-- jQuerySpApp css -->
     <link rel="stylesheet" href="assets/css/spapp.css">
+
 </head>
 
 <body>
@@ -35,7 +36,7 @@
             <div class="container-fluid"><a class="navbar-brand" href="#main">&nbsp;<img class="navbar-logo" src="assets/img/logo.png"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Home</a><button data-bs-toggle="collapse" class="navbar-toggler bg-light" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon" style="color: red;"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1" style="background-color: #292c2f;padding: 10px;">
                     <ul class="navbar-nav ms-auto">
-                        <li class="user nav-item" style="display: none;"><a href="#profile-view" class="btn btn-light" type="button" style="box-shadow: 0px 0px; margin-right: 5px;"><i class="fa fa-user"></i>&nbsp;FirstName LastName</a></li>
+                        <li class="user nav-item" style="display: none;"><a id="IndexProfileName" href="#profile-view" class="btn btn-light" type="button" style="box-shadow: 0px 0px; margin-right: 5px;"><i class="fa fa-user"></i>&nbsp;</a></li>
                         <li id="LogOut" class="user nav-item" style="display: none;"><button class="btn text-white" type="button" style="background-color: transparent; border: none; box-shadow: 0px 0px;margin-right: 5px;">Log Out &nbsp;<i class="fa fa-arrow-right"></i></button></li>
                         <li class="guest nav-item"><button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal" style="box-shadow: 0px 0px;margin-right: 5px;">Sign in</button></li>
                         <li class="guest nav-item"><a href="#register" class="btn btn-link" type="button" style="box-shadow: 0px 0px;color: white;text-decoration: none;">Register</a></li>
@@ -136,6 +137,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.2/bootstrap-slider.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- jQuerySpApp js -->
     <script src="assets/js/jquery.spapp.js"></script>
     <script src="assets/js/check-token.js"></script>
@@ -161,6 +163,17 @@
 
         $('#LoginModal').on('shown.bs.modal', function () {
             $('#InputEmail').trigger('focus')
+        });
+
+        $.ajax({
+            url: "api/user/account",
+            type: "GET",
+            beforeSend: function(jqXHR){
+                jqXHR.setRequestHeader('Authentication', localStorage.getItem("token"));
+            },
+            success: function(data, textStatus, jqXHR){
+                $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
+            }
         })
 
       });
