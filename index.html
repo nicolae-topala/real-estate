@@ -153,6 +153,16 @@
           }
         });
 
+        app.route({ view : "main", load : "main.html", onReady: function() {
+            $.getScript("assets/js/main.js", function(){});
+          }
+        });
+
+        app.route({ view : "search", load : "search.html", onReady: function() {
+            $.getScript("assets/js/search.js", function(){});
+          }
+        });
+
         // run app
         app.run();
 
@@ -165,16 +175,18 @@
             $('#InputEmail').trigger('focus')
         });
 
-        $.ajax({
-            url: "api/user/account",
-            type: "GET",
-            beforeSend: function(jqXHR){
-                jqXHR.setRequestHeader('Authentication', localStorage.getItem("token"));
-            },
-            success: function(data, textStatus, jqXHR){
-                $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
-            }
-        })
+        if(window.localStorage.getItem("token")){
+            $.ajax({
+                url: "api/user/account",
+                type: "GET",
+                beforeSend: function(jqXHR){
+                    jqXHR.setRequestHeader('Authentication', localStorage.getItem("token"));
+                },
+                success: function(data, textStatus, jqXHR){
+                    $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
+                }
+            })
+        }
 
       });
 

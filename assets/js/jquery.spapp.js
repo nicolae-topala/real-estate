@@ -63,7 +63,11 @@
     // and run
     this.run = function() {
       window.addEventListener('hashchange', function() { routeChange(); });
-      if( ! window.location.hash) { window.location.hash = config.defaultView; } else { routeChange(); }
+      if( ! window.location.hash) {
+        window.location.hash = config.defaultView;
+      } else {
+        routeChange();
+      }
     }
 
     return this;

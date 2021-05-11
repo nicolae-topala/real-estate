@@ -35,7 +35,7 @@
 }
 
 .search_bar_select {
-  border: none; 
+  border: none;
   width: 100%;
   height: 100%;
 }
@@ -166,12 +166,18 @@
 .recommended_paragraph {
   margin: 0 0 0 10px;
   font-family: Lato, sans-serif;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .recommended_paragraph_title {
   font-family: Lato, sans-serif;
   font-size: 20px;
   margin: 0px 0px 5px 5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .recommended_div_block {
