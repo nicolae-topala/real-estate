@@ -2,9 +2,9 @@
 
 /**
 * @OA\GET(path="/advertisements", tags={"x-user", "advertisements"},
-*     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination."),
-*     @OA\Parameter(type="integer", in="query", name="limit", default=5, description="Limit for pagination."),
-*     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name desceding order by column_name."),
+*     @OA\Parameter(name="offset", type="integer", in="query", default=0, description="Offset for pagination."),
+*     @OA\Parameter(name="limit", type="integer", in="query", default=5, description="Limit for pagination."),
+*     @OA\Parameter(name="order", type="string", in="query", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name desceding order by column_name."),
 *    	@OA\Parameter(name="title", type="string", in="query", example="Title", default="",	description="Advertisement's title."),
 *     @OA\Parameter(name="address", type="string", in="query", example="Manhatan street 2", default="",	description="The address."),
 *     @OA\Parameter(name="location_id", type="integer", in="query", example=1, description="Location ID from Locations Table."),
@@ -29,8 +29,8 @@ Flight::route('GET /advertisements', function(){
     $floors_max = Flight::query('floors_max', 100);
     $price_min = Flight::query('price_min', 0);
     $price_max = Flight::query('price_max', 9999999);
-    $location = Flight::query('location');
-    $type = Flight::query('type');
+    $location_id = Flight::query('location_id');
+    $type_id = Flight::query('type_id');
     $space_min = Flight::query('space_min', 0);
     $space_max = Flight::query('space_max', 9999999);
     $rooms_min = Flight::query('rooms_min', 0);
@@ -38,7 +38,7 @@ Flight::route('GET /advertisements', function(){
     $address = Flight::query('address', "%");
 
     Flight::json(Flight::advertisementservice()->get_advertisements($title, $offset, $limit, $order, $floors_min, $floors_max, $price_min, $address,
-                                                                    $price_max, $location, $type, $space_min, $space_max, $rooms_min, $rooms_max));
+                                                                    $price_max, $location_id, $type_id, $space_min, $space_max, $rooms_min, $rooms_max));
 });
 
 /**

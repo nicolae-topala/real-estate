@@ -36,15 +36,9 @@ $(document).ready(function(){
 });
 
 function doSearch(){
-    $("#MainSearchButton").addClass('disabled');
-    localStorage.setItem( "search-data", JSON.stringify(jsonize_form("#MainSearchForm")) );
     location.replace("#search");
-    $("#MainSearchButton").removeClass('disabled');
 }
 
 function doSearch2(){
-    $("#MainSearchButton2").addClass('disabled');
-    window.localStorage.setItem("search-data", jsonize_form("#MainSearchForm2"));
     location.replace("#search");
-    $("#MainSearchButton2").removeClass('disabled');
 }

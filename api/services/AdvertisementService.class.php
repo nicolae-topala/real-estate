@@ -14,15 +14,15 @@ class AdvertisementService extends BaseService {
     }
 
     public function get_advertisements($title, $offset, $limit, $order, $floors_min, $floors_max, $price_min, $address,
-                                       $price_max, $location, $type, $space_min, $space_max, $rooms_min, $rooms_max){
+                                       $price_max, $location_id, $type_id, $space_min, $space_max, $rooms_min, $rooms_max){
       $ad=[
           "title" => $title,
           "floors_min" => $floors_min,
           "floors_max" => $floors_max,
           "price_min" => $price_min,
           "price_max" => $price_max,
-          "location" => $location,
-          "type" => $type,
+          "location_id" => $location_id,
+          "type_id" => $type_id,
           "space_min" => $space_min,
           "space_max" => $space_max,
           "rooms_min" => $rooms_min,
@@ -45,6 +45,11 @@ class AdvertisementService extends BaseService {
         if(!isset($data['type_id'])) throw new Exception("Type field is required.");
         if(!isset($data['price'])) throw new Exception("Price field is required.");
         if(!isset($data['address'])) throw new Exception("Address field is required.");
+
+        if(!isset($data['space']) || strlen($data['space'])<1) $data['space'] = NULL;
+        if(!isset($data['floor']) || strlen($data['floor'])<1) $data['floor'] = NULL;
+        if(!isset($data['rooms']) || strlen($data['rooms'])<1) $data['rooms'] = NULL;
+        if(!isset($data['text']) || strlen($data['text'])<1) $data['text'] = NULL;
 
         try {
             $this->dao->beginTransaction();

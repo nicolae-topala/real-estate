@@ -224,3 +224,8 @@
   position: absolute;
   margin-top: -22px;
 }
+
+.pages a{
+  display: inline-block;
+  float: center;
+}

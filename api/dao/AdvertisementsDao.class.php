@@ -9,7 +9,10 @@ class AdvertisementsDao extends BaseDao{
     public function get_advertisements($offset, $limit, $ad, $order = "-id"){
         list($order_column, $order_direction) = parent::parse_order($order);
 
-        $query="SELECT * FROM advertisements
+        $query="SELECT advertisements.*, descriptions.location_id, descriptions.type_id,
+                       descriptions.rooms, descriptions.floor, descriptions.space,
+                       descriptions.price, descriptions.address, descriptions.text
+                FROM advertisements
                 JOIN descriptions ON advertisements.description_id=descriptions.id
                 WHERE LOWER(title) LIKE CONCAT('%','".strtolower($ad['title'])."','%')
                 AND address LIKE CONCAT('%','".strtolower($ad['address'])."','%')
@@ -22,8 +25,8 @@ class AdvertisementsDao extends BaseDao{
                 AND rooms >= :rooms_min
                 AND rooms <= :rooms_max ";
 
-        if($ad['location'] > 0) $query.="AND location_id = ${ad['location']} ";
-        if($ad['type'] > 0) $query.="AND type_id = ${ad['type']} ";
+        if($ad['location_id'] > 0) $query.="AND location_id = ${ad['location_id']} ";
+        if($ad['type_id'] > 0) $query.="AND type_id = ${ad['type_id']} ";
         if($order_column=="id" || $order_column=="title") // search on advertisements only id and title, the rest are on descriptions
             $order_table="advertisements";
         else
@@ -43,7 +46,10 @@ class AdvertisementsDao extends BaseDao{
     }
 
     public function get_ad_by_id($id){
-        return $this->query_unique("SELECT * FROM advertisements
+        return $this->query_unique("SELECT advertisements.*, descriptions.location_id, descriptions.type_id,
+                                           descriptions.rooms, descriptions.floor, descriptions.space,
+                                           descriptions.price, descriptions.address, descriptions.text
+                                    FROM advertisements
                                     JOIN descriptions ON advertisements.description_id=descriptions.id
                                     WHERE advertisements.id = :id", ["id" => $id]);
     }
