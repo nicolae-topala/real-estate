@@ -27,7 +27,7 @@ class Config{
         return Config::get_env("SMTP_USER", "real.estate.project.ibu@gmail.com");
     }
     public static function SMTP_PASS(){
-        return Config::get_env("SMTP_PASS", "tuw%pO*WOT*@");
+        return Config::get_env("SMTP_PASS", "dumyexiodehnypay");
     }
 
     const JWT_SECRET ="!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ";

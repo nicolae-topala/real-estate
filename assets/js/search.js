@@ -10,7 +10,6 @@ $(document).ready(function(){
           $(".js-search-location").html(html);
         }
     });
-
     getAds(1);
 });
 
@@ -55,8 +54,6 @@ function getAds(page){
 
                     var pages = Math.ceil(total/12);
 
-                    console.log(total);
-                    console.log(pages);
                     $("#SearchPage").html("");
 
                     var html = "";
