@@ -4,18 +4,16 @@
             <div class="col-lg-5 col-xl-5 col-xxl-5" style="margin-top: 10px;">
                 <div class="view_div_block">
                     <div class="row">
-                        <div class="col">
-                            <h2 style="font-family: Lato, sans-serif;">FirstName LastName</h2>
+                        <div id="profile-name" class="col">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-sm-7 col-md-5 col-lg-9 col-xl-7 col-xxl-6 offset-0 offset-sm-5 offset-md-7 offset-lg-3 offset-xl-5 offset-xxl-6">
-                            <h5 style="font-family: Lato, sans-serif;">Created at: 19/04/1994</h5>
+                        <div id="profile-date" class="col-12 col-sm-7 col-md-5 col-lg-9 col-xl-7 col-xxl-6 offset-0 offset-sm-5 offset-md-7 offset-lg-3 offset-xl-5 offset-xxl-6">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-10 col-xxl-10 offset-xl-1 offset-xxl-1 mt-2"><button class="btn btn-primary" type="button" style="width: 100%;">Your Publications</button></div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-1 offset-xxl-1 mt-2"><button class="btn btn-primary" type="button" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#ChangePasswordModal">Change Password</button>
+                        <div class="col-xl-10 col-xxl-10 offset-xl-1 offset-xxl-1 mt-2"><button class="btn btn-primary" onclick="doChangeProfilePublications();" type="button" style="width: 100%;">Your Publications</button></div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-1 offset-xxl-1 mt-2"><button class="btn btn-primary" type="button" style="width: 100%; color: #0B5ED7; background-color: #ffffff; border: 1px solid #0B5ED7" data-bs-toggle="modal" data-bs-target="#ChangePasswordModal">Change Password</button>
                             <div class="modal fade" role="dialog" tabindex="-1" id="ChangePasswordModal">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -23,44 +21,18 @@
                                             <h4 class="modal-title">Change Password</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form>
+                                            <form id="profile-password" onsubmit="doChangePassword(); return false">
                                                 <div class="container">
                                                     <div class="row">
-                                                        <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">Current Password</label><input class="form-control" type="password" id="InputPassword"></div>
+                                                        <div class="col-md-12 signin_column"><label class="form-label" for="new-password">New Password</label><input class="form-control" type="password" id="new-password" name="password" minlength="8" maxlength="32"></div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">New Password</label><input class="form-control" type="password" id="InputPassword-2"></div>
+                                                        <div class="col-md-12 signin_column"><label class="form-label" for="new-password-repeat">Repeat New Password</label><input class="form-control" type="password" id="new-password-repeat" minlength="8" maxlength="32"></div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">Repeat New Password</label><input class="form-control" type="password" id="InputPassword-1"></div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xxl-12 signin_column"><button class="btn btn-primary signin_button signin_column" type="submit" style="height: 37px;">Save Changes</button></div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-10 col-xxl-10 offset-xl-1 offset-xxl-1 mt-2"><button class="btn btn-danger" type="button" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#DeleteAccountModal">Delete Account</button>
-                            <div class="modal fade" role="dialog" tabindex="-1" id="DeleteAccountModal">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Delete Account !</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-md-12 signin_column">
-                                                            <h4 style="font-family: Lato, sans-serif;">Are you sure you want to permanently delete your account ?</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xxl-12 signin_column"><button class="btn btn-danger signin_button signin_column" type="button" style="height: 37px;">YES</button></div>
+                                                        <div id="profile-password-match" class="alert alert-danger mt-3 mb-0" role="alert" style="display: none;"></div>
+                                                        <div id="profile-password-saved" class="alert alert-success mt-3 mb-0" role="alert" style="display: none;"><span><strong>Saved</strong></span></div>
+                                                        <div class="col-xxl-12 w-100" style="padding: 0;"><button id="profile-password-button" class="btn btn-primary w-100 mt-3" type="submit" style="height: 37px;">Save Changes</button></div>
                                                     </div>
                                                 </div>
                                             </form>
@@ -72,25 +44,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-7 col-xl-7 col-xxl-7 offset-xxl-0" style="margin-top: 10px;">
+            <div id ="profile-info" class="col-lg-7 col-xl-7 col-xxl-7 offset-xxl-0" style="margin-top: 10px;">
                 <div class="view_div_block">
-                    <form method="post">
+                    <form id="profile-form" onsubmit="doUpdate(); return false" method="post">
                         <div class="row">
-                            <div class="col-xl-6 col-xxl-7 offset-xxl-0">
+                            <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7 offset-xxl-0">
                                 <h1 style="font-family: Lato, sans-serif;">Your profile</h1>
                             </div>
-                            <div class="col-xl-6 col-xxl-5 offset-xxl-0" style="text-align: right;">
-                                <h3 style="font-family: Lato, sans-serif;color: var(--bs-red);">Admin</h3>
+                            <div id="profile-admin" class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5 offset-xxl-0" style="text-align: right;">
                             </div>
-                            <div class="col-xl-6 col-xxl-11 offset-xxl-0" style="text-align: left;">
-                                <h3 style="font-family: Lato, sans-serif;color: var(--bs-teal);"><span style="color: black;">Status:&nbsp;</span>ACTIVE</h3>
+                            <div id="profile-status" class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-11 offset-xxl-0" style="text-align: left;">
                             </div>
-                            <div class="col-xl-6 col-xxl-6 offset-xl-0 mt-4"><label class="form-label" for="profile-fname">First Name</label><input class="form-control" type="fname" id="profile-fname" name="fname" maxlength="32"></div>
-                            <div class="col-xl-6 col-xxl-6 mt-4"><label class="form-label" for="profile-lname">Last Name</label><input class="form-control" type="lname" id="profile-lname" name="lname" maxlength="32"></div>
+                            <div class="col-xl-6 col-xxl-6 offset-xl-0 mt-4"><label class="form-label" for="profile-fname">First Name</label><input class="form-control" type="fname" id="profile-fname" name="first_name" maxlength="32"></div>
+                            <div class="col-xl-6 col-xxl-6 mt-4"><label class="form-label" for="profile-lname">Last Name</label><input class="form-control" type="lname" id="profile-lname" name="last_name" maxlength="32"></div>
                             <div class="col-xl-6 col-xxl-6 mt-4"><label class="form-label" for="profile-email">Email</label><input class="form-control" type="email" id="profile-email" name="email" maxlength="64"></div>
-                            <div class="col-xl-6 col-xxl-6 mt-4"><label class="form-label" for="profile-telephone">Telephone</label><input class="form-control" type="tel" id="profile-telephone" name="tel" maxlength="64"></div>
-                            <div class="col-xxl-1 offset-xxl-7" style="margin-top: 30px;"><span class="mt-4"><strong>Saved</strong></span></div>
-                            <div class="col-xl-4 col-xxl-4 offset-xl-8 offset-xxl-0 mt-4"><button class="btn btn-primary d-block w-100" type="submit">Save Changes</button></div>
+                            <div class="col-xl-6 col-xxl-6 mt-4"><label class="form-label" for="profile-telephone">Telephone</label><input class="form-control" type="tel" id="profile-telephone" name="telephone" maxlength="64"></div>
+                            <div class="col-lg-4 col-xl-4 col-xxl-4 offset-lg-8 offset-xl-8 offset-xxl-8 mt-4"><span id="Profile-saved" style="display:none; float: right; margin-bottom: 5px;"><strong>Saved</strong></span><button id="profile-button" class="btn btn-primary d-block w-100" type="submit">Save Changes</button></div>
                         </div>
                     </form>
                 </div>
@@ -98,8 +67,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-
-
-</script>

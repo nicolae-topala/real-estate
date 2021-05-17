@@ -22,6 +22,11 @@
     <link rel="stylesheet" href="assets/css/Pretty-Footer.css">
     <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">
     <link rel="stylesheet" href="assets/css/search.css">
+    <link rel="stylesheet" href="assets/css/create.css">
+    <link rel="stylesheet" href="assets/css/Pretty-Footer.css">
+    <link rel="stylesheet" href="assets/css/profile-view.css">
+    <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">
+    <link rel="stylesheet" href="assets/css/view.css">
     <link rel="stylesheet" href="assets/css/signin.css">
     <link rel="stylesheet" href="assets/css/Simple-Slider.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -36,7 +41,7 @@
             <div class="container-fluid"><a class="navbar-brand" href="#main">&nbsp;<img class="navbar-logo" src="assets/img/logo.png"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Home</a><button data-bs-toggle="collapse" class="navbar-toggler bg-light" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon" style="color: red;"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1" style="background-color: #292c2f;padding: 10px;">
                     <ul class="navbar-nav ms-auto">
-                        <li class="user nav-item" style="display: none;"><a id="IndexProfileName" href="#profile-view" class="btn btn-light" type="button" style="box-shadow: 0px 0px; margin-right: 5px;"><i class="fa fa-user"></i>&nbsp;</a></li>
+                        <li class="user nav-item" style="display: none;"><a id="IndexProfileName" href="#profile" class="btn btn-light" type="button" style="box-shadow: 0px 0px; margin-right: 5px;"><i class="fa fa-user"></i>&nbsp;</a></li>
                         <li id="LogOut" class="user nav-item" style="display: none;"><button class="btn text-white" type="button" style="background-color: transparent; border: none; box-shadow: 0px 0px;margin-right: 5px;">Log Out &nbsp;<i class="fa fa-arrow-right"></i></button></li>
                         <li class="guest nav-item"><button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal" style="box-shadow: 0px 0px;margin-right: 5px;">Sign in</button></li>
                         <li class="guest nav-item"><a href="#register" class="btn btn-link" type="button" style="box-shadow: 0px 0px;color: white;text-decoration: none;">Register</a></li>
@@ -116,7 +121,7 @@
                 </div>
                 <div class="col-sm-6 col-md-4 footer-contacts">
                     <div><span class="fa fa-map-marker footer-contacts-icon"> </span>
-                        <p style="margin-top: 10px;"><span class="new-line-span">21 Revolution Street</span> Paris, France</p>
+                        <p><span class="new-line-span">21 Revolution Street</span> Paris, France</p>
                     </div>
                     <div><i class="fa fa-phone footer-contacts-icon"></i>
                         <p class="footer-center-info email text-left" style="margin-top: 10px;"> +1 555 123456</p>
@@ -145,64 +150,68 @@
     <script type="text/javascript">
       $(document).ready(function() {
 
-        var app = $.spapp({defaultView : 'main'});
-        //load js code to pages
-        app.route({ view : "view", load : "view.html", onReady: function() {
-            $.getScript("assets/js/Simple-Slider.js", function(){});
-            $.getScript("assets/js/check-token.js", function(){});
+          var app = $.spapp({defaultView : 'main'});
+          //load js code to pages
+          app.route({ view : "view", load : "view.html", onReady: function() {
+              $.getScript("assets/js/Simple-Slider.js", function(){});
+              $.getScript("assets/js/check-token.js", function(){});
+            }
+          });
+
+          app.route({ view : "main", load : "main.html", onReady: function() {
+              $.getScript("assets/js/main.js", function(){});
+            }
+          });
+
+          app.route({ view : "search", load : "search.html", onReady: function() {
+              $.getScript("assets/js/search.js", function(){});
+            }
+          });
+
+          app.route({ view : "forgot", load : "forgot.html", onReady: function() {
+              $.getScript("assets/js/forgot.js", function(){});
+            }
+          });
+
+          app.route({ view : "confirmation-accepted", load : "confirmation-accepted.html", onReady: function() {
+              $.getScript("assets/js/confirmation-accepted.js", function(){});
+            }
+          });
+
+          app.route({ view : "profile-view", load : "profile-view.html", onReady: function() {
+              $.getScript("assets/js/profile-view.js", function(){});
+            }
+          });
+
+          app.route({ view : "profile", load : "profile.html", onReady: function() {
+              $.getScript("assets/js/profile.js", function(){});
+            }
+          });
+
+          // run app
+          app.run();
+
+          $('#LogOut').click(function(){
+              window.localStorage.clear("token");
+              location.reload();
+          });
+
+          $('#LoginModal').on('shown.bs.modal', function () {
+              $('#InputEmail').trigger('focus')
+          });
+
+          if(window.localStorage.getItem("token")){
+              $.ajax({
+                  url: "api/user/account",
+                  type: "GET",
+                  beforeSend: function(jqXHR){
+                      jqXHR.setRequestHeader('Authentication', localStorage.getItem("token"));
+                  },
+                  success: function(data, textStatus, jqXHR){
+                      $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
+                  }
+              });
           }
-        });
-
-        app.route({ view : "main", load : "main.html", onReady: function() {
-            $.getScript("assets/js/main.js", function(){});
-          }
-        });
-
-        app.route({ view : "search", load : "search.html", onReady: function() {
-            $.getScript("assets/js/search.js", function(){});
-          }
-        });
-
-        app.route({ view : "forgot", load : "forgot.html", onReady: function() {
-            $.getScript("assets/js/forgot.js", function(){});
-          }
-        });
-
-        app.route({ view : "confirmation-accepted", load : "confirmation-accepted.html", onReady: function() {
-            $.getScript("assets/js/confirmation-accepted.js", function(){});
-          }
-        });
-
-        app.route({ view : "profile-view", load : "profile-view.html", onReady: function() {
-            $.getScript("profile-view.js", function(){});
-          }
-        });
-
-        // run app
-        app.run();
-
-        $('#LogOut').click(function(){
-            window.localStorage.clear("token");
-            location.reload();
-        });
-
-        $('#LoginModal').on('shown.bs.modal', function () {
-            $('#InputEmail').trigger('focus')
-        });
-
-        if(window.localStorage.getItem("token")){
-            $.ajax({
-                url: "api/user/account",
-                type: "GET",
-                beforeSend: function(jqXHR){
-                    jqXHR.setRequestHeader('Authentication', localStorage.getItem("token"));
-                },
-                success: function(data, textStatus, jqXHR){
-                    $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
-                }
-            })
-        }
-
       });
 
       function doLogin() {
