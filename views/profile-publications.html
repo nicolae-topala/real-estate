@@ -4,71 +4,15 @@
             <div class="col-lg-5 col-xl-5 col-xxl-4" style="margin-top: 10px;">
                 <div class="view_div_block">
                     <div class="row">
-                        <div class="col">
-                            <h2 style="font-family: Lato, sans-serif;">FirstName LastName</h2>
+                        <div id="profile-publications-name" class="col">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-sm-7 col-md-5 col-lg-9 col-xl-7 col-xxl-8 offset-0 offset-sm-5 offset-md-7 offset-lg-3 offset-xl-5 offset-xxl-5">
-                            <h5 style="font-family: Lato, sans-serif;">Created at: 19/04/1994</h5>
+                        <div id="profile-publications-date" class="col-12 col-sm-7 col-md-5 col-lg-9 col-xl-7 col-xxl-8 offset-0 offset-sm-5 offset-md-7 offset-lg-3 offset-xl-5 offset-xxl-5">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-10 col-xxl-10 offset-xl-1 offset-xxl-1 mt-2"><button class="btn btn-primary" type="button" style="width: 100%;">Settings</button></div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-1 offset-xxl-1 mt-2"><button class="btn btn-primary" type="button" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#ChangePasswordModal">Change Password</button>
-                            <div class="modal fade" role="dialog" tabindex="-1" id="ChangePasswordModal">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Change Password</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">Current Password</label><input class="form-control" type="password" id="InputPassword"></div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">New Password</label><input class="form-control" type="password" id="InputPassword-2"></div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12 signin_column"><label class="form-label" for="InputPassword">Repeat New Password</label><input class="form-control" type="password" id="InputPassword-1"></div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xxl-12 signin_column"><button class="btn btn-primary signin_button signin_column" type="submit" style="height: 37px;">Save Changes</button></div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-10 col-xxl-10 offset-xl-1 offset-xxl-1 mt-2"><button class="btn btn-danger" type="button" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#DeleteAccountModal">Delete Account</button>
-                            <div class="modal fade" role="dialog" tabindex="-1" id="DeleteAccountModal">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Delete Account !</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-md-12 signin_column">
-                                                            <h4 style="font-family: Lato, sans-serif;">Are you sure you want to permanently delete your account ?</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xxl-12 signin_column"><button class="btn btn-danger signin_button signin_column" type="button" style="height: 37px;">YES</button></div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="col-xl-10 col-xxl-10 offset-xl-1 offset-xxl-1 mt-2"><a class="btn btn-primary" type="button" style="width: 100%;" href="#profile">Settings</a></div>
                     </div>
                 </div>
             </div>
@@ -78,82 +22,17 @@
                         <div class="view_div_block">
                             <div class="row">
                                 <div class="col-xl-12 col-xxl-12 offset-xxl-0">
-                                    <h1 style="font-family: Lato, sans-serif;">Your publications</h1>
+                                    <h1 id="profile-publication-text" style="font-family: Lato, sans-serif;"><strong>Your publications</strong></h1>
                                 </div>
                             </div>
                             <div></div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="search_results_div">
-                            <div class="row">
-                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 recommended_column"><a class="ads_link" href="#">
-                                        <div class="recommended_div_block">
-                                            <p class="recommended_paragraph_title"><strong>&nbsp;Title</strong></p>
-                                            <p class="recommended_paragraph">Price: 999&nbsp;<i class="fa fa-dollar"></i></p>
-                                            <p class="recommended_paragraph">Space: 99 m<sup>2</sup></p>
-                                            <p class="recommended_paragraph">Address: street name</p><img class="recommended_image" src="https://picsum.photos/1200/1200" width="300" height="200">
-                                        </div>
-                                    </a></div>
-                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 recommended_column"><a class="ads_link" href="#">
-                                        <div class="recommended_div_block">
-                                            <p class="recommended_paragraph_title"><strong>&nbsp;Title</strong></p>
-                                            <p class="recommended_paragraph">Price: 999&nbsp;<i class="fa fa-dollar"></i></p>
-                                            <p class="recommended_paragraph">Space: 99 m<sup>2</sup></p>
-                                            <p class="recommended_paragraph">Address: street name</p><img class="recommended_image" src="https://picsum.photos/1400/2000" width="300" height="200">
-                                        </div>
-                                    </a></div>
-                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 recommended_column"><a class="ads_link" href="#">
-                                        <div class="recommended_div_block">
-                                            <p class="recommended_paragraph_title"><strong>&nbsp;Title</strong></p>
-                                            <p class="recommended_paragraph">Price: 999&nbsp;<i class="fa fa-dollar"></i></p>
-                                            <p class="recommended_paragraph">Space: 99 m<sup>2</sup></p>
-                                            <p class="recommended_paragraph">Address: street name</p><img class="recommended_image" src="https://picsum.photos/1900/800" width="300" height="200">
-                                        </div>
-                                    </a></div>
-                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 recommended_column"><a class="ads_link" href="#">
-                                        <div class="recommended_div_block">
-                                            <p class="recommended_paragraph_title"><strong>&nbsp;Title</strong></p>
-                                            <p class="recommended_paragraph">Price: 999&nbsp;<i class="fa fa-dollar"></i></p>
-                                            <p class="recommended_paragraph">Space: 99 m<sup>2</sup></p>
-                                            <p class="recommended_paragraph">Address: street name</p><img class="recommended_image" src="https://picsum.photos/1200/1200" width="300" height="200">
-                                        </div>
-                                    </a></div>
-                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 recommended_column"><a class="ads_link" href="#">
-                                        <div class="recommended_div_block">
-                                            <p class="recommended_paragraph_title"><strong>&nbsp;Title</strong></p>
-                                            <p class="recommended_paragraph">Price: 999&nbsp;<i class="fa fa-dollar"></i></p>
-                                            <p class="recommended_paragraph">Space: 99 m<sup>2</sup></p>
-                                            <p class="recommended_paragraph">Address: street name</p><img class="recommended_image" src="https://picsum.photos/1400/2000" width="300" height="200">
-                                        </div>
-                                    </a></div>
-                                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 recommended_column"><a class="ads_link" href="#">
-                                        <div class="recommended_div_block">
-                                            <p class="recommended_paragraph_title"><strong>&nbsp;Title</strong></p>
-                                            <p class="recommended_paragraph">Price: 999&nbsp;<i class="fa fa-dollar"></i></p>
-                                            <p class="recommended_paragraph">Space: 99 m<sup>2</sup></p>
-                                            <p class="recommended_paragraph">Address: street name</p><img class="recommended_image" src="https://picsum.photos/1900/800" width="300" height="200">
-                                        </div>
-                                    </a></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xxl-6 offset-sm-3 offset-md-4 offset-lg-3 offset-xl-4 offset-xxl-4">
-                                <nav>
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+                <div id="profile-publications-results" class="search_results_div row">
+                </div>
+                <div style="text-align: center;">
+                    <div id="profile-publications-page" class="pages" style="display: none;">
                     </div>
                 </div>
             </div>

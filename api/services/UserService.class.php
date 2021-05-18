@@ -21,6 +21,10 @@ class UserService extends BaseService {
         }
     }
 
+    public function get_user_ads($id, $limit, $offset){
+        return $this->dao->get_user_ads($id, $limit, $offset);
+    }
+
     public function add($user){
         if(!isset($user['email'])) throw new Exception("Email is missing.");
         $user['status'] = "ACTIVE";

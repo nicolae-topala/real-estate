@@ -188,6 +188,11 @@
             }
           });
 
+          app.route({ view : "profile-publications", load : "profile-publications.html", onReady: function() {
+              $.getScript("assets/js/profile-publications.js", function(){});
+            }
+          });
+
           // run app
           app.run();
 

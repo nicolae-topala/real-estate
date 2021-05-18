@@ -96,7 +96,3 @@ function doChangePassword(){
         }
     });
 }
-
-function doChangeProfilePublications(){
-    window.location.replace("#profile-publications");
-}

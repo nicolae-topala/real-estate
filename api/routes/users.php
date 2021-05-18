@@ -34,6 +34,19 @@ Flight::route('GET /admin/accounts', function(){
 });
 
 /**
+* @OA\Get(path="/user/publications", tags={"x-user", "user"},  security={{"ApiKeyAuth":{}}},
+*     @OA\Parameter(name="offset", type="integer", in="query", default=0, description="Offset for pagination."),
+*     @OA\Parameter(name="limit", type="integer", in="query", default=5, description="Limit for pagination."),
+*     @OA\Response(response="200", description="Get user publications.")
+* )
+*/
+Flight::route('GET /user/publications', function(){
+    $offset = Flight::query('offset', 0);
+    $limit = Flight::query('limit', 5);
+    Flight::json(Flight::userservice()->get_user_ads(Flight::get('user')['id'], $limit, $offset));
+});
+
+/**
 * @OA\Get(path="/admin/account/{id}", tags={"x-admin", "user"}, security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of user"),
 *     @OA\Response(response="200", description="Fetch individual user")
