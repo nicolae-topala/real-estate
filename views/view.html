@@ -8,12 +8,12 @@
                     <div>
                         <div class="row">
                             <div class="col">
-                                <h1 style="font-family: Lato, sans-serif;width: 100%;">Title</h1>
+                                <h1 id="view-title" style="font-family: Lato, sans-serif;width: 100%;">Title</h1>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-10 col-sm-5 col-md-4 col-lg-5 col-xl-4 offset-5 offset-sm-7 offset-md-9 offset-lg-8 offset-xl-9 offset-xxl-9">
-                                <p style="font-family: Lato, sans-serif;">Date: 19/04/1994</p>
+                                <p  id="view-date" style="font-family: Lato, sans-serif;">Date: 19/04/1994</p>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -26,31 +26,35 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td>Type</td>
+                                        <td id="view-type">City name</td>
+                                    </tr>
+                                    <tr>
                                         <td>Location</td>
-                                        <td>City name</td>
+                                        <td id="view-location">City name</td>
                                     </tr>
                                     <tr>
                                         <td>Address</td>
-                                        <td>Street address</td>
+                                        <td id="view-address">Street address</td>
                                     </tr>
-                                    <tr>
+                                    <tr id="view-rooms-tr">
                                         <td>Rooms</td>
-                                        <td>4</td>
+                                        <td id="view-rooms">4</td>
                                     </tr>
-                                    <tr>
+                                    <tr id="view-floor-tr">
                                         <td>Floor</td>
-                                        <td>4</td>
+                                        <td id="view-floor">4</td>
                                     </tr>
-                                    <tr>
+                                    <tr id="view-space-tr">
                                         <td>Space(m<sup>2</sup>)</td>
-                                        <td>102</td>
+                                        <td id="view-space">102</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <p style="font-family: Lato, sans-serif;font-size: 18px;">Description text.</p>
+                                <p id="view-text" style="font-family: Lato, sans-serif;font-size: 18px;">Description text.</p>
                             </div>
                         </div>
                         <div class="row">
@@ -76,21 +80,16 @@
                 <div class="view_div_block">
                     <div class="row">
                         <div class="col">
-                            <h1 style="font-family: Lato, sans-serif;width: 100%;">10000&nbsp;<i class="fa fa-dollar"></i></h1>
+                            <h1 id="view-price" style="font-family: Lato, sans-serif;width: 100%;">10000&nbsp;<i class="fa fa-dollar"></i></h1>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xxl-12">
-                            <p style="font-family: Lato, sans-serif;font-size: 22px;">Added by:<a href="#" style="margin-left: 5px;">Admin</a>&nbsp;</p>
+                            <p id="view-user" style="font-family: Lato, sans-serif;font-size: 22px;"></p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xxl-12 offset-xxl-0"><button class="btn btn-primary" type="button" style="width: 100%;">Contact</button></div>
-                    </div>
-                    <div class="row" style="height: 30px;">
-                        <div class="col-8 offset-2 offset-sm-3 offset-md-4 offset-lg-2 offset-xl-3 offset-xxl-4">
-                            <p style="font-family: Lato, sans-serif;margin-top: 5px;font-size: 15px;color: var(--bs-secondary);">Office hours: 8 AM - 18 PM</p>
-                        </div>
+                        <div id="view-contact" class="col-xxl-12 offset-xxl-0"><button class="btn btn-primary" type="button" style="width: 100%;">Contact</button></div>
                     </div>
                 </div>
                 <div>
@@ -125,53 +124,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="padding: 20px;"><div class="container">
-<h2 class="text-center" style="font-family: Lato, sans-serif;">Comments</h2>
-
-<div class="card">
-  <div class="card-body">
-      <div class="row">
-          <div class="col-md-12">
-              <p>
-                  <a class="float-left" href="#"><strong>FirstName LastName</strong></a>
-
-                </p>
-             <div class="clearfix"></div>
-              <p>Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-          </div>
-      </div><hr>
-        <div class="row">
-          <div class="col-md-12" style="margin-top: 20px;">
-              <p>
-                  <a class="float-left" href="#"><strong>FirstName LastName</strong></a>
-
-             </p>
-             <div class="clearfix"></div>
-              <p>Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-          </div>
-      </div>
-  </div>
-</div>
-</div></div>
-        <div class="row user">
-            <div class="col-xxl-12 offset-xxl-0">
-                <form>
-                    <div class="card card-body">
-                        <div class="row">
-                            <div class="col">
-                                <p>FirstName LastName</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col"><textarea class="form-control" style="width: 100%;height: 150px;"></textarea></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-3 col-xl-3 col-xxl-2 offset-lg-9 offset-xl-9 offset-xxl-10"><button class="btn btn-primary" type="submit" style="margin-top: 15px;width: 100%;">Comment</button></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 </div>
+
 <!-- <script src="assets/js/Simple-Slider.js"></script> -->

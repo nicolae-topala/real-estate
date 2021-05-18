@@ -52,7 +52,7 @@ Flight::route('GET /advertisements/@id', function($id){
 });
 
 /**
-* @OA\Post(path="/admin/advertisement/create", tags={"x-admin", "advertisements"}, security={{"ApiKeyAuth":{}}},
+* @OA\Post(path="/user/advertisement/create", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
 *   @OA\RequestBody(description="Basic advertisement info.", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
@@ -72,7 +72,7 @@ Flight::route('GET /advertisements/@id', function($id){
 *  @OA\Response(response="200", description="Create advertisement")
 * )
 */
-Flight::route('POST /admin/advertisement/create', function(){
+Flight::route('POST /user/advertisement/create', function(){
   Flight::json(Flight::advertisementservice()->create_ad(Flight::get('user'), Flight::request()->data->getData()));
 });
 

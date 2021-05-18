@@ -9,11 +9,16 @@ class AdvertisementsDao extends BaseDao{
     public function get_advertisements($offset, $limit, $ad, $order = "-id"){
         list($order_column, $order_direction) = parent::parse_order($order);
 
-        $query="SELECT advertisements.*, descriptions.location_id, descriptions.type_id,
+        $query="SELECT advertisements.*, descriptions.type_id, descriptions.location_id,
+                       locations.name AS location_name, ad_types.name AS type_name,
                        descriptions.rooms, descriptions.floor, descriptions.space,
-                       descriptions.price, descriptions.address, descriptions.text
+                       descriptions.price, descriptions.address, descriptions.text,
+                       users.first_name, users.last_name
                 FROM advertisements
                 JOIN descriptions ON advertisements.description_id=descriptions.id
+                JOIN locations ON descriptions.location_id=locations.id
+                JOIN ad_types ON descriptions.type_id=ad_types.id
+                JOIN users ON advertisements.admin_id=users.id
                 WHERE LOWER(title) LIKE CONCAT('%','".strtolower($ad['title'])."','%')
                 AND address LIKE CONCAT('%','".strtolower($ad['address'])."','%')
                 AND floor >= :floors_min
@@ -46,11 +51,16 @@ class AdvertisementsDao extends BaseDao{
     }
 
     public function get_ad_by_id($id){
-        return $this->query_unique("SELECT advertisements.*, descriptions.location_id, descriptions.type_id,
+        return $this->query_unique("SELECT advertisements.*, descriptions.type_id, descriptions.location_id,
+                                           locations.name AS location_name, ad_types.name AS type_name,
                                            descriptions.rooms, descriptions.floor, descriptions.space,
-                                           descriptions.price, descriptions.address, descriptions.text
+                                           descriptions.price, descriptions.address, descriptions.text,
+                                           users.first_name, users.last_name
                                     FROM advertisements
                                     JOIN descriptions ON advertisements.description_id=descriptions.id
+                                    JOIN locations ON descriptions.location_id=locations.id
+                                    JOIN ad_types ON descriptions.type_id=ad_types.id
+                                    JOIN users ON advertisements.admin_id=users.id
                                     WHERE advertisements.id = :id", ["id" => $id]);
     }
 }
