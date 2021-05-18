@@ -26,7 +26,7 @@ Flight::route('GET /advertisements', function(){
     $title = Flight::query('title', "%");
     $order = Flight::query('order', "-id");
     $floors_min = Flight::query('floors_min', 0);
-    $floors_max = Flight::query('floors_max', 100);
+    $floors_max = Flight::query('floors_max', 100000);
     $price_min = Flight::query('price_min', 0);
     $price_max = Flight::query('price_max', 9999999);
     $location_id = Flight::query('location_id');
@@ -57,7 +57,6 @@ Flight::route('GET /advertisements/@id', function($id){
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
 *    				 @OA\Property(property="title", required="true", type="string", example="Title",	description="Advertisement's title."),
-*    				 @OA\Property(property="description_id", required="true", type="integer", example=1,	description="Description ID, with all the attributes there." ),
 *            @OA\Property(property="address", required="true", type="string", example="Manhatan street 2",	description="The address."),
 *            @OA\Property(property="location_id", required="true", type="integer", example=1,	description="Location ID from Locations Table."),
 *            @OA\Property(property="type_id", required="true", type="integer", example=1,	description="Type ID from Types Table."),

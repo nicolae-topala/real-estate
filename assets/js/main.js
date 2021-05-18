@@ -19,7 +19,8 @@ $(document).ready(function(){
         success: function(data, textStatus, jqXHR){
             var html="";
             for(var i = 0; i < data.length; i++){
-                 html += '<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3 recommended_column"><a class="ads_link" href="?id='+data[i].id+'#view">'
+                 html += '<div class="col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3 recommended_column">'
+                           + '<a class="ads_link" href="?ad_id='+data[i].id+'#view">'
                            + '<div class="recommended_div_block">'
                               + '<p class="recommended_paragraph_title"><strong>&nbsp;'+data[i].title+'</strong></p>'
                               + '<p class="recommended_paragraph">Price: '+data[i].price+'&nbsp;<i class="fa fa-dollar"></i></p>'

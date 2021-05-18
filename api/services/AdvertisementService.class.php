@@ -46,10 +46,10 @@ class AdvertisementService extends BaseService {
         if(!isset($data['price'])) throw new Exception("Price field is required.");
         if(!isset($data['address'])) throw new Exception("Address field is required.");
 
-        if(!isset($data['space']) || strlen($data['space'])<1) $data['space'] = NULL;
-        if(!isset($data['floor']) || strlen($data['floor'])<1) $data['floor'] = NULL;
-        if(!isset($data['rooms']) || strlen($data['rooms'])<1) $data['rooms'] = NULL;
-        if(!isset($data['text']) || strlen($data['text'])<1) $data['text'] = NULL;
+        if(!isset($data['space']) || strlen($data['space'])<1) $data['space'] = 0;
+        if(!isset($data['floor']) || strlen($data['floor'])<1) $data['floor'] = 0;
+        if(!isset($data['rooms']) || strlen($data['rooms'])<1) $data['rooms'] = 0;
+        if(!isset($data['text']) || strlen($data['text'])<1) $data['text'] = "";
 
         try {
             $this->dao->beginTransaction();
