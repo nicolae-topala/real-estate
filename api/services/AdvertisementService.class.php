@@ -78,10 +78,21 @@ class AdvertisementService extends BaseService {
         }
 
         $this->dao->update($advertisement['id'], ["description_id" => $description['id']]);
-        return $data;
+        return $advertisement + $description;
     }
 
     public function modify_ad($id, $data, $user){
+        if(!isset($data['title'])) throw new Exception("Title field is required.");
+        if(!isset($data['location_id'])) throw new Exception("Location field is required.");
+        if(!isset($data['type_id'])) throw new Exception("Type field is required.");
+        if(!isset($data['price'])) throw new Exception("Price field is required.");
+        if(!isset($data['address'])) throw new Exception("Address field is required.");
+
+        if(!isset($data['space']) || strlen($data['space'])<1) $data['space'] = 0;
+        if(!isset($data['floor']) || strlen($data['floor'])<1) $data['floor'] = 0;
+        if(!isset($data['rooms']) || strlen($data['rooms'])<1) $data['rooms'] = 0;
+        if(!isset($data['text']) || strlen($data['text'])<1) $data['text'] = "";
+
         try {
             $this->dao->beginTransaction();
 
@@ -108,6 +119,25 @@ class AdvertisementService extends BaseService {
             throw $e;
         }
 
-        return $data;
+        return $advertisement + $description;
+    }
+
+    public function modify_user_ad($id, $data, $user){
+      
+        if( $this->verify_ad_user($user['id'], $id) == true ){
+            return $this->modify_ad($id, $data, $user);
+        } else {
+            throw new Exception("You do not own this ad.");
+        }
+    }
+
+    public function verify_ad_user($id, $ad){
+        $ad = $this->dao->get_ad_by_id($ad);
+
+        if($id == $ad['admin_id']){
+            return true;
+        } else {
+            throw new Exception("You do not own this ad.");
+        }
     }
 }

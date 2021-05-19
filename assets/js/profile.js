@@ -64,7 +64,7 @@ function getUserData(){
             $("#profile-date").html(html);
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            $("#profile-alert").text(jqXHR).show();
+            $("#profile-alert").text( jqXHR.responseText ).show();
             $("#profile-info").hide();
         }
     });

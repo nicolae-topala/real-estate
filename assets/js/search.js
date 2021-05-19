@@ -8,9 +8,10 @@ $(document).ready(function(){
                  html += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
             }
           $(".js-search-location").html(html);
+
+          getAds(1);
         }
     });
-    getAds(1);
 });
 
 function getAds(page){

@@ -19,7 +19,7 @@ $(document).ready(function(){
         if(data.space != 0) $("#view-space").html(data.space);
           else $("#view-space-tr").html('');
 
-        if(data.text == "") $("#view-text").html(data.text);
+        if(data.text != "") $("#view-text").html(data.text);
           else $("#view-text").html('');
 
         html = data.price+'<i class="fa fa-dollar"></i>'
@@ -29,10 +29,23 @@ $(document).ready(function(){
         html += data.last_name+'</a>&nbsp;';
         $("#view-user").html(html);
 
-        html = '<a href="?=user_id='+data.admin_id+'#profile-view"';
+        html = '<a href="?user_id='+data.admin_id+'#profile-view"';
         html += ' class="btn btn-primary" type="button" style="width: 100%;">Contact</a>';
         $("#view-contact").html(html);
+    });
 
-
+    $.ajax({
+        url: "api/user/advertisement/verify/" + urlParams.get('ad_id'),
+        type: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+        success: function(data, textStatus, jqXHR){
+            if( data == true ) $("#modify_ad").show();
+        }
     });
 });
+
+function doEdit(){
+    var urlParams = new URLSearchParams(window.location.search);
+
+    window.location.replace('?ad_id='+urlParams.get('ad_id')+'#modify')
+}

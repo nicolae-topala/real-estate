@@ -52,6 +52,16 @@ Flight::route('GET /advertisements/@id', function($id){
 });
 
 /**
+* @OA\Get(path="/user/advertisement/verify/{ad_id}", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
+*     @OA\Parameter(@OA\Schema(type="integer"), in="path", type="integer", name="ad_id", example=1, description="ID of the ad"),
+*     @OA\Response(response="200", description="Fetch individual advertisement")
+* )
+*/
+Flight::route('GET /user/advertisement/verify/@ad_id', function($ad_id){
+  flight::json(Flight::advertisementservice()->verify_ad_user(Flight::get('user')['id'], $ad_id));
+});
+
+/**
 * @OA\Post(path="/user/advertisement/create", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
 *   @OA\RequestBody(description="Basic advertisement info.", required=true,
 *       @OA\MediaType(mediaType="application/json",
@@ -98,4 +108,29 @@ Flight::route('POST /user/advertisement/create', function(){
 */
 Flight::route('PUT /admin/advertisement/@id', function($id){
     Flight::json(Flight::advertisementservice()->modify_ad($id, Flight::request()->data->getData(), Flight::get('user')));
+});
+
+/**
+* @OA\Put(path="/user/advertisement/{id}", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
+*     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1),
+*     @OA\RequestBody(description="Basic advertisement info that is going to be updated.", required=true,
+*         @OA\MediaType(mediaType="application/json",
+*             @OA\Schema(
+*                 @OA\Property(property="title", type="string", example="House title", description="The title of the ad"),
+*                 @OA\Property(property="address", type="string", example="Human street nr.3", description="The street number of the ad"),
+*                 @OA\Property(property="location_id", type="integer", example="1", description="The id that includes the location"),
+*                 @OA\Property(property="type_id", type="integer", example="1", description="The type of the ad"),
+*                 @OA\Property(property="price", type="integer", example="2500", description="Price number"),
+*                 @OA\Property(property="floor", type="integer", example="4", description="Floor number"),
+*                 @OA\Property(property="space", type="integer", example="53", description="Space number in m2"),
+*                 @OA\Property(property="rooms", type="integer", example="2", description="Number of rooms"),
+*                 @OA\Property(property="text", type="string", example="This is a text.", description="The description, max 1000 characters")
+*             )
+*         )
+*     ),
+*     @OA\Response(response="200", description="Update account.")
+* )
+*/
+Flight::route('PUT /user/advertisement/@id', function($id){
+    Flight::json(Flight::advertisementservice()->modify_user_ad($id, Flight::request()->data->getData(), Flight::get('user')));
 });

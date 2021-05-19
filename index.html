@@ -41,6 +41,7 @@
             <div class="container-fluid"><a class="navbar-brand" href="#main">&nbsp;<img class="navbar-logo" src="assets/img/logo.png"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Home</a><button data-bs-toggle="collapse" class="navbar-toggler bg-light" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon" style="color: red;"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1" style="background-color: #292c2f;padding: 10px;">
                     <ul class="navbar-nav ms-auto">
+                        <li class="user nav-item" style="display: none; margin-right: 10px;"><a class="btn btn-primary search_bar_button" href="#create" style="width: auto; margin-bottom: 5px;">Create advertisement</a></li>
                         <li class="user nav-item" style="display: none;"><a id="IndexProfileName" href="#profile" class="btn btn-light" type="button" style="box-shadow: 0px 0px; margin-right: 5px;"><i class="fa fa-user"></i>&nbsp;</a></li>
                         <li id="LogOut" class="user nav-item" style="display: none;"><button class="btn text-white" type="button" style="background-color: transparent; border: none; box-shadow: 0px 0px;margin-right: 5px;">Log Out &nbsp;<i class="fa fa-arrow-right"></i></button></li>
                         <li class="guest nav-item"><button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#LoginModal" style="box-shadow: 0px 0px;margin-right: 5px;">Sign in</button></li>
@@ -91,6 +92,7 @@
     <main id="spapp" role="main">
       <section id="confirmation-accepted" data-load="confirmation-accepted.html"></section>
       <section id="create" data-load="create.html"></section>
+      <section id="modify" data-load="modify.html"></section>
       <section id="main" data-load="main.html"></section>
       <section id="forgot-accepted" data-load="forgot-accepted.html"></section>
       <section id="forgot" data-load="forgot.html"></section>
@@ -191,6 +193,16 @@
 
           app.route({ view : "profile-publications", load : "profile-publications.html", onReady: function() {
               $.getScript("assets/js/profile-publications.js", function(){});
+            }
+          });
+
+          app.route({ view : "create", load : "create.html", onReady: function() {
+              $.getScript("assets/js/create.js", function(){});
+            }
+          });
+
+          app.route({ view : "modify", load : "modify.html", onReady: function() {
+              $.getScript("assets/js/modify.js", function(){});
             }
           });
 
