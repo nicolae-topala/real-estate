@@ -123,11 +123,11 @@ class AdvertisementService extends BaseService {
     }
 
     public function modify_user_ad($id, $data, $user){
-      
+
         if( $this->verify_ad_user($user['id'], $id) == true ){
             return $this->modify_ad($id, $data, $user);
         } else {
-            throw new Exception("You do not own this ad.");
+            throw new Exception("You do not own this ad.", 500);
         }
     }
 
@@ -137,7 +137,7 @@ class AdvertisementService extends BaseService {
         if($id == $ad['admin_id']){
             return true;
         } else {
-            throw new Exception("You do not own this ad.");
+            throw new Exception("You do not own this ad.", 500);
         }
     }
 }

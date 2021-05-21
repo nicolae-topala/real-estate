@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    if(!window.localStorage.getItem("token")){
+        window.location.replace("#main");
+        return 0;
+    }
+
     $.ajax({
         url: "api/locations",
         type: "GET",

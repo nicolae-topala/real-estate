@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    if(!window.localStorage.getItem("token")){
+        window.location.replace("#main");
+        return 0;
+    }
+
     var urlParams = new URLSearchParams(window.location.search);
 
     $.ajax({
@@ -20,7 +25,7 @@ $(document).ready(function(){
       $("#create-description").val(data.text);
     });
 
-  /*  $.ajax({
+    $.ajax({
         url: "api/user/account",
         type: "GET",
         beforeSend: function(jqXHR){
@@ -29,21 +34,27 @@ $(document).ready(function(){
         success: function(data, textStatus, jqXHR){
         }
     });
+});
+
+function doModify(){
+    var urlParams = new URLSearchParams(window.location.search);
+
+    $("#modify_button").addClass('disabled');
+    $("#modify-alert").hide();
 
     $.ajax({
-        url: "api/user/account/",
+        url: "api/user/advertisement/" + urlParams.get('ad_id'),
         type: "PUT",
-        data: JSON.stringify(jsonize_form("#profile-password")),
+        data: JSON.stringify(jsonize_form("#Modify_Form")),
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
         success: function(data) {
-            $("#profile-password-saved").show();
-            $("#profile-password-button").removeClass('disabled');
+            window.location.replace('?ad_id='+ data.id +'#view');
+            $("#modify_button").removeClass('disabled');
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            $("#profile-alert").text(jqXHR).show();
-            $("#profile-password-button").removeClass('disabled');
+            $("#modify-alert").text(jqXHR.responseText).show();
+            $("#pmodify_button").removeClass('disabled');
         }
-    });*/
-
-});
+    });
+}
