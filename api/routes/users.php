@@ -57,6 +57,16 @@ Flight::route('GET /admin/account/@id', function($id){
 });
 
 /**
+* @OA\Get(path="/account/{id}", tags={"x-user", "user"},
+*     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of user"),
+*     @OA\Response(response="200", description="Fetch individual user")
+* )
+*/
+Flight::route('GET /account/@id', function($id){
+     Flight::json(Flight::userservice()->get_user($id));
+});
+
+/**
 * @OA\Put(path="/admin/account/{id}", tags={"x-admin", "user"},  security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1),
 *     @OA\RequestBody(description="Basic user info that is going to be updated.", required=true,

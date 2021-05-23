@@ -11,16 +11,16 @@ $(document).ready(function(){
         $("#view-address").html(data.address);
 
         if(data.rooms != 0) $("#view-rooms").html(data.rooms);
-          else $("#view-rooms-tr").html('');
+            else $("#view-rooms-tr").html('');
 
         if(data.floor != 0) $("#view-floor").html(data.floor);
-          else $("#view-floor-tr").html('');
+            else $("#view-floor-tr").html('');
 
         if(data.space != 0) $("#view-space").html(data.space);
-          else $("#view-space-tr").html('');
+            else $("#view-space-tr").html('');
 
         if(data.text != "") $("#view-text").html(data.text);
-          else $("#view-text").html('');
+            else $("#view-text").html('');
 
         html = data.price+'<i class="fa fa-dollar"></i>'
         $("#view-price").html(html);

@@ -41,4 +41,11 @@
                                WHERE admin_id = :id
                                LIMIT ${limit} OFFSET ${offset}",["id" => $id]);
       }
+
+      public function get_user($id){
+          return $this->query_unique("SELECT first_name, last_name, email, telephone,
+                                      admin_level, status
+                               FROM users
+                               WHERE id = :id",["id" => $id]);
+      }
 }

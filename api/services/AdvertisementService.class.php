@@ -13,6 +13,12 @@ class AdvertisementService extends BaseService {
       $this->descriptionDao = new DescriptionsDao();
     }
 
+    public function get_user_advertisements($offset, $limit, $user_id, $order){
+        if(!$user_id) throw new Exception("You need to insert user id.", 500);
+
+        return $this->dao->get_user_advertisements($offset, $limit, $user_id, $order);
+    }
+
     public function get_advertisements($title, $offset, $limit, $order, $floors_min, $floors_max, $price_min, $address,
                                        $price_max, $location_id, $type_id, $space_min, $space_max, $rooms_min, $rooms_max){
       $ad=[
@@ -40,11 +46,11 @@ class AdvertisementService extends BaseService {
     }
 
     public function create_ad($user, $data){
-        if(!isset($data['title'])) throw new Exception("Title field is required.");
-        if(!isset($data['location_id'])) throw new Exception("Location field is required.");
-        if(!isset($data['type_id'])) throw new Exception("Type field is required.");
-        if(!isset($data['price'])) throw new Exception("Price field is required.");
-        if(!isset($data['address'])) throw new Exception("Address field is required.");
+        if(!isset($data['title'])) throw new Exception("Title field is required.", 500);
+        if(!isset($data['location_id'])) throw new Exception("Location field is required.", 500);
+        if(!isset($data['type_id'])) throw new Exception("Type field is required.", 500);
+        if(!isset($data['price'])) throw new Exception("Price field is required.", 500);
+        if(!isset($data['address'])) throw new Exception("Address field is required.", 500);
 
         if(!isset($data['space']) || strlen($data['space'])<1) $data['space'] = 0;
         if(!isset($data['floor']) || strlen($data['floor'])<1) $data['floor'] = 0;
@@ -82,11 +88,11 @@ class AdvertisementService extends BaseService {
     }
 
     public function modify_ad($id, $data, $user){
-        if(!isset($data['title'])) throw new Exception("Title field is required.");
-        if(!isset($data['location_id'])) throw new Exception("Location field is required.");
-        if(!isset($data['type_id'])) throw new Exception("Type field is required.");
-        if(!isset($data['price'])) throw new Exception("Price field is required.");
-        if(!isset($data['address'])) throw new Exception("Address field is required.");
+        if(!isset($data['title'])) throw new Exception("Title field is required.", 500);
+        if(!isset($data['location_id'])) throw new Exception("Location field is required.", 500);
+        if(!isset($data['type_id'])) throw new Exception("Type field is required.", 500);
+        if(!isset($data['price'])) throw new Exception("Price field is required.", 500);
+        if(!isset($data['address'])) throw new Exception("Address field is required.", 500);
 
         if(!isset($data['space']) || strlen($data['space'])<1) $data['space'] = 0;
         if(!isset($data['floor']) || strlen($data['floor'])<1) $data['floor'] = 0;

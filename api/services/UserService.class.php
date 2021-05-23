@@ -21,6 +21,10 @@ class UserService extends BaseService {
         }
     }
 
+    public function get_user($id){
+        return $this->dao->get_user($id);
+    }
+
     public function get_user_ads($id, $limit, $offset){
         return $this->dao->get_user_ads($id, $limit, $offset);
     }
@@ -49,7 +53,8 @@ class UserService extends BaseService {
                 "email" => $user['email'],
                 "password" => $user['password'],
                 "telephone" => $user['telephone'],
-                "token" => $user['token']
+                "token" => $user['token'],
+                "admin_level" => 0
             ]);
 
         }catch(\Exception $e){

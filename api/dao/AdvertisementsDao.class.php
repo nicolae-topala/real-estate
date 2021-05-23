@@ -50,6 +50,26 @@ class AdvertisementsDao extends BaseDao{
         ]);
     }
 
+    public function get_user_advertisements($offset, $limit, $user_id, $order = "-id"){
+        list($order_column, $order_direction) = parent::parse_order($order);
+
+        $query="SELECT advertisements.*, descriptions.type_id, descriptions.location_id,
+                       descriptions.rooms, descriptions.floor, descriptions.space,
+                       descriptions.price, descriptions.address, descriptions.text
+                FROM advertisements
+                JOIN descriptions ON advertisements.description_id=descriptions.id
+                WHERE admin_id = :id ";
+
+        if($order_column=="id" || $order_column=="title") // search on advertisements only id and title, the rest are on descriptions
+            $order_table="advertisements";
+        else
+            $order_table = "descriptions";
+
+        $query.="ORDER BY ${order_table}.${order_column} ${order_direction} LIMIT ${limit} OFFSET ${offset}";
+
+        return $this->query($query, ["id" => $user_id]);
+    }
+
     public function get_ad_by_id($id){
         return $this->query_unique("SELECT advertisements.*, descriptions.type_id, descriptions.location_id,
                                            locations.name AS location_name, ad_types.name AS type_name,

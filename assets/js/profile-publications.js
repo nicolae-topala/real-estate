@@ -53,7 +53,8 @@ function getUserPublications(page){
                       var html = "";
 
                       if(page > 1)
-                          html += '<a class="page-link btn pages" onclick="getUserPublications('+(page-1)+')" aria-label="Previous"><span aria-hidden="true">«</span></a>';
+                          html += '<a class="page-link btn pages" onclick="getUserPublications('+(page-1)+')" aria-label="Previous">'
+                                + '<span aria-hidden="true">«</span></a>';
 
                       for(var i = 1; i <= pages; i++){
                           if (i == page) html += '<a class="page-link btn pages page-active disabled">'+i+'</a>';
@@ -61,7 +62,8 @@ function getUserPublications(page){
                       }
 
                       if(page < pages)
-                          html +='<a onclick="getUserPublications('+(page+1)+')" class="page-link btn pages" aria-label="Next" ><span aria-hidden="true">»</span></a>';
+                          html += '<a onclick="getUserPublications('+(page+1)+')" class="page-link btn pages" aria-label="Next" >'
+                                + '<span aria-hidden="true">»</span></a>';
 
                       $("#profile-publications-page").html(html);
                       $("#profile-publications-page").show();

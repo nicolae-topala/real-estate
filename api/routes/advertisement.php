@@ -42,6 +42,23 @@ Flight::route('GET /advertisements', function(){
 });
 
 /**
+* @OA\GET(path="/advertisements/profile/{user_id}", tags={"x-user", "advertisements"},
+*     @OA\Parameter(name="offset", type="integer", in="query", default=0, description="Offset for pagination."),
+*     @OA\Parameter(name="limit", type="integer", in="query", default=5, description="Limit for pagination."),
+*     @OA\Parameter(name="order", type="string", in="query", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name desceding order by column_name."),
+*     @OA\Parameter(name="user_id", type="integer", in="path", example=1, description="User ID that owns the ADS."),
+*     @OA\Response(response="200", description="ADs from a specific user")
+* )
+*/
+Flight::route('GET /advertisements/profile/@user_id', function($user_id){
+    $offset = Flight::query('offset', 0);
+    $limit = Flight::query('limit', 5);
+    $order = Flight::query('order', "-id");
+
+    Flight::json(Flight::advertisementservice()->get_user_advertisements($offset, $limit, $user_id, $order));
+});
+
+/**
 * @OA\Get(path="/advertisements/{id}", tags={"x-user", "advertisements"},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example=1, description="ID of the ad"),
 *     @OA\Response(response="200", description="Fetch individual advertisement")
