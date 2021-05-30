@@ -8,10 +8,12 @@ require_once dirname(__FILE__)."/../vendor/autoload.php";
 require_once dirname(__FILE__)."/services/UserService.class.php";
 require_once dirname(__FILE__)."/services/AdvertisementService.class.php";
 require_once dirname(__FILE__)."/services/LocationService.class.php";
+require_once dirname(__FILE__)."/services/PhotoService.class.php";
 require_once dirname(__FILE__)."/routes/middleware.php";
 require_once dirname(__FILE__)."/routes/users.php";
 require_once dirname(__FILE__)."/routes/advertisement.php";
 require_once dirname(__FILE__)."/routes/locations.php";
+require_once dirname(__FILE__)."/routes/photos.php";
 
 Flight::set('flight.log_errors', TRUE);
 
@@ -27,6 +29,7 @@ Flight::map('error', function(Exception $ex){
 Flight::register('userservice', 'UserService');
 Flight::register('advertisementservice', 'AdvertisementService');
 Flight::register('locationservice', 'LocationService');
+Flight::register('photoservice', 'PhotoService');
 
 /**
  * Utility function for reading query parameters from URL

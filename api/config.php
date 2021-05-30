@@ -17,6 +17,7 @@ class Config{
     public static function DB_PORT(){
         return Config::get_env("DB_PORT", "3306");
     }
+
     public static function SMTP_HOST(){
         return Config::get_env("SMTP_HOST", "smtp.gmail.com");
     }
@@ -28,6 +29,22 @@ class Config{
     }
     public static function SMTP_PASS(){
         return Config::get_env("SMTP_PASS", "dumyexiodehnypay");
+    }
+// CDN config
+    public static function CDN_KEY(){
+        return Config::get_env("CDN_KEY", "F5A3CXUKXVYXCRNBZ2ZX");
+    }
+    public static function CDN_SECRET(){
+        return Config::get_env("CDN_SECRET", "+xkJKwb1KwJGkMqJBOEDPUoH2v2z8qBheQ/5D7XQ6fA");
+    }
+    public static function CDN_SPACE(){
+        return Config::get_env("CDN_SPACE", "cdn.real-estate.live");
+    }
+    public static function CDN_BASE_URL(){
+        return Config::get_env("CDN_BASE_URL", "https://fra1.digitaloceanspaces.com");
+    }
+    public static function CDN_REGION(){
+        return Config::get_env("CDN_REGION", "fra1");
     }
 
     const JWT_SECRET ="!IgzGraHsaoWSPc1Orm^u8*pS0sgKQ";

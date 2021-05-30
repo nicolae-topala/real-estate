@@ -13,12 +13,13 @@ class AdvertisementsDao extends BaseDao{
                        locations.name AS location_name, ad_types.name AS type_name,
                        descriptions.rooms, descriptions.floor, descriptions.space,
                        descriptions.price, descriptions.address, descriptions.text,
-                       users.first_name, users.last_name
+                       users.first_name, users.last_name, photos.name
                 FROM advertisements
                 JOIN descriptions ON advertisements.description_id=descriptions.id
                 JOIN locations ON descriptions.location_id=locations.id
                 JOIN ad_types ON descriptions.type_id=ad_types.id
                 JOIN users ON advertisements.admin_id=users.id
+                JOIN photos ON descriptions.thumbnail_id=photos.id
                 WHERE LOWER(title) LIKE CONCAT('%','".strtolower($ad['title'])."','%')
                 AND address LIKE CONCAT('%','".strtolower($ad['address'])."','%')
                 AND floor >= :floors_min
@@ -55,9 +56,11 @@ class AdvertisementsDao extends BaseDao{
 
         $query="SELECT advertisements.*, descriptions.type_id, descriptions.location_id,
                        descriptions.rooms, descriptions.floor, descriptions.space,
-                       descriptions.price, descriptions.address, descriptions.text
+                       descriptions.price, descriptions.address, descriptions.text,
+                       photos.name
                 FROM advertisements
                 JOIN descriptions ON advertisements.description_id=descriptions.id
+                JOIN photos ON descriptions.thumbnail_id=photos.id
                 WHERE admin_id = :id ";
 
         if($order_column=="id" || $order_column=="title") // search on advertisements only id and title, the rest are on descriptions
@@ -75,12 +78,13 @@ class AdvertisementsDao extends BaseDao{
                                            locations.name AS location_name, ad_types.name AS type_name,
                                            descriptions.rooms, descriptions.floor, descriptions.space,
                                            descriptions.price, descriptions.address, descriptions.text,
-                                           users.first_name, users.last_name
+                                           users.first_name, users.last_name, photos.name
                                     FROM advertisements
                                     JOIN descriptions ON advertisements.description_id=descriptions.id
                                     JOIN locations ON descriptions.location_id=locations.id
                                     JOIN ad_types ON descriptions.type_id=ad_types.id
                                     JOIN users ON advertisements.admin_id=users.id
+                                    JOIN photos ON descriptions.thumbnail_id=photos.id
                                     WHERE advertisements.id = :id", ["id" => $id]);
     }
 }
