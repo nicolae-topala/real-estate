@@ -2,7 +2,7 @@
 
 /**
 * @OA\Post(path="/user/photos/add", tags={"photos", "x-user"}, deion="Query for uploading a photo to CDN", security={{"ApiKeyAuth": {}}},
-*   @OA\RequestBody(deion="Upload file to CDN", required=true,
+*   @OA\RequestBody(description="Upload file to CDN", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
 *    			   @OA\Property(property="id", required="true", type="integer", example="1",	deion="ID of the AD" ),
@@ -19,7 +19,7 @@ Flight::route('POST /user/photos/add', function(){
 
 /**
 * @OA\Post(path="/user/photos/add_thumbnail", tags={"photos", "x-user"}, deion="Query for uploading the thumbnail to CDN", security={{"ApiKeyAuth": {}}},
-*   @OA\RequestBody(deion="Upload the thumbnail to CDN", required=true,
+*   @OA\RequestBody(description="Upload the thumbnail to CDN", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
 *    			   @OA\Property(property="id", required="true", type="integer", example="1",	deion="ID of the AD" ),

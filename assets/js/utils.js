@@ -35,3 +35,63 @@ function urlParamsToJson(){
     var search = location.search.substring(1);
     return JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) });
 }
+
+function uploadImage(ad_id, selectorId, type){
+  var files = $(selectorId)[0].files;
+
+  if(files.length == 0) return 0;
+
+  for(var i=0; i < files.length; i++){
+      var file = files[i];
+
+      var reader = new FileReader();
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+          return function(e) {
+              var upload = {
+                id: ad_id,
+                content: e.target.result.split(',')[1]
+              };
+
+              if(type == "photo"){
+                  $.ajax({
+                      url: "api/user/photos/add",
+                      type: "POST",
+                      data: JSON.stringify(upload),
+                      contentType: "application/json",
+                      beforeSend: function(xhr){
+                          xhr.setRequestHeader('Authentication', localStorage.getItem("token"));
+                      },
+                      success: function (data) {
+                          console.log("Image loaded successfully!");
+                          console.log(data);
+                      },
+                      error: function(jqXHR, textStatus, errorThrown) {
+                          console.log(jqXHR.responseText);
+                      }
+                  });
+              }
+              else if(type == "thumbnail"){
+                  $.ajax({
+                      url: "api/user/photos/add_thumbnail",
+                      type: "POST",
+                      data: JSON.stringify(upload),
+                      contentType: "application/json",
+                      beforeSend: function(xhr){
+                          xhr.setRequestHeader('Authentication', localStorage.getItem("token"));
+                      },
+                      success: function (data) {
+                          console.log("Thumbnail loaded successfully!");
+                          console.log(data);
+                      },
+                      error: function(jqXHR, textStatus, errorThrown) {
+                          console.log(jqXHR.responseText);
+                      }
+                  });
+              }
+          };
+      })(file);
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(file);
+  }
+}

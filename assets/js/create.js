@@ -28,6 +28,8 @@ function doCreate() {
         data: jsonize_form("#Create_Form"),
         beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
         success: function(data, textStatus, jqXHR){
+            uploadImage(data.id, "#create-thumbnail", "thumbnail");
+            uploadImage(data.id, "#create-photos", "photo");
             $("#create_button").removeClass('disabled');
             location.replace('?ad_id='+data.id+'#view');
         },

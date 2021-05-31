@@ -29,7 +29,8 @@ function getUserPublications(page){
                         +    '<p class="recommended_paragraph_title"><strong>&nbsp;'+data[i].title+'</strong></p>'
                         +    '<p class="recommended_paragraph">Price: '+data[i].price+'&nbsp;<i class="fa fa-dollar"></i></p>'
                         +    '<p class="recommended_paragraph">Space: '+data[i].space+' m<sup>2</sup></p>'
-                        +    '<p class="recommended_paragraph">Address: '+data[i].address+'</p><img class="recommended_image" src="https://picsum.photos/1200/1200" width="300" height="200">'
+                        +    '<p class="recommended_paragraph">Address: '+data[i].address+'</p>'
+                        +    '<img class="recommended_image" src="https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/'+data[i].name+'" width="300" height="200">'
                       +  '</div>'
                   +  '</a></div>';
               }

@@ -91,7 +91,7 @@ function doChangePassword(){
             $("#profile-password-button").removeClass('disabled');
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            $("#profile-alert").text(jqXHR).show();
+            $("#profile-alert").text(jqXHR.responseText).show();
             $("#profile-password-button").removeClass('disabled');
         }
     });

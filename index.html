@@ -156,7 +156,6 @@
           //load js code to pages
           app.route({ view : "view", load : "view.html", onReady: function() {
               $.getScript("assets/js/Simple-Slider.js", function(){});
-              $.getScript("assets/js/check-token.js", function(){});
               $.getScript("assets/js/view.js", function(){});
             }
           });

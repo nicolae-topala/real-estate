@@ -2,7 +2,8 @@ $(document).ready(function() {
     if(window.localStorage.getItem("token")){
         $(".user").show();
         $(".guest").hide();
-    }else{
+    }
+    else{
         $(".user").hide();
         $(".guest").show();
     };
