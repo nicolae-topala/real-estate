@@ -6,7 +6,6 @@ $(document).ready(function(){
     }
 
     $.get("api/account/" + urlParams.get('user_id')).done(function(data){
-        console.log(data);
         var html = "";
 
         $(".profile-email").html('E-mail: '+data.email);
@@ -46,8 +45,8 @@ function getUserAds(page){
     main_data.offset = (page-1) * main_data.limit;
 
     $.get( "api/advertisements/profile/" + urlParams.get('user_id'), main_data ).done(function(data){
-        console.log(data);
-        var html = "";
+      var html = "";
+
       if(data < 1){
           html = '<strong>There are no publications</strong>';
           $("#user-publications-text").html(html);

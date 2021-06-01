@@ -13,7 +13,7 @@ class AdvertisementsDao extends BaseDao{
                        locations.name AS location_name, ad_types.name AS type_name,
                        descriptions.rooms, descriptions.floor, descriptions.space,
                        descriptions.price, descriptions.address, descriptions.text,
-                       users.first_name, users.last_name, photos.name
+                      users.first_name, users.last_name, photos.name
                 FROM advertisements
                 JOIN descriptions ON advertisements.description_id=descriptions.id
                 JOIN locations ON descriptions.location_id=locations.id
@@ -86,5 +86,10 @@ class AdvertisementsDao extends BaseDao{
                                     JOIN users ON advertisements.admin_id=users.id
                                     JOIN photos ON descriptions.thumbnail_id=photos.id
                                     WHERE advertisements.id = :id", ["id" => $id]);
+    }
+
+    public function delete_ad($description_id){
+        $this->query_unique("DELETE FROM advertisements
+                             WHERE description_id = :description_id", ["description_id" => $description_id]);
     }
 }

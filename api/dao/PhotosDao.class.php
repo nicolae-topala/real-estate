@@ -21,4 +21,12 @@ class PhotosDao extends BaseDao{
         return parent::remove($filename);
     }
 
+    public function delete_photos($description_id){
+        $this->query_unique("UPDATE descriptions
+                             SET thumbnail_id = NULL
+                             WHERE id = :description_id", ["description_id" => $description_id]);
+
+         $this->query_unique("DELETE FROM photos
+                              WHERE description_id = :description_id", ["description_id" => $description_id]);
+    }
 }

@@ -79,6 +79,17 @@ Flight::route('GET /user/advertisement/verify/@ad_id', function($ad_id){
 });
 
 /**
+* @OA\Get(path="/user/advertisement/delete/{ad_id}", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
+*     @OA\Parameter(@OA\Schema(type="integer"), in="path", type="integer", name="ad_id", example=1, description="ID of the ad"),
+*     @OA\Response(response="200", description="Delete advertisements from DB.")
+* )
+*/
+Flight::route('GET /user/advertisement/delete/@ad_id', function($ad_id){
+  flight::json(Flight::advertisementservice()->delete_ad(Flight::get('user'), $ad_id));
+});
+
+
+/**
 * @OA\Post(path="/user/advertisement/create", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
 *   @OA\RequestBody(description="Basic advertisement info.", required=true,
 *       @OA\MediaType(mediaType="application/json",

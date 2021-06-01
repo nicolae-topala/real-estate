@@ -20,7 +20,8 @@ function getUserPublications(page){
               var html = '<strong>There are no publications</strong>';
               $("#profile-publication-text").html(html);
               $("#profile-publications-results").html();
-          }else{
+          }
+          else{
               var html = "";
 
               for(var i = 0; i < data.length; i++){

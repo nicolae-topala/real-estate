@@ -9,6 +9,8 @@ require_once dirname(__FILE__)."/../clients/CDNClient.class.php";
 class PhotoService extends BaseService{
 
     private $CDNClient;
+    private $DescriptionsDao;
+    private $AdvertisementService;
 
     public function __construct(){
         $this->dao = new PhotosDao();

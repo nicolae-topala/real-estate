@@ -3,14 +3,20 @@
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/AdvertisementsDao.class.php";
 require_once dirname(__FILE__)."/../dao/DescriptionsDao.class.php";
+require_once dirname(__FILE__)."/../dao/PhotosDao.class.php";
+require_once dirname(__FILE__)."/../clients/CDNClient.class.php";
 
 class AdvertisementService extends BaseService {
 
     private $descriptionDao;
+    private $photosDao;
+    private $CDNClient;
 
     public function __construct() {
       $this->dao = new AdvertisementsDao();
       $this->descriptionDao = new DescriptionsDao();
+      $this->photosDao = new PhotosDao();
+      $this->CDNClient = new CDNClient();
     }
 
     public function get_user_advertisements($offset, $limit, $user_id, $order){
@@ -129,7 +135,6 @@ class AdvertisementService extends BaseService {
     }
 
     public function modify_user_ad($id, $data, $user){
-
         if( $this->verify_ad_user($user['id'], $id) == true ){
             return $this->modify_ad($id, $data, $user);
         } else {
@@ -145,5 +150,24 @@ class AdvertisementService extends BaseService {
         } else {
             throw new Exception("You do not own this ad.", 500);
         }
+    }
+
+    public function delete_ad($user, $ad){
+        $ad = $this->dao->get_ad_by_id($ad);
+
+        if( $this->verify_ad_user($user['id'], $ad['id']) == true ){
+            $photos = $this->photosDao->get_ad_photos($ad['description_id']);
+            foreach ($photos as $photo) {
+                $this->CDNClient->delete($photo['name']);
+            }
+
+            $this->photosDao->delete_photos($ad['description_id']);
+            $this->dao->delete_ad($ad['description_id']);
+            $this->descriptionDao->delete_description($ad['description_id']);
+        } else {
+            throw new Exception("You do not own this ad.", 500);
+        }
+
+        return ["message" => "Ad succesfully deleted."];
     }
 }

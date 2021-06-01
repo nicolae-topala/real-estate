@@ -34,10 +34,12 @@
       public function get_user_ads($id, $limit, $offset){
           return $this->query("SELECT advertisements.*, descriptions.location_id, descriptions.type_id,
                                       descriptions.rooms, descriptions.floor, descriptions.space,
-                                      descriptions.price, descriptions.address, descriptions.text
+                                      descriptions.price, descriptions.address, descriptions.text,
+                                      photos.name
                                FROM advertisements
                                INNER JOIN descriptions ON advertisements.description_id = descriptions.id
                                INNER JOIN users ON advertisements.admin_id = users.id
+                               JOIN photos ON descriptions.thumbnail_id=photos.id
                                WHERE admin_id = :id
                                LIMIT ${limit} OFFSET ${offset}",["id" => $id]);
       }
