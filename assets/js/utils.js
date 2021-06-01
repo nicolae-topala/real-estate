@@ -65,6 +65,8 @@ function uploadImage(ad_id, selectorId, type){
                       success: function (data) {
                           console.log("Image loaded successfully!");
                           console.log(data);
+                          if(i == files.length)
+                              location.replace('?ad_id='+ad_id+'#view');
                       },
                       error: function(jqXHR, textStatus, errorThrown) {
                           console.log(jqXHR.responseText);

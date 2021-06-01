@@ -31,7 +31,6 @@ function doCreate() {
             uploadImage(data.id, "#create-thumbnail", "thumbnail");
             uploadImage(data.id, "#create-photos", "photo");
             $("#create_button").removeClass('disabled');
-            location.replace('?ad_id='+data.id+'#view');
         },
         error: function(jqXHR, textStatus, errorThrown) {
             $("#create-alert").show().text( jqXHR.responseText );
