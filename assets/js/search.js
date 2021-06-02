@@ -19,7 +19,7 @@ function getAds(page){
         $("#SearchPage").hide();
         $("#SearchResults").hide();
 
-        var main_data = urlParamsToJson();
+        var main_data = REUtils.urlParamsToJson();
 
         main_data.limit = 12;
         main_data.offset = (page-1) * main_data.limit;
@@ -54,7 +54,6 @@ function getAds(page){
 
                 $.get( "api/advertisements", main_data ).done(function(data){
                     var total = data.length;
-
                     var pages = Math.ceil(total/12);
 
                     $("#SearchPage").html("");
@@ -77,9 +76,9 @@ function getAds(page){
                 });
             }
         });
-        insertData("#SearchForm", main_data);
-        insertOptions('type_id', main_data.type_id);
-        insertOptions('location_id', main_data.location_id);
+        REUtils.insertData("#SearchForm", main_data);
+        REUtils.insertOptions('type_id', main_data.type_id);
+        REUtils.insertOptions('location_id', main_data.location_id);
 
     }
 }

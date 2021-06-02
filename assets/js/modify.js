@@ -19,9 +19,9 @@ $(document).ready(function(){
     });
 
     $.get( "api/advertisements/" + urlParams.get('ad_id') ).done(function(data){
-      insertData("#Modify_Form", data);
-      insertOptions('create-type', data.type_id);
-      insertOptions('create-location', data.location_id);
+      REUtils.insertData("#Modify_Form", data);
+      REUtils.insertOptions('create-type', data.type_id);
+      REUtils.insertOptions('create-location', data.location_id);
       $("#create-description").val(data.text);
     });
 
@@ -45,7 +45,7 @@ function doModify(){
     $.ajax({
         url: "api/user/advertisement/" + urlParams.get('ad_id'),
         type: "PUT",
-        data: JSON.stringify(jsonize_form("#Modify_Form")),
+        data: JSON.stringify(REUtils.jsonize_form("#Modify_Form")),
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
         success: function(data) {

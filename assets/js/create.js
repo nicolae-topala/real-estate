@@ -25,7 +25,7 @@ function doCreate() {
         url: "api/user/advertisement/create",
         type: "POST",
         dataType: "JSON",
-        data: jsonize_form("#Create_Form"),
+        data: REUtils.jsonize_form("#Create_Form"),
         beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
         success: function(data, textStatus, jqXHR){
             uploadImage(data.id, "#create-thumbnail", "thumbnail");

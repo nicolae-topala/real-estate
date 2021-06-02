@@ -44,7 +44,6 @@ $(document).ready(function(){
     });
 
     $.get("api/photos/" + urlParams.get('ad_id')).done(function(data){
-        console.log(data);
         if(!data.length) $(".slider-for").html('<div><img data-u="image" src="https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/default.png" /></div>');
         for(var i = 0; i < data.length; i++){
             $(".slider-for").append('<div><img data-u="image" src="https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/'+data[i].name+'" />'

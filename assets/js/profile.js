@@ -14,12 +14,12 @@ function doUpdate(){
     $.ajax({
         url: "api/user/account/",
         type: "PUT",
-        data: JSON.stringify(jsonize_form("#profile-form")),
+        data: JSON.stringify(REUtils.jsonize_form("#profile-form")),
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
         success: function(data) {
             $("#Profile-saved").show();
-            insertData("#profile-form", data);
+            REUtils.insertData("#profile-form", data);
             $("#profile-button").removeClass('disabled');
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -39,7 +39,7 @@ function getUserData(){
             jqXHR.setRequestHeader('Authentication', localStorage.getItem("token"));
         },
         success: function(data, textStatus, jqXHR){
-            insertData("#profile-form", data);
+            REUtils.insertData("#profile-form", data);
 
             if (data.status == "ACTIVE"){
                 html = '<h3 style="font-family: Lato, sans-serif;color: var(--bs-teal);"><span style="color: black;">Status:&nbsp;</span>ACTIVE</h3>';
@@ -83,7 +83,7 @@ function doChangePassword(){
     $.ajax({
         url: "api/user/account/",
         type: "PUT",
-        data: JSON.stringify(jsonize_form("#profile-password")),
+        data: JSON.stringify(REUtils.jsonize_form("#profile-password")),
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
         success: function(data) {

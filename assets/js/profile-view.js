@@ -5,7 +5,7 @@ $(document).ready(function(){
         window.location.replace("#main");
     }
 
-    doCheckToken();
+    REUtils.doCheckToken();
 
     $.get("api/account/" + urlParams.get('user_id')).done(function(data){
         var html = "";
@@ -74,7 +74,6 @@ function getUserAds(page){
 
           $.get( "api/advertisements/profile/" + urlParams.get('user_id'), main_data ).done(function(data){
               var total = data.length;
-
               var pages = Math.ceil(total/12);
 
               $("#user-publications-page").html("");

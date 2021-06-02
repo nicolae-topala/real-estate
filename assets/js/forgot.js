@@ -1,6 +1,6 @@
 function doForgot() {
     $("#ForgotButton").addClass('disabled');
-    $.post("api/forgot", jsonize_form("#Forgot_Form")).done(function(data){
+    $.post("api/forgot", REUtils.jsonize_form("#Forgot_Form")).done(function(data){
         location.replace("#forgot-accepted");
         $("#ForgotButton").removeClass('disabled');
     }).fail(function(error){
