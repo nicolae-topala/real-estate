@@ -5,6 +5,8 @@ $(document).ready(function(){
         window.location.replace("#main");
     }
 
+    doCheckToken();
+
     $.get("api/account/" + urlParams.get('user_id')).done(function(data){
         var html = "";
 
@@ -96,3 +98,47 @@ function getUserAds(page){
       }
     });
 };
+
+function doBlock(){
+    var urlParams = new URLSearchParams(window.location.search);
+
+    $("#profile-view-block").addClass('disabled');
+    $.ajax({
+        url: "api/admin/account/" + urlParams.get('user_id'),
+        type: "PUT",
+        data: JSON.stringify({ "status": "BLOCKED" }),
+        contentType: "application/json",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+        success: function(data) {
+            $("#profile-view-block").removeClass('disabled');
+
+            window.location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            $("#profile-view-block").removeClass('disabled');
+            console.log( jqXHR.responseText );
+        }
+    });
+}
+
+function doUnblock(){
+    var urlParams = new URLSearchParams(window.location.search);
+
+    $("#profile-view-unblock").addClass('disabled');
+    $.ajax({
+        url: "api/admin/account/" + urlParams.get('user_id'),
+        type: "PUT",
+        data: JSON.stringify({ "status": "ACTIVE" }),
+        contentType: "application/json",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+        success: function(data) {
+            $("#profile-view-unblock").removeClass('disabled');
+
+            window.location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            $("#profile-view-unblock").removeClass('disabled');
+            console.log( jqXHR.responseText );
+        }
+    });
+}

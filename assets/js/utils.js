@@ -35,3 +35,29 @@ function urlParamsToJson(){
     var search = location.search.substring(1);
     return JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) });
 }
+
+function doCheckToken(){
+    $(".admin").hide();
+    $(".guest").hide();
+    $(".user").hide();
+
+    if(window.localStorage.getItem("token")){
+        $.ajax({
+            url: "api/user/account",
+            type: "GET",
+            beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+            success: function(data, textStatus, jqXHR){
+                if(data.admin_level > 0){
+                    $(".admin").show();
+                    $(".user").show();
+                }
+                else{
+                    $(".user").show();
+                }
+            }
+        });
+    }
+    else{
+        $(".guest").show();
+    };
+}

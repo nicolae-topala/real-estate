@@ -147,7 +147,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- jQuerySpApp js -->
     <script src="assets/js/jquery.spapp.js"></script>
-    <script src="assets/js/check-token.js"></script>
     <script src="assets/js/utils.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
@@ -207,6 +206,8 @@
 
           // run app
           app.run();
+
+          doCheckToken();
 
           $('#LogOut').click(function(){
               window.localStorage.clear("token");

@@ -72,11 +72,13 @@ Flight::route('GET /account/@id', function($id){
 *     @OA\RequestBody(description="Basic user info that is going to be updated.", required=true,
 *         @OA\MediaType(mediaType="application/json",
 *             @OA\Schema(
-*                 @OA\Property(property="first_name", type="string", required="true", example="Nick", description="First name"),
-*                 @OA\Property(property="last_name", type="string", required="true", example="Ford", description="Last name"),
-*                 @OA\Property(property="email", type="string", required="true", example="nick.ford@ford.com", description="Email"),
-*                 @OA\Property(property="password", type="string", required="true", example="example123", description="Password"),
-*                 @OA\Property(property="telephone", type="string", required="true", example="3248975", description="Telephone")
+*                 @OA\Property(property="first_name", type="string", example="Nick", description="First name"),
+*                 @OA\Property(property="last_name", type="string", example="Ford", description="Last name"),
+*                 @OA\Property(property="email", type="string", example="nick.ford@ford.com", description="Email"),
+*                 @OA\Property(property="password", type="string", example="example123", description="Password"),
+*                 @OA\Property(property="telephone", type="string", example="3248975", description="Telephone"),
+*                 @OA\Property(property="status", type="string", example="BLOCKED", description="Change status of account"),
+*                 @OA\Property(property="admin_level", type="integer", example="1", description="Make admin")
 *             )
 *         )
 *     ),
