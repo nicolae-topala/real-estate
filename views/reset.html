@@ -19,36 +19,3 @@
             </form>
         </div>
     </section>
-
-    <script type="text/javascript">
-      $(function(){
-          var urlParams = new URLSearchParams(window.location.search);
-          if(urlParams.has('token')){
-              $("#change-password-token").val(urlParams.get('token'));
-          }
-      });
-
-      $("#Forgot_Form").submit(function(e) {
-        e.preventDefault();
-      });
-
-      function doReset() {
-          if($('#reset-password').val() != $('#repeat-reset-password').val()){
-             $('#Reset-Alert').show().text("Passwords don't match !");
-             return 0;
-          }
-          $('#Reset-Alert').hide();
-
-          $("#ResetButton").addClass('disabled');
-          $.post("api/reset", jsonize_form("#Reset-Form")).done(function(data){
-              window.localStorage.setItem("token", data.token);
-              $("#ResetButton").removeClass('disabled');
-              location.replace("#reset-accepted");
-          }).fail(function(error){
-              $('#Reset-Alert').show().text( error.responseJSON.message );
-              $("#ResetButton").removeClass('disabled');
-          });
-
-      }
-
-    </script>

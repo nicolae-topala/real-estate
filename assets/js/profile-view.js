@@ -7,33 +7,26 @@ $(document).ready(function(){
 
     REUtils.doCheckToken();
 
-    $.get("api/account/" + urlParams.get('user_id')).done(function(data){
-        var html = "";
+    RestClient.get("api/account/" + urlParams.get('user_id'),
+      function(data){
+          $("#profile-name").html(data.first_name+' '+ data.last_name);
+          $(".profile-email").html('E-mail: '+data.email);
+          $("#profile-telephone").html('Telephone: '+data.telephone);
 
-        $(".profile-email").html('E-mail: '+data.email);
-        $("#profile-telephone").html('Telephone: '+data.telephone);
+          switch(data.status){
+              case "ACTIVE": $(".profile-status").css('color','var(--bs-teal)').html("ACTIVE");
+                             break;
+              case "BLOCKED": $(".profile-status").css('color','var(--bs-red)').html("BLOCKED");
+                             break;
+              default: $(".profile-status").css('color','black').html("PENDING");
+          }
 
-        if (data.status == "ACTIVE"){
-            html = '<h5 style="font-family: Lato, sans-serif;color: var(--bs-teal);"><span style="color: black;">Status:&nbsp;</span>ACTIVE</h5>';
-        }
-        else if (data.status == "BLOCKED"){
-            html = '<h5 style="font-family: Lato, sans-serif;color: var(--bs-red);"><span style="color: black;">Status:&nbsp;</span>BLOCKED</h5>';
-        }
-        else {
-            html = '<h5 style="font-family: Lato, sans-serif;"><span style="color: black;">Status:&nbsp;</span>PENDING</h5>';
-        }
-        $(".profile-status").html(html);
-
-        if(data.admin_level > 0){
-            html = '<h5 style="text-align: left;font-family: Lato, sans-serif;">Role: <span style="color: var(--bs-red);">Admin</span></h5>';
-        }
-        else {
-            html = '<h5 style="text-align: left;font-family: Lato, sans-serif;">Role: <span style="color: var(--bs-teal);">User</span></h5>';
-        }
-        $("#profile-admin").html(html);
-
-        html = '<h2 style="font-family: Lato, sans-serif;">'+data.first_name+' '+ data.last_name+'</h2>';
-        $("#profile-name").html(html);
+          if(data.admin_level > 0){
+              $("#profile-admin").css('color','var(--bs-red)').html("Admin");
+          }
+          else {
+              $("#profile-admin").css('color','var(--bs-teal)').html("User");
+          }
     });
 
     getUserAds(1);
@@ -42,102 +35,46 @@ $(document).ready(function(){
 function getUserAds(page){
     var urlParams = new URLSearchParams(window.location.search);
     var main_data = {};
+    var page_ads_limit = 12;
 
-    main_data.limit = 12;
+    main_data.limit = page_ads_limit;
     main_data.offset = (page-1) * main_data.limit;
 
-    $.get( "api/advertisements/profile/" + urlParams.get('user_id'), main_data ).done(function(data){
-      var html = "";
-
-      if(data < 1){
-          html = '<strong>There are no publications</strong>';
-          $("#user-publications-text").html(html);
-      }
-      else
-      {
-          for(var i = 0; i < data.length; i++){
-            html += '<div class="col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4 recommended_column">'
-                    +'<a class="ads_link" href="?ad_id='+data[i].id+'#view">'
-                    +  '<div class="recommended_div_block">'
-                        +  '<p class="recommended_paragraph_title"><strong>&nbsp;'+data[i].title+'</strong></p>'
-                        +  '<p class="recommended_paragraph">Price: '+data[i].price+'&nbsp;<i class="fa fa-dollar"></i></p>'
-                        +  '<p class="recommended_paragraph">Space: '+data[i].space+' m<sup>2</sup></p>'
-                        +  '<p class="recommended_paragraph">Address: '+data[i].address+'</p>'
-                        +  '<img class="recommended_image" src="https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/'+data[i].name+'" width="300" height="200">'
-                    +  '</div>'
-                +  '</a></div>';
+    RestClient.get("api/advertisements/profile/" + urlParams.get('user_id') + REUtils.encodeQueryData(main_data),
+      function(data){
+          if(data < 1){
+              var html = '<strong>There are no publications</strong>';
+              $("#user-publications-text").html(html);
           }
-          $("#user-publications").html(html);
+          else {
+              REUtils.createCard(data, "#user-publications", 4, 6);
 
-          main_data.limit = 1000;
-          main_data.offset = 0;
+              /* get all ads */
+              main_data.limit = 1000;
+              main_data.offset = 0;
 
-          $.get( "api/advertisements/profile/" + urlParams.get('user_id'), main_data ).done(function(data){
-              var total = data.length;
-              var pages = Math.ceil(total/12);
+              RestClient.get("api/advertisements/profile/" + urlParams.get('user_id') + REUtils.encodeQueryData(main_data),
+                function(data){
+                    var total = data.length;
+                    var pages = Math.ceil(total/12);
 
-              $("#user-publications-page").html("");
-
-              var html = "";
-
-              if(page > 1)
-                  html += '<a class="page-link btn pages" onclick="getUserAds('+(page-1)+')" aria-label="Previous"><span aria-hidden="true">«</span></a>';
-
-              for(var i = 1; i <= pages; i++){
-                  if (i == page) html += '<a class="page-link btn pages page-active disabled">'+i+'</a>';
-                  else html += '<a class="page-link btn pages" onclick=getUserAds('+i+')>'+i+'</a>';
-              }
-
-              if(page < pages)
-                  html +='<a onclick="getUserAds('+(page+1)+')" class="page-link btn pages" aria-label="Next" ><span aria-hidden="true">»</span></a>';
-
-              $("#user-publications-page").html(html);
-              $("#user-publications-page").show();
-          });
-      }
+                    REUtils.createPagination("#user-publications-page", page, pages, "getUserAds");
+              });
+          }
     });
 };
 
-function doBlock(){
+function doBlock(selectorId, status){
     var urlParams = new URLSearchParams(window.location.search);
 
-    $("#profile-view-block").addClass('disabled');
-    $.ajax({
-        url: "api/admin/account/" + urlParams.get('user_id'),
-        type: "PUT",
-        data: JSON.stringify({ "status": "BLOCKED" }),
-        contentType: "application/json",
-        beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
-        success: function(data) {
-            $("#profile-view-block").removeClass('disabled');
+    $(selectorId).addClass('disabled');
 
-            window.location.reload();
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            $("#profile-view-block").removeClass('disabled');
-            console.log( jqXHR.responseText );
-        }
-    });
-}
-
-function doUnblock(){
-    var urlParams = new URLSearchParams(window.location.search);
-
-    $("#profile-view-unblock").addClass('disabled');
-    $.ajax({
-        url: "api/admin/account/" + urlParams.get('user_id'),
-        type: "PUT",
-        data: JSON.stringify({ "status": "ACTIVE" }),
-        contentType: "application/json",
-        beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
-        success: function(data) {
-            $("#profile-view-unblock").removeClass('disabled');
-
-            window.location.reload();
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            $("#profile-view-unblock").removeClass('disabled');
-            console.log( jqXHR.responseText );
-        }
+    RestClient.put("api/admin/account/" + urlParams.get('user_id'), { "status": status },
+       function(data){
+           $(selectorId).removeClass('disabled');
+           window.location.reload();
+    }, function(jqXHR, textStatus, errorThrown){
+           $(selectorId).removeClass('disabled');
+           console.log( jqXHR.responseText );
     });
 }

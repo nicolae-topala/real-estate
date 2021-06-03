@@ -4,11 +4,11 @@
             <div class="col-lg-5 col-xl-5 col-xxl-5" style="margin-top: 10px;">
                 <div class="view_div_block">
                     <div class="row">
-                        <div id="profile-name" class="col">
-                        </div>
+                        <h2 id="profile-name" style="font-family: Lato, sans-serif;"></h2>
                     </div>
                     <div class="row">
-                        <div id="profile-date" class="col-12 col-sm-7 col-md-5 col-lg-9 col-xl-7 col-xxl-6 offset-0 offset-sm-5 offset-md-7 offset-lg-3 offset-xl-5 offset-xxl-6">
+                        <div class="col-12 col-sm-7 col-md-5 col-lg-9 col-xl-7 col-xxl-6 offset-0 offset-sm-5 offset-md-7 offset-lg-3 offset-xl-5 offset-xxl-6">
+                            <h5 id="profile-date" style="font-family: Lato, sans-serif;"></h5>
                         </div>
                     </div>
                     <div class="row">
@@ -51,9 +51,11 @@
                             <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7 offset-xxl-0">
                                 <h1 style="font-family: Lato, sans-serif;">Your profile</h1>
                             </div>
-                            <div id="profile-admin" class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5 offset-xxl-0" style="text-align: right;">
+                            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5 offset-xxl-0" style="text-align: right;">
+                                <h3 id="profile-admin" style="font-family: Lato, sans-serif;color: var(--bs-red); display: none;">Admin</h3>
                             </div>
-                            <div id="profile-status" class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-11 offset-xxl-0" style="text-align: left;">
+                            <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-11 offset-xxl-0" style="text-align: left;">
+                                <h3 style="font-family: Lato, sans-serif;color: black;">Status:&nbsp;<span id="profile-status"></span></h3>
                             </div>
                             <div class="col-xl-6 col-xxl-6 offset-xl-0 mt-4"><label class="form-label" for="profile-fname">First Name</label><input class="form-control" type="fname" id="profile-fname" name="first_name" maxlength="32"></div>
                             <div class="col-xl-6 col-xxl-6 mt-4"><label class="form-label" for="profile-lname">Last Name</label><input class="form-control" type="lname" id="profile-lname" name="last_name" maxlength="32"></div>

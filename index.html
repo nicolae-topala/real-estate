@@ -148,6 +148,7 @@
     <!-- jQuerySpApp js -->
     <script src="assets/js/jquery.spapp.js"></script>
     <script src="assets/js/utils.js"></script>
+    <script src="assets/js/restClient.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
 
@@ -201,6 +202,16 @@
 
           app.route({ view : "modify", load : "modify.html", onReady: function() {
               $.getScript("assets/js/modify.js", function(){});
+            }
+          });
+
+          app.route({ view : "reset", load : "reset.html", onReady: function() {
+              $.getScript("assets/js/reset.js", function(){});
+            }
+          });
+
+          app.route({ view : "register", load : "register.html", onReady: function() {
+              $.getScript("assets/js/register.js", function(){});
             }
           });
 

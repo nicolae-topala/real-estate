@@ -1,78 +1,67 @@
 $(document).ready(function(){
     var urlParams = new URLSearchParams(window.location.search);
 
-    $.get( "api/advertisements/" + urlParams.get('ad_id') ).done(function(data){
-        var html = "";
+    RestClient.get("api/advertisements/" + urlParams.get('ad_id'),
+      function(data){
+          $("#view-title").html(data.title);
+          $("#view-date").html('Date: '+data.date.substring(0,10));
+          $("#view-type").html(data.type_name);
+          $("#view-location").html(data.location_name);
+          $("#view-address").html(data.address);
+          $("#view-price").html(data.price+'<i class="fa fa-dollar"></i>');
+          $("#view-user").html(data.first_name+' '+data.last_name);
+          $("#view-contact").attr('href', '?user_id='+data.admin_id+'#profile-view');
 
-        $("#view-title").html(data.title);
-        $("#view-date").html('Date: '+data.date.substring(0,10));
-        $("#view-type").html(data.type_name);
-        $("#view-location").html(data.location_name);
-        $("#view-address").html(data.address);
+          if(data.rooms != 0) $("#view-rooms").html(data.rooms);
+              else $("#view-rooms-tr").html('');
 
-        if(data.rooms != 0) $("#view-rooms").html(data.rooms);
-            else $("#view-rooms-tr").html('');
+          if(data.floor != 0) $("#view-floor").html(data.floor);
+              else $("#view-floor-tr").html('');
 
-        if(data.floor != 0) $("#view-floor").html(data.floor);
-            else $("#view-floor-tr").html('');
+          if(data.space != 0) $("#view-space").html(data.space);
+              else $("#view-space-tr").html('');
 
-        if(data.space != 0) $("#view-space").html(data.space);
-            else $("#view-space-tr").html('');
-
-        if(data.text != "") $("#view-text").html(data.text);
-            else $("#view-text").html('');
-
-        html = data.price+'<i class="fa fa-dollar"></i>'
-        $("#view-price").html(html);
-
-        html = 'Added by:<a href="?user_id='+data.admin_id+'#profile-view" style="margin-left: 5px;">'+data.first_name+' ';
-        html += data.last_name+'</a>&nbsp;';
-        $("#view-user").html(html);
-
-        html = '<a href="?user_id='+data.admin_id+'#profile-view"';
-        html += ' class="btn btn-primary" type="button" style="width: 100%;">Contact</a>';
-        $("#view-contact").html(html);
+          if(data.text != "") $("#view-text").html(data.text);
+              else $("#view-text").html('');
     });
 
-    $.ajax({
-        url: "api/user/advertisement/verify/" + urlParams.get('ad_id'),
-        type: "GET",
-        beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
-        success: function(data, textStatus, jqXHR){
-            if( data == true ) $("#modify_ad").show();
-        }
+    RestClient.get("api/user/advertisement/verify/" + urlParams.get('ad_id'),
+      function(data){
+          if( data == true ) $("#modify_ad").show();
     });
 
-    $.get("api/photos/" + urlParams.get('ad_id')).done(function(data){
-        if(!data.length) $(".slider-for").html('<div><img data-u="image" src="https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/default.png" /></div>');
-        for(var i = 0; i < data.length; i++){
-            $(".slider-for").append('<div><img data-u="image" src="https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/'+data[i].name+'" />'
-                                  + '<img data-u="thumb" src="https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/'+data[i].name+'" /></div>');
-        }
-        loadViewSlider();
-    }).fail(function(error){
-        console.log(error);
+    RestClient.get("api/photos/" + urlParams.get('ad_id'),
+      function(data){
+          if(!data.length)
+              $(".slider-for").html('<div><img data-u="image"'
+                + 'src="'+ REUtils.CDN_path +'default.png"/></div>');
+
+          for(var i = 0; i < data.length; i++){
+              $(".slider-for").append('<div><img data-u="image"'
+                + 'src="'+ REUtils.CDN_path + data[i].name +'"/>'
+                + '<img data-u="thumb" src="'+ REUtils.CDN_path + data[i].name +'"/></div>');
+          }
+
+          loadViewSlider();
+    }, function(error){
+          console.log(error);
     });
 });
 
 function doEdit(){
     var urlParams = new URLSearchParams(window.location.search);
 
-    window.location.replace('?ad_id='+urlParams.get('ad_id')+'#modify')
+    window.location.replace('?ad_id='+ urlParams.get('ad_id') +'#modify')
 }
 
 function doDelete(){
   var urlParams = new URLSearchParams(window.location.search);
 
   $("#view-delete-button").addClass('disabled');
-  $.ajax({
-      url: "api/user/advertisement/delete/" + urlParams.get('ad_id'),
-      type: "GET",
-      beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
-      success: function(data, textStatus, jqXHR){
-          $("#view-delete-button").removeClass('disabled');
-          window.location.replace('?#profile-publications')
-      }
+  RestClient.get("api/user/advertisement/delete/" + urlParams.get('ad_id'),
+    function(data){
+        $("#view-delete-button").removeClass('disabled');
+        window.location.replace('?#profile-publications');
   });
 }
 

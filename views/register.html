@@ -20,22 +20,3 @@
         </form>
     </div>
 </section>
-<script type="text/javascript">
-  function doRegister() {
-      if($('#register-password').val() != $('#repeat-register-password').val()){
-         $('#Password-match').show().text("Passwords don't match !");
-         return 0;
-      }
-      $('#Password-match').hide();
-
-      $("#RegisterButton").addClass('disabled');
-      $.post("api/register", jsonize_form("#Register_Form")).done(function(data){
-        $("#RegisterButton").removeClass('disabled');
-        location.replace("#register-accepted");
-
-      }).fail(function(error){
-          $("#Password-match").show().text( error.responseJSON.message );
-          $("#RegisterButton").removeClass('disabled');
-      });
-  }
-</script>

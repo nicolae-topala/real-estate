@@ -19,7 +19,7 @@ class SMTPClient{
       $message = (new Swift_Message('[Real-Estate] Register User Confirmation'))
         ->setFrom(['no-reply@real-estate.studio' => 'No-Reply'])
         ->setTo([$user['email']])
-        ->setBody('Here is the confirmation link: http://real-estate.studio/#confirmation-accepted'.$user['token']);
+        ->setBody('Here is the confirmation link: http://real-estate.studio/?token='.$user['token'].'#confirmation-accepted');
 
       $this->mailer->send($message);
     }
@@ -28,7 +28,7 @@ class SMTPClient{
       $message = (new Swift_Message('[Real-Estate] Recover Password'))
         ->setFrom(['no-reply@real-estate.studio' => 'No-Reply'])
         ->setTo([$user['email']])
-        ->setBody('Here is the recovery token: '.$user['token']);
+        ->setBody('Here is the recovery link: http://real-estate.studio/?token='.$user['token'].'#reset');
 
       $this->mailer->send($message);
     }

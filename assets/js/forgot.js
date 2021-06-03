@@ -1,10 +1,12 @@
 function doForgot() {
     $("#ForgotButton").addClass('disabled');
-    $.post("api/forgot", REUtils.jsonize_form("#Forgot_Form")).done(function(data){
-        location.replace("#forgot-accepted");
-        $("#ForgotButton").removeClass('disabled');
-    }).fail(function(error){
-        $('#Forgot-Alert').show().text( error.responseJSON.message );
-        $("#ForgotButton").removeClass('disabled');
+
+    RestClient.post("api/forgot", REUtils.jsonize_form("#Forgot_Form"),
+       function(data){
+           location.replace("#forgot-accepted");
+           $("#ForgotButton").removeClass('disabled');
+    }, function(jqXHR, textStatus, errorThrown){
+           $('#Forgot-Alert').text( error.responseJSON.message ).show();
+           $("#ForgotButton").removeClass('disabled');
     });
 }
