@@ -34,34 +34,10 @@ $(document).ready(function(){
 
 function getUserAds(page){
     var urlParams = new URLSearchParams(window.location.search);
-    var main_data = {};
-    var page_ads_limit = 12;
 
-    main_data.limit = page_ads_limit;
-    main_data.offset = (page-1) * main_data.limit;
-
-    RestClient.get("api/advertisements/profile/" + urlParams.get('user_id') + REUtils.encodeQueryData(main_data),
-      function(data){
-          if(data < 1){
-              var html = '<strong>There are no publications</strong>';
-              $("#user-publications-text").html(html);
-          }
-          else {
-              REUtils.createCard(data, "#user-publications", 4, 6);
-
-              /* get all ads */
-              main_data.limit = 1000;
-              main_data.offset = 0;
-
-              RestClient.get("api/advertisements/profile/" + urlParams.get('user_id') + REUtils.encodeQueryData(main_data),
-                function(data){
-                    var total = data.length;
-                    var pages = Math.ceil(total/12);
-
-                    REUtils.createPagination("#user-publications-page", page, pages, "getUserAds");
-              });
-          }
-    });
+    REUtils.showAds("api/advertisements/profile/" + urlParams.get('user_id'),
+                    "#user-publications-text", "#user-publications",
+                    "#user-publications-page", page, 4, 6, "getUserAds", null);
 };
 
 function doBlock(selectorId, status){

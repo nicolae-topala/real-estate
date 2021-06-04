@@ -159,6 +159,37 @@ class REUtils{
   };
 
   static get CDN_path(){
-    return "https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/";
-  }
+      return "https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/";
+  };
+
+  static showAds(endpoint, selector_text, selector_results, selector_page, page,
+                 big_size, small_size, pagination_method_name){
+      var main_data = {};
+      var page_ads_limit = 12;
+
+      main_data.limit = page_ads_limit;
+      main_data.offset = (page-1) * main_data.limit;
+
+      RestClient.get(endpoint + REUtils.encodeQueryData(main_data),
+        function(data){
+            if(data < 1){
+                $(selector_text).html('<strong>There are no publications</strong>');
+            }
+            else{
+                REUtils.createCard(data, selector_results, big_size, small_size);
+
+                /* get all ads */
+                main_data.limit = 1000;
+                main_data.offset = 0;
+
+                RestClient.get(endpoint + REUtils.encodeQueryData(main_data),
+                  function(data){
+                      var total = data.length;
+                      var pages = Math.ceil(total/12);
+
+                      REUtils.createPagination(selector_page, page, pages, pagination_method_name);
+                });
+            }
+      });
+  };
 }
