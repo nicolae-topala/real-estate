@@ -1,5 +1,4 @@
 <?php
-
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/AdvertisementService.class.php";
 require_once dirname(__FILE__)."/../dao/DescriptionsDao.class.php";
@@ -7,7 +6,6 @@ require_once dirname(__FILE__)."/../dao/PhotosDao.class.php";
 require_once dirname(__FILE__)."/../clients/CDNClient.class.php";
 
 class PhotoService extends BaseService{
-
     private $CDNClient;
     private $DescriptionsDao;
     private $AdvertisementService;
@@ -38,9 +36,9 @@ class PhotoService extends BaseService{
         }
 
         if($type == "thumbnail"){
-          $this->DescriptionsDao->update($verify['description_id'], [
-              'thumbnail_id' => $result['id']
-          ]);
+            $this->DescriptionsDao->update($verify['description_id'], [
+                'thumbnail_id' => $result['id']
+            ]);
         }
 
         return $this->CDNClient->upload($name, $data['content']);

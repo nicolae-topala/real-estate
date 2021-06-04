@@ -4,8 +4,7 @@
 * @OA\Info(title="Real-estate API", version="0.1")
 * @Oa\OpenApi(
 *   @OA\Server(url="http://localhost/real-estate/api/", description="Development Enviroment"),
-*   @OA\Server(url="https://real-estate.studio/api/", description="Production Enviroment"),
-*   @OA\Server(url="https://real-estate-xfpu4.ondigitalocean.app/api/", description="test Enviroment")
+*   @OA\Server(url="https://real-estate.studio/api/", description="Production Enviroment")
 * )
 * @OA\SecurityScheme(
 *        securityScheme="ApiKeyAuth",
@@ -37,19 +36,20 @@ Flight::route('GET /admin/accounts', function(){
 * @OA\Get(path="/user/publications", tags={"x-user", "user"},  security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(name="offset", type="integer", in="query", default=0, description="Offset for pagination."),
 *     @OA\Parameter(name="limit", type="integer", in="query", default=5, description="Limit for pagination."),
-*     @OA\Response(response="200", description="Get user publications.")
+*     @OA\Response(response="200", description="Fetch user publications.")
 * )
 */
 Flight::route('GET /user/publications', function(){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 5);
+
     Flight::json(Flight::userservice()->get_user_ads(Flight::get('user')['id'], $limit, $offset));
 });
 
 /**
 * @OA\Get(path="/admin/account/{id}", tags={"x-admin", "user"}, security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Id of user"),
-*     @OA\Response(response="200", description="Fetch individual user")
+*     @OA\Response(response="200", description="Fetch individual user as Admin")
 * )
 */
 Flight::route('GET /admin/account/@id', function($id){
@@ -82,12 +82,11 @@ Flight::route('GET /account/@id', function($id){
 *             )
 *         )
 *     ),
-*     @OA\Response(response="200", description="Update account.")
+*     @OA\Response(response="200", description="Update account as Admin")
 * )
 */
 Flight::route('PUT /admin/account/@id', function($id){
-    $data = Flight::request()->data->getData();
-    Flight::json(Flight::userservice()->update($id, $data));
+    Flight::json(Flight::userservice()->update($id, Flight::request()->data->getData()));
 });
 
 /**
@@ -107,8 +106,8 @@ Flight::route('PUT /admin/account/@id', function($id){
 * )
 */
 Flight::route('PUT /user/account', function(){
-    $data = Flight::request()->data->getData();
-    Flight::json(Flight::userservice()->update_info(Flight::get('user')['id'], $data));
+    Flight::json(Flight::userservice()->update_info(Flight::get('user')['id'],
+                                                    Flight::request()->data->getData()));
 });
 
 /**
@@ -129,7 +128,6 @@ Flight::route('PUT /user/account', function(){
 */
 Flight::route('POST /register', function(){
     Flight::userservice()->register(Flight::request()->data->getData());
-
     Flight::json(["message" => "Please confirm your account !"]);
 });
 
@@ -173,8 +171,7 @@ Flight::route('POST /login', function(){
 * )
 */
 Flight::route('POST /forgot', function(){
-    $data = Flight::request()->data->getData();
-    Flight::userservice()->forgot($data);
+    Flight::userservice()->forgot(Flight::request()->data->getData());
     Flight::json(["message" => "Recovery link has been sent to your email"]);
 });
 

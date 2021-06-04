@@ -1,5 +1,4 @@
 <?php
-
 require_once dirname(__FILE__)."/BaseDao.class.php";
 
 class PhotosDao extends BaseDao{
@@ -24,9 +23,11 @@ class PhotosDao extends BaseDao{
     public function delete_photos($description_id){
         $this->query_unique("UPDATE descriptions
                              SET thumbnail_id = NULL
-                             WHERE id = :description_id", ["description_id" => $description_id]);
+                             WHERE id = :description_id",
+                             ["description_id" => $description_id]);
 
          $this->query_unique("DELETE FROM photos
-                              WHERE description_id = :description_id", ["description_id" => $description_id]);
+                              WHERE description_id = :description_id",
+                              ["description_id" => $description_id]);
     }
 }

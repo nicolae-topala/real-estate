@@ -1,5 +1,4 @@
 <?php
-
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/AdvertisementsDao.class.php";
 require_once dirname(__FILE__)."/../dao/DescriptionsDao.class.php";
@@ -7,7 +6,6 @@ require_once dirname(__FILE__)."/../dao/PhotosDao.class.php";
 require_once dirname(__FILE__)."/../clients/CDNClient.class.php";
 
 class AdvertisementService extends BaseService {
-
     private $descriptionDao;
     private $photosDao;
     private $CDNClient;
@@ -46,8 +44,8 @@ class AdvertisementService extends BaseService {
 
     public function get_ad_by_id($id){
         $result = $this->dao->get_ad_by_id($id);
+        
         if(!$result) throw new Exception("There is no AD with such ID !", 404);
-
         return $result;
     }
 

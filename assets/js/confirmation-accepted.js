@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    $('#confirmation-message').hide();
     var urlParams = new URLSearchParams(window.location.search);
 
     RestClient.get("api/confirm/" + urlParams.get('token'), function(data){
@@ -8,6 +7,6 @@ $(document).ready(function(){
         location.replace("#main");
         location.reload();
     }, function(jqXHR, textStatus, errorThrown){
-        $('#confirmation-message').show().text( jqXHR.responseJSON.message );
+        $('#confirmation-message').text( jqXHR.responseJSON.message ).show();
     });
 });

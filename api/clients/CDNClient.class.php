@@ -1,5 +1,4 @@
 <?php
-
 require_once dirname(__FILE__).'/../config.php';
 require_once dirname(__FILE__).'/../../vendor/autoload.php';
 
@@ -19,10 +18,10 @@ class CDNClient{
     }
 
     /**
-     * Upload file to CDN and return the public URL
-     * @param  $filename name of the file on CDN
-     * @param  $cotent base64 encode file content
-     */
+    * Upload file to CDN and return the public URL
+    * @param  $filename name of the file on CDN
+    * @param  $cotent base64 encode file content
+    */
     public function upload($filename, $content){
         $response = $this->client->putObject([
             'Bucket' => Config::CDN_SPACE(),
@@ -34,6 +33,10 @@ class CDNClient{
         return $response->get("ObjectURL");
     }
 
+    /**
+    * Delete file from CDN
+    * @param  $filename name of the file on CDN
+    */
     public function delete($filename){
         $response = $this->client->deleteObject([
             'Bucket' => Config::CDN_SPACE(),

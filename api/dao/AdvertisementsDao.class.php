@@ -31,8 +31,9 @@ class AdvertisementsDao extends BaseDao{
                 AND rooms >= :rooms_min
                 AND rooms <= :rooms_max ";
 
-        if($ad['location_id'] > 0) $query.="AND location_id = ${ad['location_id']} ";
-        if($ad['type_id'] > 0) $query.="AND type_id = ${ad['type_id']} ";
+        if($ad['location_id'] > 0)  $query.="AND location_id = ${ad['location_id']} ";
+        if($ad['type_id'] > 0)      $query.="AND type_id = ${ad['type_id']} ";
+
         if($order_column=="id" || $order_column=="title") // search on advertisements only id and title, the rest are on descriptions
             $order_table="advertisements";
         else
@@ -69,7 +70,6 @@ class AdvertisementsDao extends BaseDao{
             $order_table = "descriptions";
 
         $query.="ORDER BY ${order_table}.${order_column} ${order_direction} LIMIT ${limit} OFFSET ${offset}";
-
         return $this->query($query, ["id" => $user_id]);
     }
 
@@ -90,6 +90,7 @@ class AdvertisementsDao extends BaseDao{
 
     public function delete_ad($description_id){
         $this->query_unique("DELETE FROM advertisements
-                             WHERE description_id = :description_id", ["description_id" => $description_id]);
+                             WHERE description_id = :description_id",
+                             ["description_id" => $description_id]);
     }
 }

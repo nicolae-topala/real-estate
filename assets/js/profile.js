@@ -6,7 +6,6 @@ $(document).ready(function(){
 
     $("#profile-info").show();
     getUserData();
-
 });
 
 function doUpdate(){

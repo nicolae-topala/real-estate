@@ -163,8 +163,9 @@ class REUtils{
   };
 
   static showAds(endpoint, selector_text, selector_results, selector_page, page,
-                 big_size, small_size, pagination_method_name){
-      var main_data = {};
+                 big_size, small_size, pagination_method_name, main_data){
+
+      if (main_data == null) main_data = {};
       var page_ads_limit = 12;
 
       main_data.limit = page_ads_limit;

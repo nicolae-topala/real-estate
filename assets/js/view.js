@@ -57,14 +57,14 @@ function doEdit(){
 }
 
 function doDelete(){
-  var urlParams = new URLSearchParams(window.location.search);
+    var urlParams = new URLSearchParams(window.location.search);
 
-  $("#view-delete-button").addClass('disabled');
-  RestClient.delete("api/user/advertisement/" + urlParams.get('ad_id'),
-    function(data){
-        $("#view-delete-button").removeClass('disabled');
-        window.location.replace('?#profile-publications');
-  });
+    $("#view-delete-button").addClass('disabled');
+    RestClient.delete("api/user/advertisement/" + urlParams.get('ad_id'),
+      function(data){
+          $("#view-delete-button").removeClass('disabled');
+          window.location.replace('?#profile-publications');
+    });
 }
 
 function loadViewSlider(){

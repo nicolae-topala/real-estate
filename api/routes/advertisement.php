@@ -1,5 +1,4 @@
 <?php
-
 /**
 * @OA\GET(path="/advertisements", tags={"x-user", "advertisements"},
 *     @OA\Parameter(name="offset", type="integer", in="query", default=0, description="Offset for pagination."),
@@ -65,17 +64,18 @@ Flight::route('GET /advertisements/profile/@user_id', function($user_id){
 * )
 */
 Flight::route('GET /advertisements/@id', function($id){
-  flight::json(Flight::advertisementservice()->get_ad_by_id($id));
+    Flight::json(Flight::advertisementservice()->get_ad_by_id($id));
 });
 
 /**
 * @OA\Get(path="/user/advertisement/verify/{ad_id}", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", type="integer", name="ad_id", example=1, description="ID of the ad"),
-*     @OA\Response(response="200", description="Fetch individual advertisement")
+*     @OA\Response(response="200", description="Verify if the user is the owner of the AD")
 * )
 */
 Flight::route('GET /user/advertisement/verify/@ad_id', function($ad_id){
-  flight::json(Flight::advertisementservice()->verify_ad_user(Flight::get('user')['id'], $ad_id));
+    Flight::json(Flight::advertisementservice()->verify_ad_user(Flight::get('user')['id'],
+                                                                $ad_id));
 });
 
 /**
@@ -85,9 +85,8 @@ Flight::route('GET /user/advertisement/verify/@ad_id', function($ad_id){
 * )
 */
 Flight::route('DELETE /user/advertisement/@ad_id', function($ad_id){
-  flight::json(Flight::advertisementservice()->delete_ad(Flight::get('user'), $ad_id));
+    Flight::json(Flight::advertisementservice()->delete_ad(Flight::get('user'), $ad_id));
 });
-
 
 /**
 * @OA\Post(path="/user/advertisement/create", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
@@ -110,7 +109,8 @@ Flight::route('DELETE /user/advertisement/@ad_id', function($ad_id){
 * )
 */
 Flight::route('POST /user/advertisement/create', function(){
-  Flight::json(Flight::advertisementservice()->create_ad(Flight::get('user'), Flight::request()->data->getData()));
+    Flight::json(Flight::advertisementservice()->create_ad(Flight::get('user'),
+                                                           Flight::request()->data->getData()));
 });
 
 /**
@@ -131,11 +131,12 @@ Flight::route('POST /user/advertisement/create', function(){
 *             )
 *         )
 *     ),
-*     @OA\Response(response="200", description="Update account.")
+*     @OA\Response(response="200", description="Update AD as Admin.")
 * )
 */
 Flight::route('PUT /admin/advertisement/@id', function($id){
-    Flight::json(Flight::advertisementservice()->modify_ad($id, Flight::request()->data->getData(), Flight::get('user')));
+    Flight::json(Flight::advertisementservice()->modify_ad($id, Flight::request()->data->getData(),
+                                                           Flight::get('user')));
 });
 
 /**
@@ -156,9 +157,10 @@ Flight::route('PUT /admin/advertisement/@id', function($id){
 *             )
 *         )
 *     ),
-*     @OA\Response(response="200", description="Update account.")
+*     @OA\Response(response="200", description="Update account as Admin.")
 * )
 */
 Flight::route('PUT /user/advertisement/@id', function($id){
-    Flight::json(Flight::advertisementservice()->modify_user_ad($id, Flight::request()->data->getData(), Flight::get('user')));
+    Flight::json(Flight::advertisementservice()->modify_user_ad($id, Flight::request()->data->getData(),
+                                                                Flight::get('user')));
 });

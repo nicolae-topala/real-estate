@@ -1,24 +1,21 @@
 <?php
-
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/UsersDao.class.php";
 require_once dirname(__FILE__)."/../clients/SMTPClient.class.php";
 
 class UserService extends BaseService {
-
     private $smtpClient;
 
     public function __construct() {
-      $this->dao = new UsersDao();
-      $this->smtpClient = new SMTPClient();
+        $this->dao = new UsersDao();
+        $this->smtpClient = new SMTPClient();
     }
 
     public function get_users($search, $offset, $limit, $order){
-        if ($search){
-          return $this->dao->get_users($search, $offset, $limit, $order);
-        }else{
-          return $this->dao->get_all($offset, $limit, $order);
-        }
+        if ($search)
+            return $this->dao->get_users($search, $offset, $limit, $order);
+        else
+            return $this->dao->get_all($offset, $limit, $order);
     }
 
     public function get_user($id){
@@ -61,12 +58,10 @@ class UserService extends BaseService {
             if(str_contains($e->getMessage(), 'users.uq_user_email')){
                 throw new Exception("User with same email already exists in the database", 400, $e);
             }else{
-              throw $e;
+                throw $e;
             }
         }
-
         $this->smtpClient->send_register_user_token($user);
-
         return $user;
     }
 
@@ -74,9 +69,7 @@ class UserService extends BaseService {
         $user = $this->dao->get_user_by_token($token);
 
         if(!isset($user['id'])) throw new Exception("Invalid Token");
-
         $this->dao->update($user['id'], ["status" => "ACTIVE", "token" => NULL]);
-
         return $user;
     }
 
@@ -93,48 +86,42 @@ class UserService extends BaseService {
 
         try{
             return parent::update($id, $data);
-
         }catch(\Exception $e){
-            if(str_contains($e->getMessage(), 'users.uq_user_email')){
+            if(str_contains($e->getMessage(), 'users.uq_user_email'))
                 throw new Exception("User with same email already exists in the database", 400, $e);
-            }else{
-              throw $e;
-            }
+            else
+                throw $e;
         }
     }
 
-    public function login($user){
+    public function checkUserExists($user){
         $db_user = $this->dao->get_user_by_email($user['email']);
 
         if (!isset($db_user['id'])) throw new Exception("User doesn't exist !", 400);
-
         switch($db_user['status']){
-          case 'PENDING' : throw new Exception("Your account is not confirmed !", 400); break;
-          case 'BLOCKED' : throw new Exception("Your account is suspended !", 400); break;
+            case 'PENDING' : throw new Exception("Your account is not confirmed !", 400);
+                             break;
+            case 'BLOCKED' : throw new Exception("Your account is suspended !", 400);
+                             break;
         }
+        return $db_user;
+    }
 
-        if(md5($user['password']) != $db_user['password'])
-            throw new Exception("Invalid password !", 400);
+    public function login($user){
+        $db_user = $this->checkUserExists($user);
 
+        if(md5($user['password']) != $db_user['password']) throw new Exception("Invalid password !", 400);
         return $db_user;
     }
 
     public function forgot($user){
-        $db_user = $this->dao->get_user_by_email($user['email']);
-
-        if (!isset($db_user['id'])) throw new Exception("User doesn't exist !", 400);
-
-        switch($db_user['status']){
-          case 'PENDING' : throw new Exception("Your account is not confirmed !", 400); break;
-          case 'BLOCKED' : throw new Exception("Your account is suspended !", 400); break;
-        }
+        $db_user = $this->checkUserExists($user);
 
         $check_time = strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']);
-
         if($check_time < 300) throw new Exception("Wait ".(300-$check_time)." seconds until you can create a new token.", 400);
 
-        $db_user = parent::update($db_user['id'], ['token' => md5(random_bytes(16)), 'token_created_at' => date(Config::DATE_FORMAT)]);
-
+        $db_user = parent::update($db_user['id'], ['token' => md5(random_bytes(16)),
+                                  'token_created_at' => date(Config::DATE_FORMAT)]);
         $this->smtpClient->send_user_recovery_token($db_user);
     }
 
@@ -142,10 +129,10 @@ class UserService extends BaseService {
       $db_user = $this->dao->get_user_by_token($user['token']);
 
       if(!isset($db_user['id'])) throw new Exception("Invalid Token");
-      if(strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']) > 600) throw new Exception("Token expired.", 400);
+      if(strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']) > 600)
+          throw new Exception("Token expired.", 400);
 
       $this->dao->update($db_user['id'], ["password" => md5($user['password']), "token" => NULL]);
-
       return $db_user;
     }
 

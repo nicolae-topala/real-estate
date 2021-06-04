@@ -28,7 +28,6 @@ $(document).ready(function(){
               $("#profile-admin").css('color','var(--bs-teal)').html("User");
           }
     });
-
     getUserAds(1);
 });
 

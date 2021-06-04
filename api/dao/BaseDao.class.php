@@ -44,8 +44,8 @@ class BaseDao{
               case '+' : $order_direction = "DESC"; break;
               default: throw new Exception("Invalid order format, first character should be either + or -");
           }
-
           $order_column = substr($order, 1);
+
           return [$order_column, $order_direction];
     }
 
@@ -57,20 +57,22 @@ class BaseDao{
      */
     protected function insert($table, $entity){
         $query = "INSERT INTO ${table} "."(";
-          foreach($entity as $name => $value){
-            $query .= $name.", ";
-          }
-          $query = substr($query, 0 , -2);
-          $query .= ") VALUES (";
-          foreach($entity as $name => $value){
-            $query .= ":${name}, ";
-          }
-          $query = substr($query, 0 , -2);
-          $query .= ")";
+            foreach($entity as $name => $value){
+                $query .= $name.", ";
+            }
+        $query = substr($query, 0 , -2);
+
+        $query .= ") VALUES (";
+            foreach($entity as $name => $value){
+                $query .= ":${name}, ";
+            }
+        $query = substr($query, 0 , -2);
+        $query .= ")";
 
         $stmt = $this->connection->prepare($query);
         $stmt->execute($entity);
         $entity['id'] = $this->connection->lastInsertId();
+
         return $entity;
     }
 
@@ -84,9 +86,9 @@ class BaseDao{
      */
     protected function execute_update($table, $id, $entity, $id_column = "id"){
         $query = "UPDATE ${table} SET ";
-        foreach($entity as $name => $value){
-          $query .=$name. " = :" .$name. ", ";
-        }
+            foreach($entity as $name => $value){
+                $query .=$name. " = :" .$name. ", ";
+            }
         $query = substr($query, 0 , -2);
         $query .=" WHERE ${id_column} = :id";
 
@@ -106,6 +108,7 @@ class BaseDao{
     protected function query($query, $params){
         $stmt = $this->connection->prepare($query);
         $stmt->execute($params);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -117,6 +120,7 @@ class BaseDao{
      */
     protected function query_unique($query, $params){
         $results = $this->query($query, $params);
+        
         return reset($results);
     }
 
