@@ -145,75 +145,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Controllers js -->
+    <script src="assets/js/controllers/confirmation-accepted.js"></script>
+    <script src="assets/js/controllers/create.js"></script>
+    <script src="assets/js/controllers/forgot.js"></script>
+    <script src="assets/js/controllers/main.js"></script>
+    <script src="assets/js/controllers/modify.js"></script>
+    <script src="assets/js/controllers/profile-publications.js"></script>
+    <script src="assets/js/controllers/profile-view.js"></script>
+    <script src="assets/js/controllers/profile.js"></script>
+    <script src="assets/js/controllers/register.js"></script>
+    <script src="assets/js/controllers/reset.js"></script>
+    <script src="assets/js/controllers/search.js"></script>
+    <script src="assets/js/controllers/view.js"></script>
+
     <!-- jQuerySpApp js -->
     <script src="assets/js/jquery.spapp.js"></script>
     <script src="assets/js/utils.js"></script>
     <script src="assets/js/restClient.js"></script>
+    <script src="assets/js/jssor.slider-28.1.0.min.js"></script>
+
     <script type="text/javascript">
       $(document).ready(function() {
 
           var app = $.spapp({defaultView : 'main'});
           //load js code to pages
-          app.route({ view : "view", load : "view.html", onReady: function() {
-              $.getScript("assets/js/jssor.slider-28.1.0.min.js", function(){});
-              $.getScript("assets/js/view.js", function(){});
-            }
-          });
+          app.route({ view : "view", load : "view.html", onReady: function() { View.init(); }});
 
-          app.route({ view : "main", load : "main.html", onReady: function() {
-              $.getScript("assets/js/main.js", function(){});
-            }
-          });
+          app.route({ view : "main", load : "main.html", onReady: function() { Main.init(); }});
 
-          app.route({ view : "search", load : "search.html", onReady: function() {
-              $.getScript("assets/js/search.js", function(){});
-            }
-          });
-
-          app.route({ view : "forgot", load : "forgot.html", onReady: function() {
-              $.getScript("assets/js/forgot.js", function(){});
-            }
-          });
+          app.route({ view : "search", load : "search.html", onReady: function() { Search.init(); }});
 
           app.route({ view : "confirmation-accepted", load : "confirmation-accepted.html", onReady: function() {
-              $.getScript("assets/js/confirmation-accepted.js", function(){});
-            }
-          });
+              ConfirmationAccepted.init(); }});
 
           app.route({ view : "profile-view", load : "profile-view.html", onReady: function() {
-              $.getScript("assets/js/profile-view.js", function(){});
-            }
-          });
+              ProfileView.init(); }});
 
-          app.route({ view : "profile", load : "profile.html", onReady: function() {
-              $.getScript("assets/js/profile.js", function(){});
-            }
-          });
+          app.route({ view : "profile", load : "profile.html", onReady: function() { Profile.init(); }});
 
           app.route({ view : "profile-publications", load : "profile-publications.html", onReady: function() {
-              $.getScript("assets/js/profile-publications.js", function(){});
-            }
-          });
+              ProfilePublications.init(); }});
 
-          app.route({ view : "create", load : "create.html", onReady: function() {
-              $.getScript("assets/js/create.js", function(){});
-            }
-          });
+          app.route({ view : "create", load : "create.html", onReady: function() { Create.init(); }});
 
-          app.route({ view : "modify", load : "modify.html", onReady: function() {
-              $.getScript("assets/js/modify.js", function(){});
-            }
-          });
+          app.route({ view : "modify", load : "modify.html", onReady: function() { Modify.init(); }});
 
-          app.route({ view : "reset", load : "reset.html", onReady: function() {
-              $.getScript("assets/js/reset.js", function(){});
-            }
-          });
-
-          app.route({ view : "register", load : "register.html", onReady: function() {
-              $.getScript("assets/js/register.js", function(){});
-            }
-          });
+          app.route({ view : "reset", load : "reset.html", onReady: function() { Reset.init(); }});
 
           // run app
           app.run();

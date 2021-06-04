@@ -174,7 +174,7 @@ class REUtils{
       RestClient.get(endpoint + REUtils.encodeQueryData(main_data),
         function(data){
             if(data < 1){
-                $(selector_text).html('<strong>There are no publications</strong>');
+                $(selector_text).html('<strong>There are no publications</strong>').show();
             }
             else{
                 REUtils.createCard(data, selector_results, big_size, small_size);

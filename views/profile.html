@@ -21,7 +21,7 @@
                                             <h4 class="modal-title">Change Password</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form id="profile-password" onsubmit="doChangePassword(); return false">
+                                            <form id="profile-password" onsubmit="Profile.doChangePassword(); return false">
                                                 <div class="container">
                                                     <div class="row">
                                                         <div class="col-md-12 signin_column"><label class="form-label" for="new-password">New Password</label><input class="form-control" type="password" id="new-password" name="password" minlength="8" maxlength="32"></div>
@@ -46,7 +46,7 @@
             </div>
             <div id ="profile-info" class="col-lg-7 col-xl-7 col-xxl-7 offset-xxl-0" style="margin-top: 10px;">
                 <div class="view_div_block">
-                    <form id="profile-form" onsubmit="doUpdate(); return false" method="post">
+                    <form id="profile-form" onsubmit="Profile.doUpdate(); return false" method="post">
                         <div class="row">
                             <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7 offset-xxl-0">
                                 <h1 style="font-family: Lato, sans-serif;">Your profile</h1>
