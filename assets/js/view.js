@@ -23,6 +23,8 @@ $(document).ready(function(){
 
           if(data.text != "") $("#view-text").html(data.text);
               else $("#view-text").html('');
+    }, function(jqXHR, textStatus, errorThrown){
+          window.location.replace("?#main");
     });
 
     RestClient.get("api/user/advertisement/verify/" + urlParams.get('ad_id'),
@@ -58,7 +60,7 @@ function doDelete(){
   var urlParams = new URLSearchParams(window.location.search);
 
   $("#view-delete-button").addClass('disabled');
-  RestClient.get("api/user/advertisement/delete/" + urlParams.get('ad_id'),
+  RestClient.delete("api/user/advertisement/" + urlParams.get('ad_id'),
     function(data){
         $("#view-delete-button").removeClass('disabled');
         window.location.replace('?#profile-publications');
