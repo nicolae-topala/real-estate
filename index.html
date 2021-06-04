@@ -209,33 +209,25 @@
           });
 
           if(window.localStorage.getItem("token")){
-              $.ajax({
-                  url: "api/user/account",
-                  type: "GET",
-                  beforeSend: function(jqXHR){
-                      jqXHR.setRequestHeader('Authentication', localStorage.getItem("token"));
-                  },
-                  success: function(data, textStatus, jqXHR){
-                      $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
-                  }
+              RestClient.get("api/user/account", function(data){
+                  $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
               });
           }
       });
 
       function doLogin() {
-
           $("#LoginButton").addClass('disabled');
-          $.post("api/login", REUtils.jsonize_form("#LoginForm")).done(function(data){
-              window.localStorage.setItem("token", data.token);
-              $("#LoginModal").modal('hide');
-              $("#ForgotButton").removeClass('disabled');
-              location.reload();
-          }).fail(function(error){
-              $("#WrongPass").show().text( error.responseJSON.message );
-              $("#LoginButton").removeClass('disabled');
+          RestClient.post("api/login", REUtils.jsonize_form("#LoginForm"),
+             function(data){
+               window.localStorage.setItem("token", data.token);
+               $("#LoginModal").modal('hide');
+               $("#ForgotButton").removeClass('disabled');
+               location.reload();
+          }, function(error){
+               $("#WrongPass").show().text( error.responseJSON.message );
+               $("#LoginButton").removeClass('disabled');
           });
       }
     </script>
 </body>
-
 </html>
