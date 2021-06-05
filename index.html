@@ -57,7 +57,7 @@
                         <h4 class="modal-title">Welcome back !</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="LoginForm" method="POST" onsubmit="doLogin(); return false">
+                        <form id="LoginForm" method="POST" onsubmit="IndexPage.doLogin(); return false">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12 signin_column"><label class="form-label" for="InputEmail">Email</label><input class="form-control" type="email" id="InputEmail" name="email"></div>
@@ -159,6 +159,7 @@
     <script src="assets/js/controllers/reset.js"></script>
     <script src="assets/js/controllers/search.js"></script>
     <script src="assets/js/controllers/view.js"></script>
+    <script src="assets/js/controllers/index-page.js"></script>
 
     <!-- jQuerySpApp js -->
     <script src="assets/js/jquery.spapp.js"></script>
@@ -167,67 +168,7 @@
     <script src="assets/js/jssor.slider-28.1.0.min.js"></script>
 
     <script type="text/javascript">
-      $(document).ready(function() {
-
-          var app = $.spapp({defaultView : 'main'});
-          //load js code to pages
-          app.route({ view : "view", load : "view.html", onReady: function() { View.init(); }});
-
-          app.route({ view : "main", load : "main.html", onReady: function() { Main.init(); }});
-
-          app.route({ view : "search", load : "search.html", onReady: function() { Search.init(); }});
-
-          app.route({ view : "confirmation-accepted", load : "confirmation-accepted.html", onReady: function() {
-              ConfirmationAccepted.init(); }});
-
-          app.route({ view : "profile-view", load : "profile-view.html", onReady: function() {
-              ProfileView.init(); }});
-
-          app.route({ view : "profile", load : "profile.html", onReady: function() { Profile.init(); }});
-
-          app.route({ view : "profile-publications", load : "profile-publications.html", onReady: function() {
-              ProfilePublications.init(); }});
-
-          app.route({ view : "create", load : "create.html", onReady: function() { Create.init(); }});
-
-          app.route({ view : "modify", load : "modify.html", onReady: function() { Modify.init(); }});
-
-          app.route({ view : "reset", load : "reset.html", onReady: function() { Reset.init(); }});
-
-          // run app
-          app.run();
-
-          REUtils.doCheckToken();
-
-          $('#LogOut').click(function(){
-              window.localStorage.clear("token");
-              location.reload();
-          });
-
-          $('#LoginModal').on('shown.bs.modal', function () {
-              $('#InputEmail').trigger('focus')
-          });
-
-          if(window.localStorage.getItem("token")){
-              RestClient.get("api/user/account", function(data){
-                  $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
-              });
-          }
-      });
-
-      function doLogin() {
-          $("#LoginButton").addClass('disabled');
-          RestClient.post("api/login", REUtils.jsonize_form("#LoginForm"),
-             function(data){
-               window.localStorage.setItem("token", data.token);
-               $("#LoginModal").modal('hide');
-               $("#ForgotButton").removeClass('disabled');
-               location.reload();
-          }, function(error){
-               $("#WrongPass").show().text( error.responseJSON.message );
-               $("#LoginButton").removeClass('disabled');
-          });
-      }
+        IndexPage.init();
     </script>
 </body>
 </html>
