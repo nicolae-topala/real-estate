@@ -32,18 +32,14 @@ class IndexPage{
 
         $('#LogOut').click(function(){
             window.localStorage.clear("token");
-            location.reload();
+            REUtils.doCheckToken();
         });
 
         $('#LoginModal').on('shown.bs.modal', function () {
             $('#InputEmail').trigger('focus')
         });
 
-        if(window.localStorage.getItem("token")){
-            RestClient.get("api/user/account", function(data){
-                $("#IndexProfileName").append("<span>"+data.first_name+" "+data.last_name+"</span>");
-            });
-        }
+        REUtils.checkProfileName();
     }
 
     static doLogin(){
@@ -53,7 +49,7 @@ class IndexPage{
              window.localStorage.setItem("token", data.token);
              $("#LoginModal").modal('hide');
              $("#ForgotButton").removeClass('disabled');
-             location.reload();
+             REUtils.checkProfileName();
         }, function(error){
              $("#WrongPass").show().text( error.responseJSON.message );
              $("#LoginButton").removeClass('disabled');

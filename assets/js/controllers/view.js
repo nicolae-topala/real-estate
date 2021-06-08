@@ -53,7 +53,7 @@ class View{
     static doEdit(){
         var urlParams = new URLSearchParams(window.location.search);
 
-        window.location.replace('?ad_id='+ urlParams.get('ad_id') +'#modify')
+        REUtils.changePage( 'ad_id='+ urlParams.get('ad_id'), "#modify" );
     }
 
     static doDelete(){

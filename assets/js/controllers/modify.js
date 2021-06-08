@@ -22,7 +22,7 @@ class Modify{
 
         RestClient.put("api/user/advertisement/" + urlParams.get('ad_id'), REUtils.jsonize_form("#Modify_Form"),
            function(data){
-              window.location.replace('?ad_id='+ data.id +'#view');
+              REUtils.changePage( 'ad_id=' + data.id, "#view" );
               $("#modify_button").removeClass('disabled');
         }, function(jqXHR, textStatus, errorThrown){
               $("#modify-alert").text(jqXHR.responseText).show();

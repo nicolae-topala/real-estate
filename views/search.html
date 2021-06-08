@@ -1,6 +1,6 @@
 <div style="background-color: #F4F4F4;">
     <div>
-        <form id="SearchForm">
+        <form id="SearchForm" onsubmit="Search.createSearch(); return false" method="GET">
             <div class="row" style="padding: 10px;">
                 <div class="col-sm-6 col-md-3 col-lg-4 col-xl-4 col-xxl-3 offset-xl-0 search_column"><input class="form-control" type="search" placeholder="Title" name="title"></div>
                 <div class="col-sm-6 col-md-3 col-lg-4 col-xl-4 col-xxl-2 search_column"><input class="form-control" type="search" placeholder="Address" name="address"></div>

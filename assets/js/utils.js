@@ -66,6 +66,9 @@ class REUtils{
                  html += "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
             }
           $(selectorId).html(html);
+
+          /* if on search page insert data in form after reading locations from database */
+          if( window.location.hash == "#search" ) REUtils.insertData("#SearchForm", REUtils.urlParamsToJson());
       });
   };
 
@@ -90,8 +93,9 @@ class REUtils{
                     RestClient.post("api/user/photos/add", upload, function(data){
                         console.log("Image loaded successfully!");
                         console.log(data);
-                        if(i == files.length)
-                            location.replace('?ad_id='+ad_id+'#view');
+                        if(i == files.length){
+                            REUtils.changePage('ad_id=' + ad_id, "#view")
+                        }
                     });
                 }
                 else if(type == "thumbnail"){
@@ -121,7 +125,7 @@ class REUtils{
       for(var i = 0; i < data.length; i++){
            html += '<div class="col-sm-'+ small_size +' col-md-'+ small_size
                  + 'col-lg-'+ big_size +' col-xl-'+ big_size +' col-xxl-'+ big_size +' recommended_column">'
-                     + '<a class="ads_link" href="?ad_id='+ data[i].id +'#view">'
+                     + '<a class="ads_link" href="" onclick="REUtils.viewAd('+data[i].id+'); return false;">'
                      + '<div class="recommended_div_block">'
                         + '<p class="recommended_paragraph_title"><strong>&nbsp;'+ data[i].title +'</strong></p>'
                         + '<p class="recommended_paragraph">Price: '+ data[i].price +'&nbsp;<i class="fa fa-dollar"></i></p>'
@@ -177,6 +181,8 @@ class REUtils{
                 $(selector_text).html('<strong>There are no publications</strong>').show();
             }
             else{
+                $(selector_text).show();
+
                 REUtils.createCard(data, selector_results, big_size, small_size);
 
                 /* get all ads */
@@ -193,4 +199,23 @@ class REUtils{
             }
       });
   };
+
+  static changePage(data, page){
+      data = "?" + data;
+      window.history.pushState(null, null, data);
+      window.location.replace(page);
+  }
+
+  static viewAd(ad_id){
+      REUtils.changePage("ad_id=" + ad_id, "#view");
+  }
+
+  static checkProfileName(){
+      if(window.localStorage.getItem("token")){
+          RestClient.get("api/user/account", function(data){
+              $("#IndexProfileName").html( data.first_name + " " + data.last_name );
+              REUtils.doCheckToken();
+          });
+      }
+  }
 }

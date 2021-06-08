@@ -5,8 +5,8 @@ class ConfirmationAccepted{
         RestClient.get("api/confirm/" + urlParams.get('token'), function(data){
             $('#confirmation-message').show();
             window.localStorage.setItem("token", data.token);
+            REUtils.checkProfileName();
             location.replace("#main");
-            location.reload();
         }, function(jqXHR, textStatus, errorThrown){
             $('#confirmation-message').text( jqXHR.responseJSON.message ).show();
         });

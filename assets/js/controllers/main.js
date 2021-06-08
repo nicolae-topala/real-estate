@@ -8,7 +8,11 @@ class Main{
         });
     }
 
-    static doSearch(){
-        location.replace("#search");
+    static doSearch1(){
+        REUtils.changePage( $("#MainSearchForm1").serialize(), "#search" );
+    }
+
+    static doSearch2(){
+        REUtils.changePage( $("#MainSearchForm2").serialize(), "#search" );
     }
 }

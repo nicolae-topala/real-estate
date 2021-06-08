@@ -5,7 +5,7 @@
                 <h1 style="font-family: Lato, Arial, sans-serif;text-shadow: 2px 2px 4px #000000;color: rgb(255,255,255);">You're just a few clicks away...</h1>
             </div>
             <div>
-                <form id="MainSearchForm" onsubmit="Main.doSearch()" method="GET">
+                <form id="MainSearchForm1" onsubmit="Main.doSearch1(); return false" method="GET">
                     <div class="row search_bar">
                         <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3 search_bar_column" style="padding: 0;"><select class="form-select search_bar_select" name="type_id" style="width: 100%;height: 100%;">
                               <option value="1" selected="">Apartments</option>
@@ -42,7 +42,7 @@
     </div>
 </div>
 <div class="d-md-none d-lg-block d-lg-none d-xl-block d-xl-none">
-    <form id="MainSearchForm2" onsubmit="Main.doSearch()" method="GET">
+    <form id="MainSearchForm2" onsubmit="Main.doSearch2(); return false" method="GET">
         <div class="container" style="margin-top: 50px;">
             <div class="row">
                 <div class="col-md-12"><select class="form-select small_objects" name="type_id" style="width: 100%;">

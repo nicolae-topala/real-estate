@@ -48,7 +48,8 @@ class ProfileView{
         RestClient.put("api/admin/account/" + urlParams.get('user_id'), { "status": status },
            function(data){
                $(selectorId).removeClass('disabled');
-               window.location.reload();
+               if(status == "BLOCKED") $("#BlockAccountModal").modal('hide');
+               ProfileView.init();
         }, function(jqXHR, textStatus, errorThrown){
                $(selectorId).removeClass('disabled');
                console.log( jqXHR.responseText );

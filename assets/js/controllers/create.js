@@ -15,6 +15,7 @@ class Create{
            function(data){
               REUtils.uploadImage(data.id, "#create-thumbnail", "thumbnail");
               REUtils.uploadImage(data.id, "#create-photos", "photo");
+              REUtils.changePage( "ad_id=" + data.id, "#view" );
               $("#create_button").removeClass('disabled');
         }, function(jqXHR, textStatus, errorThrown){
               $("#create-alert").show().text( jqXHR.responseText );
