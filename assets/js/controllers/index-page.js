@@ -27,7 +27,7 @@ class IndexPage{
 
         // run app
         app.run();
-        
+
         $('#LogOut').click(function(){
             window.localStorage.clear("token");
             REUtils.doCheckToken();
@@ -46,7 +46,9 @@ class IndexPage{
            function(data){
              window.localStorage.setItem("token", data.token);
              $("#LoginModal").modal('hide');
-             $("#ForgotButton").removeClass('disabled');
+             $("#WrongPass").hide();
+             $("#LoginButton").removeClass('disabled');
+             $("#LoginForm").find("input").val("");
              REUtils.checkProfileName();
         }, function(error){
              $("#WrongPass").show().text( error.responseJSON.message );

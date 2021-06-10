@@ -6,7 +6,7 @@
 .register-photo .image-holder {
   display: table-cell;
   width: auto;
-  background: url(https://picsum.photos/4000/2000);
+  background: url(https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/main.png);
   background-size: cover;
 }
 
@@ -83,4 +83,3 @@
   opacity: 0.9;
   text-decoration: none;
 }
-
