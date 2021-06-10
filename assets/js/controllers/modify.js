@@ -10,7 +10,6 @@ class Modify{
 
         RestClient.get("api/advertisements/" + urlParams.get('ad_id'), function(data){
             REUtils.insertData("#Modify_Form", data);
-            $("#create-description").val(data.text);
         });
     }
 

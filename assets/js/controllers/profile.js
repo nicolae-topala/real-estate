@@ -38,9 +38,10 @@ class Profile{
 
         RestClient.put("api/user/account/", REUtils.jsonize_form("#profile-form"),
            function(data){
-               REUtils.insertData("#profile-form", data);
+               Profile.getUserData();
                $("#Profile-saved").show();
                $("#profile-button").removeClass('disabled');
+               REUtils.checkProfileName();
         }, function(jqXHR, textStatus, errorThrown){
                $("#profile-alert").text(jqXHR.responseText).show();
                $("#profile-button").removeClass('disabled');

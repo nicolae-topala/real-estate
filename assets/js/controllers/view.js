@@ -25,7 +25,7 @@ class View{
               if(data.text != "") $("#view-text").html(data.text);
                   else $("#view-text").html('');
         }, function(jqXHR, textStatus, errorThrown){
-              window.location.replace("?#main");
+              window.location.replace("#main");
         });
 
         RestClient.get("api/user/advertisement/verify/" + urlParams.get('ad_id'),

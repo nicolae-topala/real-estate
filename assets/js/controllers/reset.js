@@ -20,7 +20,8 @@ class Reset{
            function(data){
              window.localStorage.setItem("token", data.token);
              $("#ResetButton").removeClass('disabled');
-             location.replace("?#main");
+             REUtils.checkProfileName();
+             location.replace("#main");
         }, function(jqXHR, textStatus, errorThrown){
              $('#Reset-Alert').text( jqXHR.responseJSON ).show();
              $("#ResetButton").removeClass('disabled');

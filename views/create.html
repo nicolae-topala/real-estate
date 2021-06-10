@@ -7,7 +7,7 @@
                     <div class="col-xxl-12">
                         <h2 class="text-center" style="font-family: Lato, sans-serif;"><strong>Create new advertisement</strong></h2>
                     </div>
-                    <div class="col-xxl-12"><label class="form-label" for="create-title">Title<span style="color: red;">*</span></label><input class="form-control create_new_border" type="text" id="create-title" required="" name="title"></div>
+                    <div class="col-xxl-12"><label class="form-label" for="create-title">Title<span style="color: red;">*</span></label><input class="form-control create_new_border" type="text" id="create-title" required="" name="title" maxlength="64"></div>
                     <div class="col-lg-6 col-xl-6 col-xxl-6 create_new_column"><label class="form-label" for="create-type">Type<span style="color: red;">*</span></label><select class="form-select" id="create-type" required="" name="type_id">
                               <option value="1" selected="">Apartment</option>
                               <option value="2">House</option>
@@ -19,12 +19,12 @@
                     <div class="col-xxl-12" style="margin-top: 50px;">
                         <h5 class="text-center" style="font-family: Lato, sans-serif;"><strong>Details</strong></h5>
                     </div>
-                    <div class="col-xxl-12 create_new_column"><label class="form-label" for="create-address">Address<span style="color: red;">*</span></label><input class="form-control create_new_border" type="text" id="create-address" required="" name="address"></div>
+                    <div class="col-xxl-12 create_new_column"><label class="form-label" for="create-address">Address<span style="color: red;">*</span></label><input class="form-control create_new_border" type="text" id="create-address" required="" name="address" maxlength="124"></div>
                     <div class="col-lg-6 col-xl-6 col-xxl-6 create_new_column"><label class="form-label" for="create-floor">Floor</label><input class="form-control create_new_border" type="number" id="create-floor" name="floor"></div>
                     <div class="col-lg-6 col-xl-6 col-xxl-6 create_new_column"><label class="form-label" for="create-rooms">Rooms</label><input class="form-control create_new_border" type="number" id="create-rooms" name="rooms"></div>
                     <div class="col-lg-6 col-xl-6 col-xxl-6 create_new_column"><label class="form-label" for="create-space">Space<span style="color: red;">*</span></label><input class="form-control create_new_border" type="number" id="create-space" required="" name="space"></div>
                     <div class="col-lg-6 col-xl-6 col-xxl-6 create_new_column"><label class="form-label" for="create-price">Price<span style="color: red;">*</span></label><input class="form-control create_new_border" type="number" id="create-price" required="" name="price"></div>
-                    <div class="col-xxl-12 create_new_column"><label class="form-label" for="create-description">Description</label><textarea class="form-control create_new_border" id="create-description" style="height: 250px;" name="text"></textarea></div>
+                    <div class="col-xxl-12 create_new_column"><label class="form-label" for="create-description">Description</label><textarea class="form-control create_new_border" id="create-description" style="height: 250px;" name="text" maxlength="1000"></textarea></div>
                     <div class="col-xxl-12 create_new_column"><label class="form-label" for="create-thumbnail">Thumbnail</label><input class="form-control create_new_border" type="file" id="create-thumbnail" accept=".jpg, .jpeg, .png"></div>
                     <div class="col-xxl-12 create_new_column"><label class="form-label" for="create-photos">Photos</label><input class="form-control create_new_border" type="file" id="create-photos" multiple="" accept=".jpg, .jpeg, .png"></div>
                     <div class="col">

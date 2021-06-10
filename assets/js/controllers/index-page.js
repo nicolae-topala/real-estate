@@ -27,9 +27,7 @@ class IndexPage{
 
         // run app
         app.run();
-
-        REUtils.doCheckToken();
-
+        
         $('#LogOut').click(function(){
             window.localStorage.clear("token");
             REUtils.doCheckToken();

@@ -77,7 +77,7 @@ class REUtils{
 
     if(files.length == 0) return 0;
 
-    for(var i=0; i < files.length; i++){
+    for(var i = 0; i < files.length; i++){
         var file = files[i];
         var reader = new FileReader();
 
@@ -125,7 +125,7 @@ class REUtils{
       for(var i = 0; i < data.length; i++){
            html += '<div class="col-sm-'+ small_size +' col-md-'+ small_size
                  + 'col-lg-'+ big_size +' col-xl-'+ big_size +' col-xxl-'+ big_size +' recommended_column">'
-                     + '<a class="ads_link" href="" onclick="REUtils.viewAd('+data[i].id+'); return false;">'
+                     + '<a class="ads_link" href="?ad_id='+data[i].id+'#view">'
                      + '<div class="recommended_div_block">'
                         + '<p class="recommended_paragraph_title"><strong>&nbsp;'+ data[i].title +'</strong></p>'
                         + '<p class="recommended_paragraph">Price: '+ data[i].price +'&nbsp;<i class="fa fa-dollar"></i></p>'
@@ -206,15 +206,12 @@ class REUtils{
       window.location.replace(page);
   }
 
-  static viewAd(ad_id){
-      REUtils.changePage("ad_id=" + ad_id, "#view");
-  }
-
   static checkProfileName(){
+      REUtils.doCheckToken();
+      
       if(window.localStorage.getItem("token")){
           RestClient.get("api/user/account", function(data){
               $("#IndexProfileName").html( data.first_name + " " + data.last_name );
-              REUtils.doCheckToken();
           });
       }
   }

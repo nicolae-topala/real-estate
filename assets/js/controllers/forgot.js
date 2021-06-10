@@ -7,7 +7,7 @@ class Forgot{
                location.replace("#forgot-accepted");
                $("#ForgotButton").removeClass('disabled');
         }, function(jqXHR, textStatus, errorThrown){
-               $('#Forgot-Alert').text( error.responseJSON.message ).show();
+               $("#Forgot-Alert").text( jqXHR.responseJSON.message ).show();
                $("#ForgotButton").removeClass('disabled');
         });
     }
