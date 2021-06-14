@@ -11,11 +11,11 @@ class Create{
         $("#create-alert").hide();
         $("#create_button").addClass('disabled');
 
-        RestClient.post("api/user/advertisement/create", REUtils.jsonize_form("#Create_Form"),
+        RestClient.post("api/user/publications/create", REUtils.jsonize_form("#Create_Form"),
            function(data){
               if( $("#create-photos")[0].files.length == 0 ){
                   REUtils.uploadImage(data.id, "#create-thumbnail", "thumbnail");
-                  REUtils.changePage( "ad_id=" + data.id, "#view" );
+                  REUtils.changePage( "id=" + data.id, "#view" );
               } else {
                   REUtils.uploadImage(data.id, "#create-thumbnail", "thumbnail");
                   REUtils.uploadImage(data.id, "#create-photos", "photo");

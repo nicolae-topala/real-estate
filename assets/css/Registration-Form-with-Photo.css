@@ -6,7 +6,7 @@
 .register-photo .image-holder {
   display: table-cell;
   width: auto;
-  background: url(https://cdn.real-estate.live.fra1.cdn.digitaloceanspaces.com/main.png);
+  background: url(https://cdn.real-estate.studio/main.png);
   background-size: cover;
 }
 

@@ -1,10 +1,10 @@
 <?php
 /**
-* @OA\GET(path="/advertisements", tags={"x-user", "advertisements"},
+* @OA\GET(path="/publications", tags={"x-user", "publications"},
 *     @OA\Parameter(name="offset", type="integer", in="query", default=0, description="Offset for pagination."),
 *     @OA\Parameter(name="limit", type="integer", in="query", default=5, description="Limit for pagination."),
 *     @OA\Parameter(name="order", type="string", in="query", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name desceding order by column_name."),
-*    	@OA\Parameter(name="title", type="string", in="query", example="Title", default="",	description="Advertisement's title."),
+*    	@OA\Parameter(name="title", type="string", in="query", example="Title", default="",	description="Publication's title."),
 *     @OA\Parameter(name="address", type="string", in="query", example="Manhatan street 2", default="",	description="The address."),
 *     @OA\Parameter(name="location_id", type="integer", in="query", example=1, description="Location ID from Locations Table."),
 *     @OA\Parameter(name="type_id", type="integer", in="query", example=1, description="Type ID from Types Table."),
@@ -16,10 +16,10 @@
 *     @OA\Parameter(name="space_max", type="integer", in="query", example=300, default=9999999,	description="Maximum the ammount of space in m2."),
 *     @OA\Parameter(name="rooms_min", type="integer", in="query", example=1, default=0,	description="Minimun number of rooms."),
 *     @OA\Parameter(name="rooms_max", type="integer", in="query", example=12, default=9999999,	description="Maximum number of rooms."),
-*     @OA\Response(response="200", description="Create advertisement")
+*     @OA\Response(response="200", description="Create publication")
 * )
 */
-Flight::route('GET /advertisements', function(){
+Flight::route('GET /publications', function(){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 5);
     $title = Flight::query('title', "%");
@@ -41,7 +41,7 @@ Flight::route('GET /advertisements', function(){
 });
 
 /**
-* @OA\GET(path="/advertisements/profile/{user_id}", tags={"x-user", "advertisements"},
+* @OA\GET(path="/publications/profile/{user_id}", tags={"x-user", "publications"},
 *     @OA\Parameter(name="offset", type="integer", in="query", default=0, description="Offset for pagination."),
 *     @OA\Parameter(name="limit", type="integer", in="query", default=5, description="Limit for pagination."),
 *     @OA\Parameter(name="order", type="string", in="query", default="-id", description="Sorting for return elements. -column_name ascending order by column_name or +column_name desceding order by column_name."),
@@ -49,7 +49,7 @@ Flight::route('GET /advertisements', function(){
 *     @OA\Response(response="200", description="ADs from a specific user")
 * )
 */
-Flight::route('GET /advertisements/profile/@user_id', function($user_id){
+Flight::route('GET /publications/profile/@user_id', function($user_id){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 5);
     $order = Flight::query('order', "-id");
@@ -58,42 +58,42 @@ Flight::route('GET /advertisements/profile/@user_id', function($user_id){
 });
 
 /**
-* @OA\Get(path="/advertisements/{id}", tags={"x-user", "advertisements"},
+* @OA\Get(path="/publications/{id}", tags={"x-user", "publications"},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example=1, description="ID of the ad"),
-*     @OA\Response(response="200", description="Fetch individual advertisement")
+*     @OA\Response(response="200", description="Fetch individual publication")
 * )
 */
-Flight::route('GET /advertisements/@id', function($id){
+Flight::route('GET /publications/@id', function($id){
     Flight::json(Flight::advertisementservice()->get_ad_by_id($id));
 });
 
 /**
-* @OA\Get(path="/user/advertisement/verify/{ad_id}", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
+* @OA\Get(path="/user/publications/verify/{ad_id}", tags={"x-user", "publications"}, security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", type="integer", name="ad_id", example=1, description="ID of the ad"),
 *     @OA\Response(response="200", description="Verify if the user is the owner of the AD")
 * )
 */
-Flight::route('GET /user/advertisement/verify/@ad_id', function($ad_id){
+Flight::route('GET /user/publications/verify/@ad_id', function($ad_id){
     Flight::json(Flight::advertisementservice()->verify_ad_user(Flight::get('user')['id'],
                                                                 $ad_id));
 });
 
 /**
-* @OA\Delete(path="/user/advertisement/{ad_id}", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
+* @OA\Delete(path="/user/publications/{ad_id}", tags={"x-user", "publications"}, security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", type="integer", name="ad_id", example=1, description="ID of the ad"),
-*     @OA\Response(response="200", description="Delete advertisements from DB.")
+*     @OA\Response(response="200", description="Delete publications from DB.")
 * )
 */
-Flight::route('DELETE /user/advertisement/@ad_id', function($ad_id){
+Flight::route('DELETE /user/publications/@ad_id', function($ad_id){
     Flight::json(Flight::advertisementservice()->delete_ad(Flight::get('user'), $ad_id));
 });
 
 /**
-* @OA\Post(path="/user/advertisement/create", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
-*   @OA\RequestBody(description="Basic advertisement info.", required=true,
+* @OA\Post(path="/user/publications/create", tags={"x-user", "publications"}, security={{"ApiKeyAuth":{}}},
+*   @OA\RequestBody(description="Basic publication info.", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
-*    				 @OA\Property(property="title", required="true", type="string", example="Title",	description="Advertisement's title."),
+*    				 @OA\Property(property="title", required="true", type="string", example="Title",	description="Publication's title."),
 *            @OA\Property(property="address", required="true", type="string", example="Manhatan street 2",	description="The address."),
 *            @OA\Property(property="location_id", required="true", type="integer", example=1,	description="Location ID from Locations Table."),
 *            @OA\Property(property="type_id", required="true", type="integer", example=1,	description="Type ID from Types Table."),
@@ -105,18 +105,18 @@ Flight::route('DELETE /user/advertisement/@ad_id', function($ad_id){
 *          )
 *       )
 *     ),
-*  @OA\Response(response="200", description="Create advertisement")
+*  @OA\Response(response="200", description="Create publication")
 * )
 */
-Flight::route('POST /user/advertisement/create', function(){
+Flight::route('POST /user/publications/create', function(){
     Flight::json(Flight::advertisementservice()->create_ad(Flight::get('user'),
                                                            Flight::request()->data->getData()));
 });
 
 /**
-* @OA\Put(path="/admin/advertisement/{id}", tags={"x-admin", "advertisements"}, security={{"ApiKeyAuth":{}}},
+* @OA\Put(path="/admin/publications/{id}", tags={"x-admin", "publications"}, security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1),
-*     @OA\RequestBody(description="Basic advertisement info that is going to be updated.", required=true,
+*     @OA\RequestBody(description="Basic publication info that is going to be updated.", required=true,
 *         @OA\MediaType(mediaType="application/json",
 *             @OA\Schema(
 *                 @OA\Property(property="title", type="string", example="House title", description="The title of the ad"),
@@ -134,15 +134,15 @@ Flight::route('POST /user/advertisement/create', function(){
 *     @OA\Response(response="200", description="Update AD as Admin.")
 * )
 */
-Flight::route('PUT /admin/advertisement/@id', function($id){
+Flight::route('PUT /admin/publications/@id', function($id){
     Flight::json(Flight::advertisementservice()->modify_ad($id, Flight::request()->data->getData(),
                                                            Flight::get('user')));
 });
 
 /**
-* @OA\Put(path="/user/advertisement/{id}", tags={"x-user", "advertisements"}, security={{"ApiKeyAuth":{}}},
+* @OA\Put(path="/user/publications/{id}", tags={"x-user", "publications"}, security={{"ApiKeyAuth":{}}},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1),
-*     @OA\RequestBody(description="Basic advertisement info that is going to be updated.", required=true,
+*     @OA\RequestBody(description="Basic publication info that is going to be updated.", required=true,
 *         @OA\MediaType(mediaType="application/json",
 *             @OA\Schema(
 *                 @OA\Property(property="title", type="string", example="House title", description="The title of the ad"),
@@ -160,7 +160,7 @@ Flight::route('PUT /admin/advertisement/@id', function($id){
 *     @OA\Response(response="200", description="Update account as Admin.")
 * )
 */
-Flight::route('PUT /user/advertisement/@id', function($id){
+Flight::route('PUT /user/publications/@id', function($id){
     Flight::json(Flight::advertisementservice()->modify_user_ad($id, Flight::request()->data->getData(),
                                                                 Flight::get('user')));
 });

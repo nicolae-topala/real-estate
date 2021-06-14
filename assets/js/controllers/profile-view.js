@@ -35,7 +35,7 @@ class ProfileView{
     static getUserAds(page){
         var urlParams = new URLSearchParams(window.location.search);
 
-        REUtils.showAds("api/advertisements/profile/" + urlParams.get('user_id'),
+        REUtils.showAds("api/publications/profile/" + urlParams.get('user_id'),
                         "#user-publications-text", "#user-publications",
                         "#user-publications-page", page, 4, 6, "ProfileView.getUserAds", null);
     }

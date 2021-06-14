@@ -8,7 +8,7 @@ class Search{
         var main_data = REUtils.urlParamsToJson();
 
         REUtils.insertData("#SearchForm", main_data);
-        REUtils.showAds("api/advertisements", "#ResultText", "#SearchResults",
+        REUtils.showAds("api/publications", "#ResultText", "#SearchResults",
                         "#SearchPage", page, 3, 6, "Search.getAds", main_data);
     }
 

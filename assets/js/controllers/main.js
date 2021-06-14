@@ -2,9 +2,9 @@ class Main{
     static init(){
         REUtils.getLocation(".js-search-location");
 
-        RestClient.get("api/advertisements"+ REUtils.encodeQueryData({limit:"4", order:"+id"}),
+        RestClient.get("api/publications"+ REUtils.encodeQueryData({limit:"4", order:"+id"}),
           function(data){
-              REUtils.createCard(data, "#latestAds", 3, 6);
+              REUtils.createCard(data, "#latest_publications", 3, 6);
         });
     }
 

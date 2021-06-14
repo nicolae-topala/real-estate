@@ -2,7 +2,7 @@ class View{
     static init(){
         var urlParams = new URLSearchParams(window.location.search);
 
-        RestClient.get("api/advertisements/" + urlParams.get('ad_id'),
+        RestClient.get("api/publications/" + urlParams.get('id'),
           function(data){
               $("#view-title").html(data.title);
               $("#view-date").html('Date: '+data.date.substring(0,10));
@@ -28,12 +28,12 @@ class View{
               window.location.replace("#main");
         });
 
-        RestClient.get("api/user/advertisement/verify/" + urlParams.get('ad_id'),
+        RestClient.get("api/user/publications/verify/" + urlParams.get('id'),
           function(data){
               if( data == true ) $("#modify_ad").show();
         });
 
-        RestClient.get("api/photos/" + urlParams.get('ad_id'),
+        RestClient.get("api/photos/" + urlParams.get('id'),
           function(data){
               if(!data.length)
                   $(".slider-for").html('<div><img data-u="image"'
@@ -53,14 +53,14 @@ class View{
     static doEdit(){
         var urlParams = new URLSearchParams(window.location.search);
 
-        REUtils.changePage( 'ad_id='+ urlParams.get('ad_id'), "#modify" );
+        REUtils.changePage( 'id='+ urlParams.get('id'), "#modify" );
     }
 
     static doDelete(){
         var urlParams = new URLSearchParams(window.location.search);
 
         $("#view-delete-button").addClass('disabled');
-        RestClient.delete("api/user/advertisement/" + urlParams.get('ad_id'),
+        RestClient.delete("api/user/publications/" + urlParams.get('id'),
           function(data){
               $("#view-delete-button").removeClass('disabled');
               window.location.replace('?#profile-publications');
