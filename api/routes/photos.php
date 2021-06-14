@@ -38,7 +38,7 @@ Flight::route('POST /user/photos/add_thumbnail', function(){
 });
 
 /**
-* @OA\Get(path="/photos/{id}", tags={"x-user", "advertisements", "photos"},
+* @OA\Get(path="/photos/{id}", tags={"x-user", "publications", "photos"},
 *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example=1, description="ID of the ad"),
 *     @OA\Response(response="200", description="Fetch photos from advertisement")
 * )
